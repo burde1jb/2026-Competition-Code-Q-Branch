@@ -1,0 +1,242 @@
+// package frc.robot.subsystems;
+
+// import com.revrobotics.spark.ClosedLoopSlot;
+// import com.revrobotics.spark.FeedbackSensor;
+// import com.revrobotics.spark.SparkBase;
+// import com.revrobotics.spark.SparkBase.ControlType;
+// import com.revrobotics.spark.SparkBase.PersistMode;
+// import com.revrobotics.spark.SparkBase.ResetMode;
+// import com.revrobotics.spark.SparkClosedLoopController;
+// import com.revrobotics.spark.SparkFlex;
+// import com.revrobotics.spark.SparkLimitSwitch;
+// import com.revrobotics.spark.SparkLowLevel.MotorType;
+// import com.revrobotics.spark.config.AbsoluteEncoderConfig;
+// import com.revrobotics.spark.config.ExternalEncoderConfig;
+// import com.revrobotics.spark.config.LimitSwitchConfig;
+// import com.revrobotics.spark.config.SignalsConfig;
+// import com.revrobotics.spark.config.SparkFlexConfig;
+// import com.revrobotics.spark.config.MAXMotionConfig.MAXMotionPositionMode;
+// import com.revrobotics.AbsoluteEncoder;
+// import edu.wpi.first.math.MathUtil;
+// import edu.wpi.first.math.controller.PIDController;
+// import edu.wpi.first.wpilibj.DigitalInput;
+// import edu.wpi.first.wpilibj.DriverStation;
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+// import edu.wpi.first.wpilibj2.command.Command;
+// import edu.wpi.first.wpilibj2.command.SubsystemBase;
+// import frc.robot.Robot;
+// import frc.robot.RobotConstants;
+
+// public class ExtendoSubsystemPIDRevlib extends SubsystemBase {
+//     //name of this subsystem for dashboard labeling
+//     String className = this.getClass().getSimpleName();
+//     SparkFlex ExtendoMotor;
+//     AbsoluteEncoder ExtendoEncoder;
+//     private final double rangeOffset = RobotConstants.ExtendoRangeOffset;
+//     //private final double encoderOffset = RobotConstants.ExtendoEncoderOffset;
+//     private final double PositionalTolerance = 0.01;//2 * rangeOffset;
+//     private SparkFlexConfig motorConfig = new SparkFlexConfig();
+//     public double simposition = RobotConstants.ExtendoRetract;//this starts the simulation at the min postion
+    
+//     private double PGain = 5.1;
+//     private double IGain = 0.0;
+//     private double DGain = 0.0;
+//     private double MaxAccel = 0.0;
+//     private double MaxVelocity = 0.0;
+
+//     // these positions are for the Soft limits. these are used by the motor controller to attempt to
+//     // control the movement range of the motor
+//     // These are often found by cold booting the mechanism to a known location (like a hard stop) and
+//     // setting that position as 0 (min position), then moving to the other end of travel and reading
+//     // the position (maxposition).
+//     private double MinPostiion = RobotConstants.ExtendoRetract; // rotations
+//     private double MaxPostition =  RobotConstants.ExtendoExtendL4; // rotations
+
+//       //the built in PID controller on the Spark(Max Or Flex) motor controller, these will not take processing power from the roborio because they are running on the motor controller itself at a much higher loop rate (this is good for fast response and precision)
+//     private SparkClosedLoopController SparkMaxBuiltInPidController;
+
+    
+//     public ExtendoSubsystemPIDRevlib() {
+//         ExtendoMotor = new SparkFlex(RobotConstants.ExtendoMotorCANid, MotorType.kBrushless);
+//         ExtendoEncoder = ExtendoMotor.getAbsoluteEncoder();
+//         SparkMaxBuiltInPidController = ExtendoMotor.getClosedLoopController();
+//         setupTuningDashboardDefaults();
+//         SetupMotorConfig();
+//     }
+
+//     // This will return the subsytems current position 
+//     // public double getEncoderMeasurement() {
+//     //     if(Robot.isSimulation())
+//     //     {
+//     //         return simposition;
+//     //     }
+
+//     //     double RawPosition = ExtendoEncoder.getPosition();
+//     //     double position =  RawPosition + rangeOffset; // + encoderOffset % 1; //why do we modulo 1 here? this will always return a remainder and not the correct position?
+//     //     SmartDashboard.putNumber("Extendoposition", position);
+//     //     SmartDashboard.putNumber("RawExtendoposition", RawPosition);
+//     //     return position; 
+//     // }
+
+//     // this returns a command that can be called when needed. it is part of this class but is not really "part"  of this subsystem. its a factory that builds a command for other parts of the program to use.  
+//     //https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#capturing-state-in-inline-commands
+//     public Command goTo(double targetRotorPosition) {
+//         // Try to move until we're at the setpoint, then stop
+//         return run(() -> 
+//         {
+//             SmartDashboard.putNumber("targetRotorPosition", targetRotorPosition);
+//             MoveMotor(targetRotorPosition);
+//         })
+//             .until(()->MathUtil.isNear(targetRotorPosition, ExtendoEncoder.getPosition(), .01));
+//     }  
+
+//     public void setPosition(double rotations) {
+//         SmartDashboard.putNumber(className + " Setpoint", rotations);
+//         SparkMaxBuiltInPidController.setSetpoint(rotations, SparkBase.ControlType.kMAXMotionPositionControl, ClosedLoopSlot.kSlot0);
+//     }
+
+//     //another option for the joystick control
+//     // public void MoveByJoystick(double MovePower) {
+//     //     if (MovePower > 0) {
+//     //         MoveMotor(getEncoderMeasurement()+(MovePower*RobotConstants.ExtendoExtendSpeed));
+//     //     }
+//     //     else {
+//     //         MoveMotor(getEncoderMeasurement()+(MovePower*RobotConstants.ExtendoRetractSpeed));
+//     //     }
+//     // } 
+
+//     //everything will call this function to move the motor. seperated from the business logic this allows us to change implementation without touching the login of the subsystem.
+//     public void MoveMotor(double Position)
+//     {
+//         if(Robot.isSimulation())
+//         {
+//             simposition += Position / 50; //Fake Sim numbers to demo operation. 
+//         }
+//         setPosition(Position);
+//     }
+    
+//     //whichever way we choose to stop the motor goes here. this way we can change the entire class from brake to coast or to hold position without having to change any other business logic or codes. the entire implementation is here.
+//     // public void stop() {
+//     //     //same thing but we are using .set(0);
+//     //     MoveMotor(0);//ExtendoMotor.stopMotor();
+//     // }
+
+//     @Override
+//     public void periodic() {
+//          SmartDashboard.putNumber("Extendo SIM Encoder", simposition);//why does this not include the offset?
+//         SmartDashboard.putNumber("Extendo Encoder", ExtendoEncoder.getPosition());//why does this not include the offset?
+//         SmartDashboard.putNumber("motorPosition",ExtendoMotor.getEncoder().getPosition());
+//         SmartDashboard.putNumber("ExtendoTemp",ExtendoMotor.getMotorTemperature());
+//         SmartDashboard.putBoolean("ExtendoISAtSetpoint",SparkMaxBuiltInPidController.isAtSetpoint());
+        
+//         pidtune();
+//     }
+//       // Configure the motor controller
+//     private void SetupMotorConfig() {
+//         /*
+//         * Create a new SPARK MAX configuration object. This will store the
+//         * configuration parameters for the SPARK MAX that we will set below.
+//         */
+//         //motorConfig = new SparkMaxConfig();
+//         /*
+//         * Configure soft limits. These limits will prevent the motor from moving
+//         * beyond the specified positions.
+//         */
+//         //if using absolute encoder, user min and max absolute position. 
+//         motorConfig.softLimit.forwardSoftLimit(MaxPostition).reverseSoftLimit(MinPostiion);
+//         motorConfig.softLimit.forwardSoftLimitEnabled(true).reverseSoftLimitEnabled(true);
+//         // Invert Motor Direction (if needed)
+//         motorConfig.inverted(false);
+//         /*
+//         * Configure the encoder. For this specific example, we are using the
+//         * integrated encoder of the NEO, and we don't need to configure it. If
+//         * needed, we can adjust values like the position or velocity conversion
+//         * factors.
+//         */
+//         motorConfig.encoder.positionConversionFactor(1).velocityConversionFactor(1);
+
+//         /*
+//         * Configure the closed loop controller. We want to make sure we set the
+//         * feedback sensor as the primary encoder.
+//         */
+//         motorConfig
+//             .closedLoop
+//             .feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
+//             .allowedClosedLoopError(PositionalTolerance,ClosedLoopSlot.kSlot0)//set tolerance for the built in closedLoopController
+//             // Set PID values for position control. We don't need to pass a closed loop
+//             // slot, as it will default to slot 0.
+//             .p(PGain)
+//             .i(IGain)
+//             .d(DGain)
+//             .outputRange(-1, 1);
+//         motorConfig.closedLoop.maxMotion.allowedProfileError(.1);
+//         motorConfig.closedLoop.maxMotion.cruiseVelocity(10);
+//         motorConfig.closedLoop.maxMotion.maxAcceleration(10);
+//         motorConfig.closedLoop.maxMotion.positionMode(MAXMotionPositionMode.kMAXMotionTrapezoidal);
+
+//         //set encoder offset for an absolute encoder attached to the data breakout port. 
+//         motorConfig.absoluteEncoder.zeroOffset(0.72);
+//         motorConfig.absoluteEncoder.inverted(true);
+        
+//         //ExternalEncoderConfig EEConfig = new ExternalEncoderConfig();
+//         SignalsConfig config = new SignalsConfig().isAtSetpointAlwaysOn(true);
+        
+//         AbsoluteEncoderConfig AEConfig = new AbsoluteEncoderConfig().setSparkMaxDataPortConfig();
+//         motorConfig.apply(AEConfig);
+//         /*
+//         * Apply the configuration to the SPARK MAX.
+//         *
+//         * kResetSafeParameters is used to get the SPARK MAX to a known state. This
+//         * is useful in case the SPARK MAX is replaced.
+//         *
+//         * kPersistParameters is used to ensure the configuration is not lost when
+//         * the SPARK MAX loses power. This is useful for power cycles that may occur
+//         * mid-operation.
+//         */
+//         ExtendoMotor.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+//     }
+//     public void setupTuningDashboardDefaults()
+//     {
+//     SmartDashboard.setDefaultNumber(className + " P Gain", PGain);
+//     SmartDashboard.setDefaultNumber(className + " I Gain", IGain);
+//     SmartDashboard.setDefaultNumber(className + " D Gain", DGain);
+//     SmartDashboard.setDefaultNumber(className + " Max Accel", MaxAccel);
+//     SmartDashboard.setDefaultNumber(className + " Max Velocity", MaxVelocity);
+//     }
+//    public void pidtune() {
+//     // get the latest user written values from the dashboard for the PID values.
+//     // these are local and are created/destroyed each time this function is called
+//     double p = SmartDashboard.getNumber(className + " P Gain", 0);
+//     double i = SmartDashboard.getNumber(className + " I Gain", 0);
+//     double d = SmartDashboard.getNumber(className + " D Gain", 0);
+//     double A = SmartDashboard.getNumber(className + " Max Accel", 0);
+//     double V = SmartDashboard.getNumber(className + " Max Velocity", 0);
+//     // if the value has changed, update the local variable AND controller with the new value.
+//     if ((p != PGain)) {
+//       PGain = p;
+//       motorConfig.closedLoop.p(p, ClosedLoopSlot.kSlot0);
+//       ExtendoMotor.configureAsync(motorConfig,ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+//     }
+//     if ((i != IGain)) {
+//       IGain = i;
+//       motorConfig.closedLoop.i(i, ClosedLoopSlot.kSlot0);
+//       ExtendoMotor.configureAsync(motorConfig,ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+//     }
+//     if ((d != DGain)) {
+//       DGain = d;
+//       motorConfig.closedLoop.d(d, ClosedLoopSlot.kSlot0);
+//       ExtendoMotor.configureAsync(motorConfig,ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+//     }
+//     if ((A != MaxAccel)) {
+//       MaxAccel = A;
+//       motorConfig.closedLoop.maxMotion.maxAcceleration(A, ClosedLoopSlot.kSlot0);
+//       ExtendoMotor.configureAsync(motorConfig,ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+//     }
+//     if ((V != MaxVelocity)) {
+//       MaxVelocity = V;
+//       motorConfig.closedLoop.maxMotion.cruiseVelocity(V, ClosedLoopSlot.kSlot0);
+//       ExtendoMotor.configureAsync(motorConfig,ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+//     }
+//   }
+
+// }
