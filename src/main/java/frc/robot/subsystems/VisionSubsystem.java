@@ -20,19 +20,28 @@ public class VisionSubsystem extends SubsystemBase {
 
   public void config() {
     LimelightHelpers.setCameraPose_RobotSpace(
-        "",
+        "LL4",
         0.3556, 
         0.01,
         0.190,
         0,
         -10,
         0);
-    LimelightHelpers.SetFiducialIDFiltersOverride("", new int[] {6,7,8,9,10,11,17,18,19,20,21,22});
+    LimelightHelpers.setCameraPose_RobotSpace(
+        "LL3",
+        0.3556, 
+        0.01,
+        0.190,
+        0,
+        -10,
+        0);    
+        LimelightHelpers.SetFiducialIDFiltersOverride("LL4", new int[] {6,7,8,9,10,11,17,18,19,20,21,22});
+        LimelightHelpers.SetFiducialIDFiltersOverride("LL3", new int[] {6,7,8,9,10,11,17,18,19,20,21,22});
   }
 
   @Override
   public void periodic() {
-    fiducials = LimelightHelpers.getRawFiducials("");
+    fiducials = LimelightHelpers.getRawFiducials("LL4");
 
   }
   public RawFiducial getClosestFiducial() {
@@ -79,17 +88,29 @@ public RawFiducial getFiducialWithId(int id, boolean verbose) {
   throw new NoSuchTargetException("Cannot find: " + id + ". IN view:: " + availableIds.toString());
   }
 
-  public double getTX(){
-    return LimelightHelpers.getTX(VisionConstants.LIMELIGHT_NAME);
+  public double getTX1(){
+    return LimelightHelpers.getTX(VisionConstants.LIMELIGHT_NAME1);
   }
-  public double getTY(){
-    return LimelightHelpers.getTY(VisionConstants.LIMELIGHT_NAME);
+  public double getTY1(){
+    return LimelightHelpers.getTY(VisionConstants.LIMELIGHT_NAME1);
   }
-  public double getTA(){
-    return LimelightHelpers.getTA(VisionConstants.LIMELIGHT_NAME);
+  public double getTA1(){
+    return LimelightHelpers.getTA(VisionConstants.LIMELIGHT_NAME1);
   }
-  public boolean getTV(){
-    return LimelightHelpers.getTV(VisionConstants.LIMELIGHT_NAME);
+  public boolean getTV1(){
+    return LimelightHelpers.getTV(VisionConstants.LIMELIGHT_NAME1);
+  }
+  public double getTX2(){
+    return LimelightHelpers.getTX(VisionConstants.LIMELIGHT_NAME2);
+  }
+  public double getTY2(){
+    return LimelightHelpers.getTY(VisionConstants.LIMELIGHT_NAME2);
+  }
+  public double getTA2(){
+    return LimelightHelpers.getTA(VisionConstants.LIMELIGHT_NAME2);
+  }
+  public boolean getTV2(){
+    return LimelightHelpers.getTV(VisionConstants.LIMELIGHT_NAME2);
   }
 
   public double getClosestTX(){

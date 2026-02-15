@@ -57,7 +57,6 @@ public class RobotContainer {
   private double MaxAngularRate = RotationsPerSecond.of(3.0).in(RadiansPerSecond);
   private final CommandJoystick joystick = new CommandJoystick(0);
   private final XboxController xboxController = new XboxController(1);
-  private final CommandXboxController CommandXbox = new CommandXboxController(1);
   public static final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
   // /* Setting up bindings for necessary control of the swerve drive platform */
   private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
@@ -98,7 +97,6 @@ public class RobotContainer {
 
     //Note that X is defined as forward according to WPILib convention,
     //and Y is defined as to the left according to WPILib convention.
-    
 
     NamedCommands.registerCommand("AutonIntakeExtend", new AutonIntakeExtend(intakeSubsystem));
     NamedCommands.registerCommand("AutonIntakeRetract", new AutonIntakeRetract(intakeSubsystem));
@@ -133,9 +131,17 @@ public class RobotContainer {
     climberSubsystem.setDefaultCommand(new ClimberCommand(climberSubsystem, xboxController));
 
     configureBindings();
-    autoChooser = AutoBuilder.buildAutoChooser("test.");
-    SmartDashboard.putData("Auto Mode", autoChooser);
+    configureAutoChooser();
+    // autoChooser = AutoBuilder.buildAutoChooser("test.");
+    // SmartDashboard.putData("Auto Chooser", autoChooser);
     FollowPathCommand.warmupCommand().schedule();
+    
+  }
+
+  private void configureAutoChooser() {
+    autoChooser = AutoBuilder.buildAutoChooser();
+
+    SmartDashboard.putData("Auto Chooser", autoChooser);
   }
 
     //  private final IntSupplier OptionalButtonSupplier = ()-> {
@@ -157,6 +163,12 @@ public class RobotContainer {
   {
     return new ConditionalCommand(ATMan.C_TowerCommand(), ATMan.C_TowerCommand(), ()->{return true;}).asProxy();//.until(MantaState.getLimeLightBypassed)
   }
+  public Command xstance() {
+    return new InstantCommand(() -> {
+      drivetrain.brake(true);
+    });
+  }
+
   double JoystickAxisDeadZone = 0.2;//REMOVING MAGIC NUMBER AND GIVING IT A NAME
   int LeftXAxis = 0;
   int RightXAxis = 0; //REMOVING MAGIC NUMBER AND GIVING IT A NAME
@@ -250,15 +262,21 @@ public class RobotContainer {
     //joystick.button(1).whileTrue(new AlignCommand(commandSwerveDrivetrain, visionSubsystem));
     joystick.button(1).whileTrue(alignHub());
     joystick.button(4).whileTrue(alignTower());
+    joystick.button(14).whileTrue(brake(true));
+        
+        // // reset the field-centric heading on left bumper press
+        joystick.button(13).onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
     
-    // // reset the field-centric heading on left bumper press
-    joystick.button(13).onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
-
-    // commandSwerveDrivetrain.registerTelemetry(logger::telemeterize);
-  }
-  
-  public Command getAutonomousCommand() {
-    // return new PathPlannerAuto("Test - Commands");
+        // commandSwerveDrivetrain.registerTelemetry(logger::telemeterize);
+      }
+      
+      private Command brake(boolean b) {
+        return new InstantCommand(() -> {
+      drivetrain.brake(b);
+        });
+      }
+    
+      public Command getAutonomousCommand() {
     return autoChooser.getSelected();
   }
   public Command AutonShooterOn() {

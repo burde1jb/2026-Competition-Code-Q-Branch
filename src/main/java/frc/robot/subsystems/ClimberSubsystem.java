@@ -13,8 +13,8 @@ public class ClimberSubsystem extends SubsystemBase {
     private AbsoluteEncoder climberEncoderUPPER;
     // private AbsoluteEncoder climberEncoderLOWER;
     private final double rangeOffset = RobotConstants.ClimberrangeOffset;
-    private final double encoderOffsetUPPER = RobotConstants.ClimberencoderLOWERoffset;
-    private final double encoderOffsetLOWER = RobotConstants.ClimberencoderUPPERoffset;
+    private final double encoderOffsetUPPER = RobotConstants.ClimberencoderUPPERoffset;
+    private final double encoderOffsetLOWER = RobotConstants.ClimberencoderLOWERoffset;
 
     public ClimberSubsystem() {
         climberMotorUPPER = new SparkFlex(RobotConstants.ClimbermotorUPPERcanID,
@@ -36,9 +36,9 @@ public class ClimberSubsystem extends SubsystemBase {
 
     public void UppergoTo(double encoderGoalUPPER) {
         if ((climberEncoderUPPER.getPosition()) < (encoderGoalUPPER + encoderOffsetUPPER - rangeOffset)) {
-            climberMotorUPPER.set(RobotConstants.ClimberReleasepower);
-        } else if ((climberEncoderUPPER.getPosition()) > (encoderGoalUPPER + rangeOffset)) {
             climberMotorUPPER.set(RobotConstants.ClimberClimbpower);
+        } else if ((climberEncoderUPPER.getPosition()) > (encoderGoalUPPER + rangeOffset)) {
+            climberMotorUPPER.set(RobotConstants.ClimberReleasepower);
         } else {
             climberMotorUPPER.stopMotor();
         }
@@ -46,10 +46,10 @@ public class ClimberSubsystem extends SubsystemBase {
 
     public boolean UPPERwentTo (double encoderGoalUPPER) {
         if ((climberEncoderUPPER.getPosition()) < (encoderGoalUPPER + encoderOffsetUPPER - rangeOffset)) {
-            climberMotorUPPER.set(RobotConstants.ClimberReleasepower);
+            climberMotorUPPER.set(RobotConstants.ClimberClimbpower);
             return false;
         } else if ((climberEncoderUPPER.getPosition()) > (encoderGoalUPPER + rangeOffset)) {
-            climberMotorUPPER.set(RobotConstants.ClimberClimbpower);
+            climberMotorUPPER.set(RobotConstants.ClimberReleasepower);
             return false;
         } else {
             climberMotorUPPER.stopMotor();

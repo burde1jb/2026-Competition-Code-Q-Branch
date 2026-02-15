@@ -21,8 +21,8 @@ public class RobotConstants {
     public final static int FuelShooterMotor3CANid = 22;
     public final static int FuelShooterEncoderid = 2;
     //shooter power values
-    public final static double FuelShooterMaxVelocity = -1600;
-    public final static double FuelShooterSpeed = -0.50;
+    public final static double FuelShooterMaxVelocity = -1500;
+    public final static double FuelShooterSpeed = -0.80;
 
     // Fuel Wrist Constants
     // CAN, PWM, DIO values for motors, encoders, and sensors - Motor moving the
@@ -40,12 +40,12 @@ public class RobotConstants {
     // and 1
     public final static double FuelWristencoderOffset = 0.00;
     public final static double FuelWristrangeOffset = 0.03;
-    public final static double FuelWristExtendgoal = 0.933;
-    public final static double FuelWristRetractgoal = 0.437;
+    public final static double FuelWristExtendgoal = 0.446;
+    public final static double FuelWristRetractgoal = 0.03;
  
     // Fuel Wrist Power values for motors
-    public final static double FuelWristExtendpower = -0.40;
-    public final static double FuelWristRetractpower = +0.80;
+    public final static double FuelWristExtendpower = 0.40;
+    public final static double FuelWristRetractpower = -0.20;
 
     // Fuel Intake Constants
     // CAN, PWM, DIO values for motors, encoders, and sensors - Motor Spinning
@@ -59,7 +59,7 @@ public class RobotConstants {
     public final static double FuelIntakemotorFF = 0;
 
     // Fuel Intake Power values for motors
-    public final static double FuelIntakeOnspeed = -0.90;
+    public final static double FuelIntakeOnspeed = 0.90;
     // public final static double FuelIntakeOutspeed = 0.50;
     // public final static double FuelIntakeSlowspeed = -0.2;
 
@@ -76,8 +76,8 @@ public class RobotConstants {
     public final static double ConveyorIntakemotorFF = 0;
 
     // Fuel Intake Power values for motors
-    public final static double ConveyorIntakeOnspeed = -1.00;
-    public final static double ConveyorIntakeOnspeedAuton = -1.00;
+    public final static double ConveyorIntakeOnspeed = -0.80;
+    public final static double ConveyorIntakeOnspeedAuton = -0.50;
     public final static double ConveyorIntakeOutspeed = 0.80;
     public final static double ConveyorIntakeSlowspeed = 0.60;
 
@@ -86,8 +86,8 @@ public class RobotConstants {
     // Climber in/out of robot
     public final static int ClimbermotorUPPERcanID = 25;
     public final static int ClimbermotorLOWERcanID = 26;
-    public final static double ClimberencoderLOWERoffset = 0.2;
-    public final static double ClimberencoderUPPERoffset = 0.2;
+    public final static double ClimberencoderLOWERoffset = 0.0;
+    public final static double ClimberencoderUPPERoffset = 0.0;
     
 
     // Climber PID Values for Motors
@@ -99,11 +99,11 @@ public class RobotConstants {
     // Climber Values for encoders - Offsets used to make end values between 0
     // and 1
     public final static double ClimberencoderOffset = 0.00;
-    public final static double ClimberrangeOffset = 0.03;
+    public final static double ClimberrangeOffset = 0.01;
     public final static double LOWERClimberGoal = 0.400;
     public final static double LOWERClimberHome = 0.000;
-    public final static double UPPERClimberGoal = 0.400;
-    public final static double UPPERClimberHome = 0.000;
+    public final static double UPPERClimberGoal = 0.751;
+    public final static double UPPERClimberHome = 0.413;
 
     // Climber Power values for motors
     public final static double ClimberExtendpower = 0.40;
@@ -112,8 +112,8 @@ public class RobotConstants {
     public final static double ClimberReleasepower = -0.50;
     // Serealizer
     public final static int SerializerMotorCAN = 27;
-    public final static double SerializerOnspeed = -0.7;
-    public final static double SerializerOutspeed = +0.5;
+    public final static double SerializerOnspeed = 1.0;
+    public final static double SerializerOutspeed = -1.0;
     public final static double SerializerSlowspeed = 0.2;
 
     // LED Values
@@ -122,7 +122,8 @@ public class RobotConstants {
     public final static double LEDdefault = 0.57;
 
     public static class VisionConstants {
-    public static final String LIMELIGHT_NAME = "";
+    public static final String LIMELIGHT_NAME1 = "LL4";
+    public static final String LIMELIGHT_NAME2 = "LL3";
     public static final Distance LIMELIGHT_LENS_HEIGHT = Distance.ofBaseUnits(8, Inches);
     public static final Angle LIMELIGHT_ANGLE = Angle.ofBaseUnits(0, Degrees);
 

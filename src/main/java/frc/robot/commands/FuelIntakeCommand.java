@@ -28,11 +28,11 @@ public class FuelIntakeCommand extends Command {
         }
 
         if (controller2.getAButton()) {
-            // intakeSubsystem.goTo(RobotConstants.FuelWristExtendgoal);
-            intakeSubsystem.wristOn(true);
+            intakeSubsystem.goTo(RobotConstants.FuelWristExtendgoal);
+            // intakeSubsystem.wristOn(true);
         } else if (controller2.getBButton()) {
-            // intakeSubsystem.goTo(RobotConstants.FuelWristRetractgoal);
-            intakeSubsystem.wristOn(false);
+            intakeSubsystem.goTo(RobotConstants.FuelWristRetractgoal);
+            // intakeSubsystem.wristOn(false);
         } else {
             intakeSubsystem.wristOff();
         }

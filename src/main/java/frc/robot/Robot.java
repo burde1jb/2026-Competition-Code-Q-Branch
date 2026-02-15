@@ -4,16 +4,24 @@
 
 package frc.robot;
 
+import static edu.wpi.first.units.Units.Seconds;
+
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructPublisher;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Util.HubTracker;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
@@ -28,8 +36,26 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
   UpdateDrivetrainFromLimelight();
     CommandScheduler.getInstance().run();
+
+  double startTime = Timer.getFPGATimestamp();
+
+  SmartDashboard.putNumber("Voltage", RobotController.getBatteryVoltage());
+    SmartDashboard.putNumber("Match Time", DriverStation.getMatchTime());
+
+    SmartDashboard.putNumber(
+        "HubTracker/Time Until Shift",
+        HubTracker.timeRemainingInCurrentShift().orElse(Seconds.of(0)).in(Seconds));
+    SmartDashboard.putBoolean(
+        "HubTracker/RedWonAuto", HubTracker.getAutoWinner().orElse(Alliance.Blue) == Alliance.Red);
+    SmartDashboard.putBoolean("HubTracker/GameDataPresent", !HubTracker.getAutoWinner().isEmpty());
+
+    SmartDashboard.putNumber(
+        "HubTracker/TimeUtilActive",
+        HubTracker.timeUntilActive().orElse(Seconds.of(0)).in(Seconds));
+
+
   }
-  private final boolean kUseLimelight = true; //false if not using Limelight, true if using Limelight
+  private final boolean kUseLimelight = false; //false if not using Limelight, true if using Limelight
   private final NetworkTableInstance inst = NetworkTableInstance.getDefault();
   private final NetworkTable driveStateTable = inst.getTable("Q Branch");
   private final StructPublisher<Pose2d> drivePose = driveStateTable.getStructTopic("LLPose", Pose2d.struct).publish();
@@ -76,6 +102,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+    CameraServer.startAutomaticCapture();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     if (m_autonomousCommand != null) {
@@ -93,6 +120,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    CameraServer.startAutomaticCapture();
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }

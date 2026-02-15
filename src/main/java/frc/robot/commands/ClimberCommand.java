@@ -20,10 +20,10 @@ public class ClimberCommand extends Command {
     @Override
     public void execute() {
         if (controller2.getLeftY() > 0.2){
-            climberSubsystem.UppergoTo(RobotConstants.UPPERClimberGoal);
+            climberSubsystem.UppergoTo(RobotConstants.UPPERClimberHome);
         }
         else if (controller2.getLeftY() < -0.2){
-            climberSubsystem.UppergoTo(RobotConstants.UPPERClimberHome);
+            climberSubsystem.UppergoTo(RobotConstants.UPPERClimberGoal);
         }
         // else if (controller2.getRightY() > 0.2){
         //     climberSubsystem.LowergoTo(RobotConstants.UPPERClimberGoal);

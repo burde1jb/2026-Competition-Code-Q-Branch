@@ -37,12 +37,17 @@ public class FuelShooterSubsystem extends SubsystemBase {
     String className = this.getClass().getSimpleName();
     SparkFlex FuelShooterMotor;
     SparkFlex FuelShooterMotor2;
+    SparkClosedLoopController FuelShooterMotorLoop;
+    SparkClosedLoopController FuelShooterMotorLoop2;
+    SparkFlexConfig FuelShooterMotorConfig;
+    SparkFlexConfig FuelShooterMotorConfig2;
     //
     RelativeEncoder FuelShooterEncoder;
+    RelativeEncoder FuelShooterEncoder2;
    
     //private final double encoderOffset = RobotConstants.ExtendoEncoderOffset;
-    private final double PositionalTolerance = 0.01;//2 * rangeOffset;
-    private SparkFlexConfig motorConfig = new SparkFlexConfig();
+    // private final double PositionalTolerance = 0.01;//2 * rangeOffset;
+    // private SparkFlexConfig motorConfig = new SparkFlexConfig();
 
     private double PGain = 5.1;
     private double IGain = 0.0;
@@ -57,6 +62,8 @@ public class FuelShooterSubsystem extends SubsystemBase {
     // the position (maxposition).
     private double MaxVelocity =  RobotConstants.FuelShooterMaxVelocity; // rotations
     private double FuelShooterVelocity;
+    private double FuelShooterVelocity2;
+
       //the built in PID controller on the Spark(Max Or Flex) motor controller, these will not take processing power from the roborio because they are running on the motor controller itself at a much higher loop rate (this is good for fast response and precision)
     private SparkClosedLoopController SparkMaxBuiltInPidController;
 
@@ -64,11 +71,18 @@ public class FuelShooterSubsystem extends SubsystemBase {
     public FuelShooterSubsystem() {
         FuelShooterMotor = new SparkFlex(RobotConstants.FuelShooterMotorCANid, MotorType.kBrushless);
         FuelShooterMotor2 = new SparkFlex(RobotConstants.FuelShooterMotor2CANid, MotorType.kBrushless);
-        // FuelShooterMotor3 = new SparkFlex(RobotConstants.FuelShooterMotor3CANid, MotorType.kBrushless);
         FuelShooterEncoder = FuelShooterMotor.getEncoder();
+        FuelShooterEncoder2 = FuelShooterMotor2.getEncoder();
         SparkMaxBuiltInPidController = FuelShooterMotor.getClosedLoopController();
+        FuelShooterMotorLoop = FuelShooterMotor.getClosedLoopController();
+        FuelShooterMotorLoop2 = FuelShooterMotor2.getClosedLoopController();
+        FuelShooterMotorConfig = new SparkFlexConfig();
+        FuelShooterMotorConfig2 = new SparkFlexConfig();
         FuelShooterVelocity = FuelShooterEncoder.getVelocity();
-        SetupMotorConfig();
+        FuelShooterVelocity2 = FuelShooterEncoder2.getVelocity();
+        // SetupMotorConfig();
+        FuelShooterMotorLoop.setSetpoint(-3000, ControlType.kMAXMotionVelocityControl);
+        FuelShooterMotorLoop2.setSetpoint(-3000, ControlType.kMAXMotionVelocityControl);
 
     }
 
@@ -115,21 +129,35 @@ public class FuelShooterSubsystem extends SubsystemBase {
      }
     public void shooterOn(double velocity){
         double v = RobotConstants.FuelShooterSpeed;
-        double x = (velocity- FuelShooterEncoder.getVelocity())/velocity;
+        double x = (velocity - FuelShooterEncoder.getVelocity())/velocity;
         FuelShooterMotor.set(v);
         FuelShooterMotor2.set(v);
-        // FuelShooterMotor3.set(v);
-        if (Math.abs(x) < .06){
-            if (FuelShooterEncoder.getVelocity() < velocity){
-                v += .02;
-            }
-            else if (FuelShooterEncoder.getVelocity() > velocity){
-                v -= .02;
-            }
-            FuelShooterMotor.set(v);
-            FuelShooterMotor2.set(v);
-            // FuelShooterMotor3.set(v);
-        }
+        
+        // // FuelShooterMotor3.set(v);
+        // if (Math.abs(FuelShooterEncoder.getVelocity()) < Math.abs(0.94 * velocity)){
+        //   FuelShooterMotor.set(v);
+        //   FuelShooterMotor2.set(v);
+        // }
+        // if (Math.abs(FuelShooterEncoder.getVelocity()) > Math.abs((1.06 * velocity))){
+        //   FuelShooterMotor.set(-0.02);
+        //   FuelShooterMotor2.set(-0.02);
+        // }
+        // else if (Math.abs(x) < 0.06 ){
+        //     if (FuelShooterEncoder.getVelocity() < velocity){
+        //         FuelShooterMotor.set(-0.02);
+        //         FuelShooterMotor2.set(-0.02);
+        //     }
+        //     else if (FuelShooterEncoder.getVelocity() > velocity){
+        //         FuelShooterMotor.set(-0.02);
+        //         FuelShooterMotor2.set(-0.02);
+        //     }
+        //     // FuelShooterMotor3.set(v);
+        // }
+        
+        // else {
+        // FuelShooterMotor.set(v);
+        // FuelShooterMotor2.set(v);
+        // }
     }
 
     public boolean atSpeed () {
@@ -144,11 +172,11 @@ public class FuelShooterSubsystem extends SubsystemBase {
     public void restart() {
       speed = 1200;
       }
-    public void velocitySetpoint(double velocitySetpoint) {
-        //limit the setpoint to the max and min positions
-        double limitedSetpoint = MathUtil.clamp(velocitySetpoint, -speed, speed);
-        SparkMaxBuiltInPidController.setReference(limitedSetpoint, ControlType.kVelocity);
-    }
+    // public void velocitySetpoint(double velocitySetpoint) {
+    //     //limit the setpoint to the max and min positions
+    //     double limitedSetpoint = MathUtil.clamp(velocitySetpoint, -speed, speed);
+    //     SparkMaxBuiltInPidController.setReference(limitedSetpoint, ControlType.kVelocity);
+    // }
     @Override
     
     public void periodic() {
@@ -157,90 +185,90 @@ public class FuelShooterSubsystem extends SubsystemBase {
         // SmartDashboard.putNumber("FuelShooterTemp",FuelShooterMotor.getMotorTemperature());
         // SmartDashboard.putBoolean("FuelShooterISAtSetpoint",SparkMaxBuiltInPidController.isAtSetpoint());
         
-        pidtune();
+        // pidtune();
     }
       // Configure the motor controller
-    private void SetupMotorConfig() {
-        /*
-        * Create a new SPARK MAX configuration object. This will store the
-        * configuration parameters for the SPARK MAX that we will set below.
-        */
-        //motorConfig = new SparkMaxConfig();
-        /*
-        * Configure soft limits. These limits will prevent the motor from moving
-        * beyond the specified positions.
-        */
-        //if using absolute encoder, user min and max absolute position. 
-       // motorConfig.softLimit.forwardSoftLimit(MaxPostition).reverseSoftLimit(MinPostiion);
-       //motorConfig.softLimit.forwardSoftLimitEnabled(true).reverseSoftLimitEnabled(true);
-        // Invert Motor Direction (if needed)
-        motorConfig.inverted(false);
-        /*
-        * Configure the encoder. For this specific example, we are using the
-        * integrated encoder of the NEO, and we don't need to configure it. If
-        * needed, we can adjust values like the position or velocity conversion
-        * factors.
-        */
-        motorConfig.encoder.positionConversionFactor(1).velocityConversionFactor(1);
-        /* Apply the configuration to the SPARK MAX.
-        *
-        * kResetSafeParameters is used to get the SPARK MAX to a known state. This
-        * is useful in case the SPARK MAX is replaced.
-        *
-        * kPersistParameters is used to ensure the configuration is not lost when
-        * the SPARK MAX loses power. This is useful for power cycles that may occur
-        * mid-operation.
-        */
-        FuelShooterMotor.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        FuelShooterMotor2.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        // FuelShooterMotor3.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    }
-    public void setupTuningDashboardDefaults()
-    {
-    SmartDashboard.setDefaultNumber(className + " P Gain", PGain);
-    SmartDashboard.setDefaultNumber(className + " I Gain", IGain);
-    SmartDashboard.setDefaultNumber(className + " D Gain", DGain);
-    SmartDashboard.setDefaultNumber(className + " Max Accel", MaxAccel);
-    SmartDashboard.setDefaultNumber(className + " Max Velocity", Velocity);
-    }
-   public void pidtune() {
-    // get the latest user written values from the dashboard for the PID values.
-    // these are local and are created/destroyed each time this function is called
-    double p = SmartDashboard.getNumber(className + " P Gain", 0);
-    double i = SmartDashboard.getNumber(className + " I Gain", 0);
-    double d = SmartDashboard.getNumber(className + " D Gain", 0);
-    double A = SmartDashboard.getNumber(className + " Max Accel", 0);
-    double V = SmartDashboard.getNumber(className + " Max Velocity", 0);
-    // if the value has changed, update the local variable AND controller with the new value.
-    if ((p != PGain)) {
-      PGain = p;
-      motorConfig.closedLoop.p(p, ClosedLoopSlot.kSlot0);
-      FuelShooterMotor.configureAsync(motorConfig,ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    }
-    if ((i != IGain)) {
-      IGain = i;
-      motorConfig.closedLoop.i(i, ClosedLoopSlot.kSlot0);
-      FuelShooterMotor.configureAsync(motorConfig,ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    }
-    if ((d != DGain)) {
-      DGain = d;
-      motorConfig.closedLoop.d(d, ClosedLoopSlot.kSlot0);
-      FuelShooterMotor.configureAsync(motorConfig,ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
-    }
-    if ((A != MaxAccel)) {
-      MaxAccel = A;
-      motorConfig.closedLoop.maxMotion.maxAcceleration(A, ClosedLoopSlot.kSlot0);
-      FuelShooterMotor.configureAsync(motorConfig,ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
-    }
-    if ((V != Velocity)) {
-      Velocity = V;
-      motorConfig.closedLoop.maxMotion.cruiseVelocity(V, ClosedLoopSlot.kSlot0);
-      FuelShooterMotor.configureAsync(motorConfig,ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+  //   private void SetupMotorConfig() {
+  //       /*
+  //       * Create a new SPARK MAX configuration object. This will store the
+  //       * configuration parameters for the SPARK MAX that we will set below.
+  //       */
+  //       //motorConfig = new SparkMaxConfig();
+  //       /*
+  //       * Configure soft limits. These limits will prevent the motor from moving
+  //       * beyond the specified positions.
+  //       */
+  //       //if using absolute encoder, user min and max absolute position. 
+  //      // motorConfig.softLimit.forwardSoftLimit(MaxPostition).reverseSoftLimit(MinPostiion);
+  //      //motorConfig.softLimit.forwardSoftLimitEnabled(true).reverseSoftLimitEnabled(true);
+  //       // Invert Motor Direction (if needed)
+  //       motorConfig.inverted(false);
+  //       /*
+  //       * Configure the encoder. For this specific example, we are using the
+  //       * integrated encoder of the NEO, and we don't need to configure it. If
+  //       * needed, we can adjust values like the position or velocity conversion
+  //       * factors.
+  //       */
+  //       motorConfig.encoder.positionConversionFactor(1).velocityConversionFactor(1);
+  //       /* Apply the configuration to the SPARK MAX.
+  //       *
+  //       * kResetSafeParameters is used to get the SPARK MAX to a known state. This
+  //       * is useful in case the SPARK MAX is replaced.
+  //       *
+  //       * kPersistParameters is used to ensure the configuration is not lost when
+  //       * the SPARK MAX loses power. This is useful for power cycles that may occur
+  //       * mid-operation.
+  //       */
+  //       FuelShooterMotor.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+  //       FuelShooterMotor2.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+  //       // FuelShooterMotor3.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+  //   }
+  //   public void setupTuningDashboardDefaults()
+  //   {
+  //   SmartDashboard.setDefaultNumber(className + " P Gain", PGain);
+  //   SmartDashboard.setDefaultNumber(className + " I Gain", IGain);
+  //   SmartDashboard.setDefaultNumber(className + " D Gain", DGain);
+  //   SmartDashboard.setDefaultNumber(className + " Max Accel", MaxAccel);
+  //   SmartDashboard.setDefaultNumber(className + " Max Velocity", Velocity);
+  //   }
+  //  public void pidtune() {
+  //   // get the latest user written values from the dashboard for the PID values.
+  //   // these are local and are created/destroyed each time this function is called
+  //   double p = SmartDashboard.getNumber(className + " P Gain", 0);
+  //   double i = SmartDashboard.getNumber(className + " I Gain", 0);
+  //   double d = SmartDashboard.getNumber(className + " D Gain", 0.1);
+  //   double A = SmartDashboard.getNumber(className + " Max Accel", 0);
+  //   double V = SmartDashboard.getNumber(className + " Max Velocity", 0);
+  //   // if the value has changed, update the local variable AND controller with the new value.
+  //   if ((p != PGain)) {
+  //     PGain = p;
+  //     motorConfig.closedLoop.p(p, ClosedLoopSlot.kSlot0);
+  //     FuelShooterMotor.configureAsync(motorConfig,ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+  //   }
+  //   if ((i != IGain)) {
+  //     IGain = i;
+  //     motorConfig.closedLoop.i(i, ClosedLoopSlot.kSlot0);
+  //     FuelShooterMotor.configureAsync(motorConfig,ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+  //   }
+  //   if ((d != DGain)) {
+  //     DGain = d;
+  //     motorConfig.closedLoop.d(d, ClosedLoopSlot.kSlot0);
+  //     FuelShooterMotor.configureAsync(motorConfig,ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+  //   }
+  //   if ((A != MaxAccel)) {
+  //     MaxAccel = A;
+  //     motorConfig.closedLoop.maxMotion.maxAcceleration(A, ClosedLoopSlot.kSlot0);
+  //     FuelShooterMotor.configureAsync(motorConfig,ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+  //   }
+  //   if ((V != Velocity)) {
+  //     Velocity = V;
+  //     motorConfig.closedLoop.maxMotion.cruiseVelocity(V, ClosedLoopSlot.kSlot0);
+  //     FuelShooterMotor.configureAsync(motorConfig,ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
 
   
 
 
-    }
-  }
+  //   }
+  // }
 
 }
