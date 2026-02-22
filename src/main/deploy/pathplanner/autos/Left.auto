@@ -82,11 +82,11 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 7.0
+            "waitTime": 1.0
           }
         },
         {
-          "type": "parallel",
+          "type": "sequential",
           "data": {
             "commands": [
               {
@@ -94,26 +94,27 @@
                 "data": {
                   "name": "AutonIntakeRetract"
                 }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Climb B"
-                }
               }
             ]
           }
         },
         {
-          "type": "named",
+          "type": "sequential",
           "data": {
-            "name": "AutonClimber"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 4.0
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Climb C"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonIntakeOffCommand"
+                }
+              }
+            ]
           }
         }
       ]

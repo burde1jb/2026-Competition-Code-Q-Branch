@@ -21,7 +21,7 @@ public class RobotConstants {
     public final static int FuelShooterMotor3CANid = 22;
     public final static int FuelShooterEncoderid = 2;
     //shooter power values
-    public final static double FuelShooterMaxVelocity = -1500;
+    public final static double FuelShooterMaxVelocity = -2400;
     public final static double FuelShooterSpeed = -0.80;
 
     // Fuel Wrist Constants
@@ -108,8 +108,8 @@ public class RobotConstants {
     // Climber Power values for motors
     public final static double ClimberExtendpower = 0.40;
     public final static double ClimberRetractpower = -0.40;
-    public final static double ClimberClimbpower = 0.50;
-    public final static double ClimberReleasepower = -0.50;
+    public final static double ClimberClimbpower = 1.0;
+    public final static double ClimberReleasepower = -1.0;
     // Serealizer
     public final static int SerializerMotorCAN = 27;
     public final static double SerializerOnspeed = 1.0;
@@ -122,8 +122,8 @@ public class RobotConstants {
     public final static double LEDdefault = 0.57;
 
     public static class VisionConstants {
-    public static final String LIMELIGHT_NAME1 = "LL4";
-    public static final String LIMELIGHT_NAME2 = "LL3";
+    public static final String LIMELIGHT_NAME1 = "limelight-four";
+    public static final String LIMELIGHT_NAME2 = "limelight-three";
     public static final Distance LIMELIGHT_LENS_HEIGHT = Distance.ofBaseUnits(8, Inches);
     public static final Angle LIMELIGHT_ANGLE = Angle.ofBaseUnits(0, Degrees);
 

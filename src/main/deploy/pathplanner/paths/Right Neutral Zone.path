@@ -8,33 +8,46 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.500168674698795,
-        "y": 3.2154216867469883
+        "x": 2.3581084337349396,
+        "y": 2.4832650602409636
       },
       "isLocked": false,
       "linkedName": "Shooting Position"
     },
     {
       "anchor": {
-        "x": 1.5677746077032806,
-        "y": 3.3039657631954356
+        "x": 7.756397590361445,
+        "y": 0.8222530120481917
       },
       "prevControl": {
-        "x": 2.205120481927711,
-        "y": 3.3028433734939755
+        "x": 3.1121204819277093,
+        "y": 3.8929397590361443
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "Climb Right Side"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": -29.999999999999996
+    },
+    {
+      "waypointRelativePos": 0.8544144144143964,
+      "rotationDegrees": -29.999999999999996
+    },
+    {
+      "waypointRelativePos": 0.9466666666666611,
+      "rotationDegrees": 0.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 0.75,
-    "maxAcceleration": 2.0,
+    "maxVelocity": 1.5,
+    "maxAcceleration": 5.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -42,7 +55,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": 90.0
   },
   "reversed": false,
   "folder": null,

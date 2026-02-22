@@ -70,12 +70,6 @@
           "data": {
             "commands": [
               {
-                "type": "path",
-                "data": {
-                  "pathName": "Climb B"
-                }
-              },
-              {
                 "type": "named",
                 "data": {
                   "name": "AutonIntakeOffCommand"
@@ -85,9 +79,28 @@
           }
         },
         {
-          "type": "named",
+          "type": "sequential",
           "data": {
-            "name": "AutonClimber"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonIntakeOnCommand"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Climb C"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonIntakeOffCommand"
+                }
+              }
+            ]
           }
         }
       ]

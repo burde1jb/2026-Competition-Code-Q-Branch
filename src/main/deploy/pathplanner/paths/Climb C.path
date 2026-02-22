@@ -3,77 +3,81 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.4291726105527853,
-        "y": 7.340827389443652
-      },
-      "prevControl": null,
-      "nextControl": {
-        "x": 0.39406496984458517,
-        "y": 6.97179287570587
-      },
-      "isLocked": false,
-      "linkedName": "Left Depo Pickup"
-    },
-    {
-      "anchor": {
-        "x": 0.4291726105527853,
-        "y": 5.361212553496397
-      },
-      "prevControl": {
-        "x": 0.43594569235059977,
-        "y": 6.582091620166635
-      },
-      "nextControl": {
-        "x": 0.4277857046426716,
-        "y": 5.111216400542004
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 1.4729638554216864,
-        "y": 5.16055421686747
-      },
-      "prevControl": {
-        "x": 0.9560036384237026,
-        "y": 5.439014321383729
-      },
-      "nextControl": {
-        "x": 1.7843358567095309,
-        "y": 4.9928339993901005
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
         "x": 2.4673855421686746,
         "y": 4.035
       },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.685939759036144,
+        "y": 6.351674698795181
+      },
+      "isLocked": false,
+      "linkedName": "Shooting Position"
+    },
+    {
+      "anchor": {
+        "x": 4.696638554216866,
+        "y": 5.258903614457831
+      },
       "prevControl": {
-        "x": 2.2387391797828413,
-        "y": 4.136098174898097
+        "x": 4.110154090015562,
+        "y": 5.277375566086219
+      },
+      "nextControl": {
+        "x": 6.084457831325301,
+        "y": 5.215192771084337
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.794759036144578,
+        "y": 5.258903614457831
+      },
+      "prevControl": {
+        "x": 5.603638554216867,
+        "y": 5.247975903614458
+      },
+      "nextControl": {
+        "x": 8.095147816037432,
+        "y": 5.270833786750426
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.7345421686746985,
+        "y": 7.204036144578313
+      },
+      "prevControl": {
+        "x": 6.914963855421686,
+        "y": 6.406313253012048
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Shooting Position"
+      "linkedName": "Climb Neutral Zone"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.220294882914134,
-      "rotationDegrees": -90.0
+      "waypointRelativePos": 0.5005405405405425,
+      "rotationDegrees": 45.0
+    },
+    {
+      "waypointRelativePos": 1.7070270270269743,
+      "rotationDegrees": 45.0
     }
   ],
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 1.0334645669291396,
-      "maxWaypointRelativePos": 1.5113445378151154,
+      "minWaypointRelativePos": 1.6424369747899155,
+      "maxWaypointRelativePos": 3.0,
       "constraints": {
-        "maxVelocity": 0.4,
-        "maxAcceleration": 4.25,
+        "maxVelocity": 0.625,
+        "maxAcceleration": 1.5,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
         "nominalVoltage": 12.0,
@@ -84,21 +88,15 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "AutonIntakeOffCommand",
-      "waypointRelativePos": 1.12,
-      "endWaypointRelativePos": null,
-      "command": null
-    },
-    {
-      "name": "AutonShooterOnTimed",
-      "waypointRelativePos": 1.12,
+      "name": "AutonIntakeExtend",
+      "waypointRelativePos": 2.1,
       "endWaypointRelativePos": null,
       "command": null
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 0.75,
-    "maxAcceleration": 2.0,
+    "maxVelocity": 1.5,
+    "maxAcceleration": 1.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -106,13 +104,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -90.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": 0.0
   },
   "useDefaultConstraints": false
 }

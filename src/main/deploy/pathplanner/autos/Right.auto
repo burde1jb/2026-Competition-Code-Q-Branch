@@ -60,28 +60,22 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "sequential",
           "data": {
             "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Right Climb"
-                }
-              },
               {
                 "type": "named",
                 "data": {
                   "name": "AutonIntakeRetract"
                 }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Right Neutral Zone"
+                }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutonClimber"
           }
         }
       ]

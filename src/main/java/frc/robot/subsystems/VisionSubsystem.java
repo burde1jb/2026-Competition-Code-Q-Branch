@@ -20,28 +20,28 @@ public class VisionSubsystem extends SubsystemBase {
 
   public void config() {
     LimelightHelpers.setCameraPose_RobotSpace(
-        "LL4",
-        0.3556, 
-        0.01,
-        0.190,
+        "limelight-four",
+        -0.32, 
+        -0.29,
+        0.23,
         0,
-        -10,
-        0);
+        20,
+        180);
     LimelightHelpers.setCameraPose_RobotSpace(
-        "LL3",
-        0.3556, 
-        0.01,
-        0.190,
+        "limelight-three",
+        -0.28, 
+        0.33,
+        0.22,
         0,
-        -10,
-        0);    
-        LimelightHelpers.SetFiducialIDFiltersOverride("LL4", new int[] {6,7,8,9,10,11,17,18,19,20,21,22});
-        LimelightHelpers.SetFiducialIDFiltersOverride("LL3", new int[] {6,7,8,9,10,11,17,18,19,20,21,22});
+        15,
+        -90);    
+        // LimelightHelpers.SetFiducialIDFiltersOverride("limelight-four", new int[] {5,7,8,12,15,21,23,24,28,31});
+        // LimelightHelpers.SetFiducialIDFiltersOverride("limelight-three", new int[] {5,7,8,12,15,21,23,24,28,31});
   }
 
   @Override
   public void periodic() {
-    fiducials = LimelightHelpers.getRawFiducials("LL4");
+    fiducials = LimelightHelpers.getRawFiducials("limelight-four");
 
   }
   public RawFiducial getClosestFiducial() {

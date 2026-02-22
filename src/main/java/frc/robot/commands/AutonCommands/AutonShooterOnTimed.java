@@ -27,7 +27,7 @@ public class AutonShooterOnTimed extends Command {
 
     @Override
     public void execute() {
-        shooterSubsystem.shooterOn(RobotConstants.FuelShooterSpeed);
+        shooterSubsystem.shooterOn(RobotConstants.FuelShooterMaxVelocity);
         
     }
 

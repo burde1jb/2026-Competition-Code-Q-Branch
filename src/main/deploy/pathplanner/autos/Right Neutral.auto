@@ -92,7 +92,7 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "sequential",
           "data": {
             "commands": [
               {
@@ -104,16 +104,10 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Right Climb"
+                  "pathName": "Right Neutral Zone"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutonClimber"
           }
         }
       ]

@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9868150683069579,
-        "y": 3.9873127703008353
+        "x": 2.675012048192771,
+        "y": 6.078481927710843
       },
       "isLocked": false,
       "linkedName": "Shooting Position"
     },
     {
       "anchor": {
-        "x": 1.503081312410841,
-        "y": 4.144978601997147
+        "x": 7.7345421686746985,
+        "y": 7.204036144578313
       },
       "prevControl": {
-        "x": 2.5482187544801302,
-        "y": 4.106313532548794
+        "x": 3.26510843373494,
+        "y": 4.166132530120482
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Climb Neutral Zone"
     }
   ],
   "rotationTargets": [],
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 0.75,
-    "maxAcceleration": 2.0,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 5.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
