@@ -8,37 +8,69 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.2239229671897283,
-        "y": 1.9971611982881616
+        "x": 6.718265060240964,
+        "y": 2.7673855421686757
       },
       "isLocked": false,
       "linkedName": "Right Balls Collected"
     },
     {
       "anchor": {
-        "x": 2.4673855421686746,
-        "y": 4.035
+        "x": 5.461578313253011,
+        "y": 2.516048192771084
       },
       "prevControl": {
-        "x": 2.325060292525308,
-        "y": 2.624686162624822
+        "x": 6.387692064262756,
+        "y": 2.7667473778852925
+      },
+      "nextControl": {
+        "x": 4.535464562243266,
+        "y": 2.2653490076568756
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.9098433734939757,
+        "y": 2.384915662650603
+      },
+      "prevControl": {
+        "x": 4.307552862380843,
+        "y": 2.4346293487614616
+      },
+      "nextControl": {
+        "x": 3.2978915662650605,
+        "y": 2.3084216867469887
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.871710843373494,
+        "y": 2.811096385542169
+      },
+      "prevControl": {
+        "x": 2.7733614457831326,
+        "y": 2.384915662650603
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Shooting Position"
+      "linkedName": "Right Shot"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.4310494362532518,
-      "rotationDegrees": 90.0
+      "waypointRelativePos": 0.3,
+      "rotationDegrees": 45.0
     }
   ],
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.17059131344845985,
-      "maxWaypointRelativePos": 0.44688644688644563,
+      "minWaypointRelativePos": 0.35,
+      "maxWaypointRelativePos": 0.9,
       "constraints": {
         "maxVelocity": 2.0,
         "maxAcceleration": 4.25,
@@ -53,14 +85,14 @@
   "eventMarkers": [
     {
       "name": "AutonShooterOnTimed",
-      "waypointRelativePos": 0.5368916797488267,
+      "waypointRelativePos": 1.1,
       "endWaypointRelativePos": null,
       "command": null
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 3.5,
-    "maxAcceleration": 4.25,
+    "maxVelocity": 2.5,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -68,7 +100,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 35.36246188706894
   },
   "reversed": false,
   "folder": null,
@@ -76,5 +108,5 @@
     "velocity": 0,
     "rotation": 90.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

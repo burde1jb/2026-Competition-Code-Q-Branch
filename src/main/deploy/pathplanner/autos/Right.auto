@@ -54,12 +54,6 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 7.0
-          }
-        },
-        {
           "type": "sequential",
           "data": {
             "commands": [
@@ -72,10 +66,35 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Right Neutral Zone"
+                  "pathName": "Right C"
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Right D"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonIntakeOnCommand"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutonIntakeOffCommand"
           }
         }
       ]

@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9865662650602394,
-        "y": 5.532096385542168
+        "x": 3.1449036144578306,
+        "y": 5.827144578313252
       },
       "isLocked": false,
       "linkedName": "Left Ball Pit Collected"
     },
     {
       "anchor": {
-        "x": 2.4673855421686746,
-        "y": 4.035
+        "x": 2.8607831325301203,
+        "y": 4.843650602409639
       },
       "prevControl": {
-        "x": 2.434602409638554,
-        "y": 4.5923132530120485
+        "x": 3.647578313253012,
+        "y": 5.193337349397591
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,8 +30,8 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.18300086730268517,
-      "rotationDegrees": -90.0
+      "waypointRelativePos": 0.0,
+      "rotationDegrees": -45.0
     }
   ],
   "constraintZones": [
@@ -68,7 +68,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -29.999999999999996
   },
   "reversed": false,
   "folder": null,

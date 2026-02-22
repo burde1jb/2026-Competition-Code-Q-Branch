@@ -3,13 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.636650602409638,
-        "y": 2.166361445783133
+        "x": 3.5383012048192777,
+        "y": 2.3193493975903605
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.057253012048192,
-        "y": 2.1335783132530115
+        "x": 4.9668825388509275,
+        "y": 2.3108551809633284
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.406939759036144,
+        "y": 2.3193493975903605
+      },
+      "prevControl": {
+        "x": 3.6096102849876965,
+        "y": 2.4184965580342603
+      },
+      "nextControl": {
+        "x": 5.656560247147263,
+        "y": 2.3055794333505317
       },
       "isLocked": false,
       "linkedName": null
@@ -20,12 +36,12 @@
         "y": 1.8166746987951807
       },
       "prevControl": {
-        "x": 6.324867469879519,
-        "y": 2.2768078907755327
+        "x": 6.082121395987983,
+        "y": 2.063086456985596
       },
       "nextControl": {
-        "x": 6.324867469879519,
-        "y": 1.4123493975903614
+        "x": 6.5072239568914405,
+        "y": 1.6315644646246665
       },
       "isLocked": false,
       "linkedName": null
@@ -36,8 +52,8 @@
         "y": 1.1690870185449365
       },
       "prevControl": {
-        "x": 6.313939759036145,
-        "y": 1.0954457831325293
+        "x": 6.475737908652834,
+        "y": 1.6856824591867956
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,15 +62,15 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.5,
-      "rotationDegrees": -90.0
+      "waypointRelativePos": 2.7318918918918493,
+      "rotationDegrees": 45.0
     }
   ],
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.1,
-      "maxWaypointRelativePos": 0.3,
+      "minWaypointRelativePos": 0.2,
+      "maxWaypointRelativePos": 0.6,
       "constraints": {
         "maxVelocity": 1.5,
         "maxAcceleration": 2.0,
@@ -69,7 +85,7 @@
   "eventMarkers": [
     {
       "name": "AutonIntakeExtend",
-      "waypointRelativePos": 0.5,
+      "waypointRelativePos": 1.0,
       "endWaypointRelativePos": null,
       "command": null
     }
@@ -90,7 +106,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": 45.0
   },
   "useDefaultConstraints": false
 }
