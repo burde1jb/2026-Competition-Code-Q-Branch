@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Util.HubTracker;
+import frc.robot.subsystems.VisionSubsystem;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
@@ -62,6 +63,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledInit() {
+    VisionSubsystem.setlimelightsThrottles(200);//slows down limelight processing to keep from overheating while disabled. 
   }
 
   @Override
@@ -70,6 +72,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledExit() {
+    VisionSubsystem.setlimelightsThrottles(0);//sets limelight throttles back to 0 so they run at full speed during the match.
   }
 
   @Override

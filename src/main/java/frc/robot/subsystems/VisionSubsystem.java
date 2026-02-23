@@ -33,8 +33,8 @@ public class VisionSubsystem extends SubsystemBase {
   private final BooleanEntry MT2BUsed = NT.getBooleanEntry(classname, "MT2BUsed", false);
 
   //these are the limelight names set by the web interface, which are also the network table subtable names for the limelight data. If you change the limelight names in the web interface, make sure to change them here too.
-  private String LimelightA = "limelight-four";
-  private String LimelightB = "limelight-three";
+  private static String LimelightA = "limelight-four";
+  private static String LimelightB = "limelight-three";
 
   public VisionSubsystem() {
     config();
@@ -287,4 +287,9 @@ public RawFiducial getFiducialWithId(int id, boolean verbose) {
     SmartDashboard.putNumber("Vision/" + label + " StdDev", stdXY);
     return true;
   }
+
+       public static void setlimelightsThrottles(int throttle){
+         LimelightHelpers.SetThrottle(LimelightA,throttle);
+         LimelightHelpers.SetThrottle(LimelightB,throttle);  
+    }
 }
