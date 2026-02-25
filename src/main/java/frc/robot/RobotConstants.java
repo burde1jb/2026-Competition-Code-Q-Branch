@@ -40,8 +40,8 @@ public class RobotConstants {
     // and 1
     public final static double FuelWristencoderOffset = 0.00;
     public final static double FuelWristrangeOffset = 0.03;
-    public final static double FuelWristExtendgoal = 0.446;
-    public final static double FuelWristRetractgoal = 0.03;
+    public final static double FuelWristExtendgoal = 0.510;
+    public final static double FuelWristRetractgoal = 0.041;
  
     // Fuel Wrist Power values for motors
     public final static double FuelWristExtendpower = 0.40;

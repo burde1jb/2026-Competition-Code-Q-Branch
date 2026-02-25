@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Util.HubTracker;
+import frc.robot.subsystems.VisionSubsystem;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
@@ -34,7 +35,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
-  UpdateDrivetrainFromLimelight();
+  // UpdateDrivetrainFromLimelight();
     CommandScheduler.getInstance().run();
 
   double startTime = Timer.getFPGATimestamp();
@@ -55,10 +56,10 @@ public class Robot extends TimedRobot {
 
 
   }
-  private final boolean kUseLimelight = true; //false if not using Limelight, true if using Limelight
+  // private final boolean kUseLimelight = true; //false if not using Limelight, true if using Limelight
   private final NetworkTableInstance inst = NetworkTableInstance.getDefault();
   private final NetworkTable driveStateTable = inst.getTable("Q Branch");
-  private final StructPublisher<Pose2d> drivePose = driveStateTable.getStructTopic("LLPose", Pose2d.struct).publish();
+  // private final StructPublisher<Pose2d> drivePose = driveStateTable.getStructTopic("LLPose", Pose2d.struct).publish();
 
   private void UpdateDrivetrainFromLimelight() {
     /*
@@ -69,28 +70,30 @@ public class Robot extends TimedRobot {
      * This example is sufficient to show that vision integration is possible, though exact implementation
      * of how to use vision should be tuned per-robot and to the team's specification.
      */
-    if (kUseLimelight) {
-      var driveState = RobotContainer.drivetrain.getState();
-      double headingDeg = driveState.Pose.getRotation().getDegrees();
-      double omegaRps = Units.radiansToRotations(driveState.Speeds.omegaRadiansPerSecond);
+    // if (kUseLimelight) {
+    //   var driveState = RobotContainer.drivetrain.getState();
+    //   double headingDeg = driveState.Pose.getRotation().getDegrees();
+    //   double omegaRps = Units.radiansToRotations(driveState.Speeds.omegaRadiansPerSecond);
 
-      LimelightHelpers.SetRobotOrientation("limelight-four", headingDeg, 0, 0, 0, 0, 0);
-      var llMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight-four");
-      if (llMeasurement != null && llMeasurement.tagCount > 0 && Math.abs(omegaRps) < 2.0) {
-        RobotContainer.drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(.5,.5,9999999));
-        SmartDashboard.putBoolean("usingLL",true);
-        RobotContainer.drivetrain.addVisionMeasurement(llMeasurement.pose, llMeasurement.timestampSeconds);
-      }
-      else{
-        SmartDashboard.putBoolean("usingLL",false);
-      }
-      drivePose.set(llMeasurement.pose);
-    }
+    //   LimelightHelpers.SetRobotOrientation("limelight-four", headingDeg, 0, 0, 0, 0, 0);
+    //   var llMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight-four");
+    //   if (llMeasurement != null && llMeasurement.tagCount > 0 && Math.abs(omegaRps) < 2.0) {
+    //     RobotContainer.drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(.5,.5,9999999));
+    //     SmartDashboard.putBoolean("usingLL",true);
+    //     RobotContainer.drivetrain.addVisionMeasurement(llMeasurement.pose, llMeasurement.timestampSeconds);
+    //   }
+    //   else{
+    //     SmartDashboard.putBoolean("usingLL",false);
+    //   }
+    //   drivePose.set(llMeasurement.pose);
+    // }
   }
 
   @Override
   public void disabledInit() {
+      VisionSubsystem.setlimelightsThrottles(200);//slows down limelight processing to keep from overheating while disabled. 
   }
+
 
   @Override
   public void disabledPeriodic() {
@@ -98,6 +101,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledExit() {
+    VisionSubsystem.setlimelightsThrottles(0);//sets limelight throttles back to 0 so they run at full speed during the match.
   }
 
   @Override

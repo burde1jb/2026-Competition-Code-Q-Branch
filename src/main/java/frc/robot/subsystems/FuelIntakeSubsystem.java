@@ -4,6 +4,7 @@ import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkFlexConfig;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotConstants;
@@ -86,4 +87,10 @@ public class FuelIntakeSubsystem extends SubsystemBase {
     //     } else {
     //         intakeMotor.set(-RobotConstants.FuelIntakeSlowspeed);
     //     }
+
+    @Override
+
+    public void periodic(){
+        SmartDashboard.putNumber("IntakeEncoder", FuelIntakeWristEncoder.getPosition());
+    }
 }
