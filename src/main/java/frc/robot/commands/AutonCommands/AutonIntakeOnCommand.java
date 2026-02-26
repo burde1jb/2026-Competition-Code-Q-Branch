@@ -1,6 +1,7 @@
 package frc.robot.commands.AutonCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.RobotConstants;
 import frc.robot.subsystems.FuelIntakeSubsystem;
 import edu.wpi.first.wpilibj.Timer;
 
@@ -21,7 +22,7 @@ public class AutonIntakeOnCommand extends Command {
 
     @Override
     public void execute() {
-        intakeSubsystem.FuelIntakeOn(true);
+        intakeSubsystem.FuelIntakeOn(RobotConstants.FuelIntakeMaxVelocity);
     }
 
     @Override

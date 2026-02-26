@@ -1,7 +1,9 @@
 package frc.robot.commands;
 
+import edu.wpi.first.hal.simulation.RoboRioDataJNI;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.RobotConstants;
 import frc.robot.subsystems.*;
 
 public class ConveyorCommand extends Command {
@@ -17,10 +19,10 @@ public class ConveyorCommand extends Command {
     @Override
     public void execute() {
         if (controller2.getLeftBumperButton()){
-            ConveyorSubsystem.conveyorOn(true);
+            ConveyorSubsystem.conveyorOn(RobotConstants.ConveyorMaxVelocity);
         }
         else if (controller2.getBackButton()){
-            ConveyorSubsystem.conveyorOn(false);
+            ConveyorSubsystem.conveyorOn(-RobotConstants.ConveyorMaxVelocity);
         }
         else {
             ConveyorSubsystem.conveyorOff();

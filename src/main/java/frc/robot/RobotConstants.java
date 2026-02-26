@@ -60,6 +60,7 @@ public class RobotConstants {
 
     // Fuel Intake Power values for motors
     public final static double FuelIntakeOnspeed = 0.90;
+    public final static double FuelIntakeMaxVelocity = 3000;
     // public final static double FuelIntakeOutspeed = 0.50;
     // public final static double FuelIntakeSlowspeed = -0.2;
 
@@ -80,6 +81,7 @@ public class RobotConstants {
     public final static double ConveyorIntakeOnspeedAuton = -0.50;
     public final static double ConveyorIntakeOutspeed = 0.80;
     public final static double ConveyorIntakeSlowspeed = 0.60;
+    public final static double ConveyorMaxVelocity = -4000;
 
         // Climber Constants
     // CAN, PWM, DIO values for motors, encoders, and sensors - Motor moving the

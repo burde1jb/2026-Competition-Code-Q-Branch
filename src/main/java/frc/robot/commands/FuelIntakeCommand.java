@@ -21,7 +21,7 @@ public class FuelIntakeCommand extends Command {
     @Override
     public void execute() {
         if (controller2.getLeftTriggerAxis() > 0.2) {
-            intakeSubsystem.FuelIntakeOn(true);
+            intakeSubsystem.FuelIntakeOn(RobotConstants.FuelIntakeMaxVelocity);
         }
         else {
             intakeSubsystem.FuelIntakeOff();

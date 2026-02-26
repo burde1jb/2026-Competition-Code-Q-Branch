@@ -1,7 +1,14 @@
 package frc.robot.subsystems;
 
+import java.util.ResourceBundle.Control;
+
 import com.revrobotics.AbsoluteEncoder;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.spark.ClosedLoopSlot;
+import com.revrobotics.spark.FeedbackSensor;
+import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkFlex;
+import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkFlexConfig;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -14,19 +21,42 @@ public class FuelIntakeSubsystem extends SubsystemBase {
     SparkFlex FuelIntakeWristMotor;
     AbsoluteEncoder FuelIntakeWristEncoder;
     SparkFlexConfig FuelIntakeWristMotorConfig;
+    private SparkClosedLoopController FuelIntakeMotorLoop;
+    private SparkFlexConfig FuelIntakeMotorConfig;
+    private RelativeEncoder FuelIntakeEncoder;
     private final double rangeOffset = RobotConstants.FuelWristrangeOffset;
     private final double encoderOffset = RobotConstants.FuelWristencoderOffset;
 
     public FuelIntakeSubsystem() {
         intakeMotor = new SparkFlex(RobotConstants.FuelIntakeCANid,
                 com.revrobotics.spark.SparkLowLevel.MotorType.kBrushless);
+        FuelIntakeMotorLoop = intakeMotor.getClosedLoopController();
         FuelIntakeWristMotor = new SparkFlex(RobotConstants.FuelIntakeWristMotorCANid, MotorType.kBrushless);
         FuelIntakeWristEncoder = FuelIntakeWristMotor.getAbsoluteEncoder();
         FuelIntakeWristMotorConfig = new SparkFlexConfig();
+
+        FuelIntakeMotorConfig
+        .closedLoop
+          .pid(0.00005, 0, 0) // slot 0
+          .pid(0, 0, 0, ClosedLoopSlot.kSlot1) // slot 1
+          .feedForward
+            .kS(0.0) // slot 0 by default
+            .kV(0.0019, ClosedLoopSlot.kSlot0) // slot 0 explicitly
+            .kA(0.0)
+            .sva(0, 0, 0, ClosedLoopSlot.kSlot1); // slot 1
+        
+            FuelIntakeMotorConfig.closedLoop
+            .feedbackSensor(FeedbackSensor.kPrimaryEncoder);
+
+            intakeMotor.configure(FuelIntakeMotorConfig, com.revrobotics.ResetMode.kResetSafeParameters, com.revrobotics.PersistMode.kPersistParameters);
+
+            FuelIntakeEncoder.setPosition(0);
+
+        
     }
 
-    public void FuelIntakeOn(boolean forward) {
-        intakeMotor.set(RobotConstants.FuelIntakeOnspeed);
+    public void FuelIntakeOn(double velocity) {
+        FuelIntakeMotorLoop.setSetpoint(velocity, ControlType.kVelocity);
     }
     
     public void FuelIntakeOut(boolean backwards) {

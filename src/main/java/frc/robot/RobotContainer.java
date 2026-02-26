@@ -286,7 +286,7 @@ public class RobotContainer {
   }
   public Command AutonIntakeOn() {
      return new InstantCommand(() -> {
-       intakeSubsystem.FuelIntakeOn(true);
+       intakeSubsystem.FuelIntakeOn(RobotConstants.FuelIntakeMaxVelocity);
      });
    }
 
@@ -298,7 +298,7 @@ public class RobotContainer {
 
   public Command AutonConveyorOn() {
     return new InstantCommand(() -> {
-      conveyorSubsystem.conveyorOn(true);
+      conveyorSubsystem.conveyorOn(RobotConstants.ConveyorMaxVelocity);
     });
   }
 

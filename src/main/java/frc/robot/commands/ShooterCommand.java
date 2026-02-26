@@ -24,7 +24,7 @@ public class ShooterCommand extends Command {
         //         ShooterSubsystem.shooterBangBang(0);
         //     }
         if(controller2.getYButton()){
-            ShooterSubsystem.shooterOn(-3300);
+            ShooterSubsystem.shooterOn(RobotConstants.FuelShooterMaxVelocity);
         }
         else if (controller2.getRightTriggerAxis() > 0.2) {
             // ShooterSubsystem.runFlywheelCommand();
