@@ -33,7 +33,7 @@ public class FuelShooterSubsystem extends SubsystemBase {
     private RelativeEncoder FuelShooterEncoder2 = FuelShooterMotor2.getEncoder();
    
     private double MaxVelocity =  RobotConstants.FuelShooterMaxVelocity; // rotations
-    private double FuelShooterVelocity = FuelShooterEncoder.getVelocity();
+    public double FuelShooterVelocity = FuelShooterEncoder.getVelocity();
     private double FuelShooterVelocity2 = FuelShooterEncoder2.getVelocity();
 
       //the built in PID controller on the Spark(Max Or Flex) motor controller, these will not take processing power from the roborio because they are running on the motor controller itself at a much higher loop rate (this is good for fast response and precision)

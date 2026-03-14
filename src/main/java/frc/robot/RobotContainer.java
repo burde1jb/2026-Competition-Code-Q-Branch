@@ -26,8 +26,10 @@ import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.units.*;
 import frc.robot.subsystems.FuelShooterSubsystem;
+import frc.robot.commands.AimAndDriveCommand;
 import frc.robot.commands.AlignCommand;
 import frc.robot.commands.ClimberCommand;
 import frc.robot.commands.ConveyorCommand;
@@ -82,6 +84,7 @@ public class RobotContainer {
   private final ClimberSubsystem climberSubsystem;
   // private final FuelIntakeWristSubsystemJOE intakeWristSubsystem;
   private final AprilTagManager ATMan;
+  
 
   public RobotContainer() {
     
@@ -90,6 +93,7 @@ public class RobotContainer {
     // this.extendoSubsystem = new ExtendoSubsystem();
     this.ledSubsystem = new LEDSubsystem();
     this.shooterSubsystem = new FuelShooterSubsystem();
+    
     this.conveyorSubsystem = new ConveyorSubsystem();
     this.serializerSubsystem = new SerializerSubsystem();
     this.climberSubsystem = new ClimberSubsystem();
@@ -124,7 +128,7 @@ public class RobotContainer {
 
     intakeSubsystem.setDefaultCommand(new FuelIntakeCommand(intakeSubsystem, xboxController));
     shooterSubsystem.setDefaultCommand(new ShooterCommand(shooterSubsystem, xboxController));
-    serializerSubsystem.setDefaultCommand(new SerializerCommand(serializerSubsystem, xboxController));
+    serializerSubsystem.setDefaultCommand(new SerializerCommand(serializerSubsystem, xboxController,()->shooterSubsystem.atSpeed()));
     conveyorSubsystem.setDefaultCommand(new ConveyorCommand(conveyorSubsystem, xboxController));
     ledSubsystem.setDefaultCommand(new LEDCommand(ledSubsystem, shooterSubsystem));
     visionSubsystem.setDefaultCommand(new AlignCommand(drivetrain, visionSubsystem,6));
@@ -263,8 +267,12 @@ public class RobotContainer {
     joystick.button(1).whileTrue(alignHub());
     joystick.button(4).whileTrue(alignTower());
     joystick.button(14).whileTrue(xstance());
-        
-        // // reset the field-centric heading on left bumper press
+    /*
+     * Drivetrain align to alliance hub
+     */
+    joystick.button(15).whileTrue(new AimAndDriveCommand(drivetrain, () -> joystick.getRawAxis(4) * MaxSpeed, () -> -joystick.getRawAxis(3) * MaxSpeed));    
+       
+    // // reset the field-centric heading on left bumper press
         joystick.button(13).onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
     
         // commandSwerveDrivetrain.registerTelemetry(logger::telemeterize);
