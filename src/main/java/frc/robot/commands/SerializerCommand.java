@@ -19,7 +19,7 @@ public class SerializerCommand extends Command {
         if (controller2.getRightBumperButton()){
             SerializerSubsystem.serializerOn(true);
         }
-        else if (controller2.getStartButton()) {
+        else if (controller2.getRightTriggerAxis() > 0.2) {
             SerializerSubsystem.serializerOn(false);
         }
         else {

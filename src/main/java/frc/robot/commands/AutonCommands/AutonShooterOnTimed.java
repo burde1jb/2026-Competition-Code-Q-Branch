@@ -33,7 +33,7 @@ public class AutonShooterOnTimed extends Command {
 
     @Override
     public boolean isFinished() {
-        if (timer.get() >=5.0) {
+        if (timer.get() >=7.0) {
             shooterSubsystem.stop();
             return true;
         }

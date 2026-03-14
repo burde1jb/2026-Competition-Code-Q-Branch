@@ -22,7 +22,7 @@ public class AutonIntakeOnCommand extends Command {
 
     @Override
     public void execute() {
-        intakeSubsystem.FuelIntakeOn(RobotConstants.FuelIntakeMaxVelocity);
+        intakeSubsystem.FuelIntakeOn(RobotConstants.FuelIntakeOnspeed);
     }
 
     @Override

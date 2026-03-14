@@ -18,19 +18,20 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotConstants;
 
 public class ConveyorSubsystem extends SubsystemBase {
-    SparkFlex ConveyorMotor;
-    private SparkClosedLoopController ConveyorMotorLoop;
-    private SparkFlexConfig ConveyorMotorConfig;
-    private RelativeEncoder ConveyorEncoder;
+    private SparkFlex ConveyorMotor = new SparkFlex(RobotConstants.ConveyorIntakeCANid, MotorType.kBrushless);
+    private SparkClosedLoopController ConveyorMotorLoop = ConveyorMotor.getClosedLoopController();
+    private SparkFlexConfig ConveyorMotorConfig = new SparkFlexConfig();
+    private RelativeEncoder ConveyorEncoder = ConveyorMotor.getEncoder();
     // SparkFlexConfig ConveyorMotorConfig;
+    private SparkClosedLoopController SparkMaxBuiltInPidController;
     // public DigitalInput sensor;
     // public SparkLimitSwitch beambreak;
     // public LimitSwitchConfig beambreakconfig;
 
     public ConveyorSubsystem() {
-        ConveyorMotor = new SparkFlex(RobotConstants.ConveyorIntakeCANid, MotorType.kBrushless);
-        ConveyorMotorLoop = ConveyorMotor.getClosedLoopController();
-        ConveyorEncoder = ConveyorMotor.getEncoder();
+        // ConveyorMotor = new SparkFlex(RobotConstants.ConveyorIntakeCANid, MotorType.kBrushless);
+        // ConveyorMotorLoop = ConveyorMotor.getClosedLoopController();
+        // ConveyorEncoder = ConveyorMotor.getEncoder();
         // ConveyorMotorConfig = new SparkFlexConfig();
 
         ConveyorMotorConfig
@@ -52,7 +53,8 @@ public class ConveyorSubsystem extends SubsystemBase {
     }
 
     public void conveyorOn(double velocity) {
-        ConveyorMotorLoop.setSetpoint(velocity, ControlType.kVelocity);
+        ConveyorMotor.set(velocity);
+        // ConveyorMotorLoop.setSetpoint(velocity, ControlType.kVelocity);
     }
 
     // public void intakeOnAuton(boolean forward) {

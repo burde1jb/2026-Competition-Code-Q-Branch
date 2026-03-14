@@ -17,23 +17,24 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotConstants;
 
 public class FuelIntakeSubsystem extends SubsystemBase {
-    SparkFlex intakeMotor;
-    SparkFlex FuelIntakeWristMotor;
-    AbsoluteEncoder FuelIntakeWristEncoder;
-    SparkFlexConfig FuelIntakeWristMotorConfig;
-    private SparkClosedLoopController FuelIntakeMotorLoop;
-    private SparkFlexConfig FuelIntakeMotorConfig;
-    private RelativeEncoder FuelIntakeEncoder;
+    SparkFlex intakeMotor = new SparkFlex(RobotConstants.FuelIntakeCANid, com.revrobotics.spark.SparkLowLevel.MotorType.kBrushless);
+    SparkFlex FuelIntakeWristMotor = new SparkFlex(RobotConstants.FuelIntakeWristMotorCANid, MotorType.kBrushless);
+    AbsoluteEncoder FuelIntakeWristEncoder = FuelIntakeWristMotor.getAbsoluteEncoder();
+    SparkFlexConfig FuelIntakeWristMotorConfig = new SparkFlexConfig();
+    private SparkClosedLoopController FuelIntakeMotorLoop = intakeMotor.getClosedLoopController();
+    private SparkFlexConfig FuelIntakeMotorConfig = new SparkFlexConfig();
+    private RelativeEncoder FuelIntakeEncoder = intakeMotor.getEncoder();
+    private SparkClosedLoopController SparkMaxBuiltInPidController;
     private final double rangeOffset = RobotConstants.FuelWristrangeOffset;
     private final double encoderOffset = RobotConstants.FuelWristencoderOffset;
 
     public FuelIntakeSubsystem() {
-        intakeMotor = new SparkFlex(RobotConstants.FuelIntakeCANid,
-                com.revrobotics.spark.SparkLowLevel.MotorType.kBrushless);
-        FuelIntakeMotorLoop = intakeMotor.getClosedLoopController();
-        FuelIntakeWristMotor = new SparkFlex(RobotConstants.FuelIntakeWristMotorCANid, MotorType.kBrushless);
-        FuelIntakeWristEncoder = FuelIntakeWristMotor.getAbsoluteEncoder();
-        FuelIntakeWristMotorConfig = new SparkFlexConfig();
+        // intakeMotor = new SparkFlex(RobotConstants.FuelIntakeCANid,
+        //         com.revrobotics.spark.SparkLowLevel.MotorType.kBrushless);
+        // FuelIntakeMotorLoop = intakeMotor.getClosedLoopController();
+        // FuelIntakeWristMotor = new SparkFlex(RobotConstants.FuelIntakeWristMotorCANid, MotorType.kBrushless);
+        // FuelIntakeWristEncoder = FuelIntakeWristMotor.getAbsoluteEncoder();
+        // FuelIntakeWristMotorConfig = new SparkFlexConfig();
 
         FuelIntakeMotorConfig
         .closedLoop
@@ -56,7 +57,8 @@ public class FuelIntakeSubsystem extends SubsystemBase {
     }
 
     public void FuelIntakeOn(double velocity) {
-        FuelIntakeMotorLoop.setSetpoint(velocity, ControlType.kVelocity);
+        intakeMotor.set(velocity);
+        // FuelIntakeMotorLoop.setSetpoint(velocity, ControlType.kVelocity);
     }
     
     public void FuelIntakeOut(boolean backwards) {

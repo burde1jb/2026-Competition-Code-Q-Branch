@@ -3,6 +3,9 @@ package frc.robot.commands.AutonCommands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotConstants;
 import frc.robot.subsystems.ClimberSubsystem;
+
+import javax.lang.model.util.ElementScanner14;
+
 import edu.wpi.first.wpilibj.Timer;
 
 public class AutonClimber extends Command {
@@ -27,19 +30,24 @@ public class AutonClimber extends Command {
 
     @Override
     public void execute() {
-        climberSubsystem.UPPERwentTo(RobotConstants.UPPERClimberGoal);
-        if (!climberFinished && climberSubsystem.UPPERwentTo(RobotConstants.UPPERClimberGoal) || timer.get() > 3.0) {
+        if (timer.get() < 1.0){
+            climberSubsystem.goDOWN();
+        } else {
             climberSubsystem.stop();
-            climberFinished = true;
         }
-        if (climberFinished) {
-            isItFinished = true;
-        }
+        // climberSubsystem.UPPERwentTo(RobotConstants.UPPERClimberGoal);
+        // if (!climberFinished && climberSubsystem.UPPERwentTo(RobotConstants.UPPERClimberGoal) || timer.get() > 3.0) {
+        //     climberSubsystem.stop();
+        //     climberFinished = true;
+        // }
+        // if (climberFinished) {
+        //     isItFinished = true;
+        // }
     }
 
     @Override
     public boolean isFinished() {
-        if (timer.get() >= 3.0) {
+        if (timer.get() >= 1.0) {
             climberSubsystem.stop();
             return true;
         }
