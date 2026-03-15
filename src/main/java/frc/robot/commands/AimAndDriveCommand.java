@@ -107,7 +107,7 @@ public class AimAndDriveCommand extends Command {
 
     private final PIDController AlignXPid = new PIDController(drivetrainThings.k_PoseX_P,drivetrainThings.k_PoseX_I,drivetrainThings.k_PoseX_D);
     private final PIDController AlignYPid = new PIDController(drivetrainThings.k_PoseY_P,drivetrainThings.k_PoseY_I,drivetrainThings.k_PoseY_D);
-    private final double wanteddistanceFromHub = Units.inchesToMeters(160);
+    private final double wanteddistanceFromHub = Units.inchesToMeters(160); //CHANGE SHOOTING DISTANCE HERE
     private final StructPublisher<Pose2d> drivePose = NT.getStructEntry_Pose2D("AimAndDriveCmd", "TargetPose", new Pose2d());
     private final DoubleEntry distanceToHubPublisher = NT.getDoubleEntry("AimAndDriveCmd", "DistanceToHub", 0);
     @Override

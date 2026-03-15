@@ -5,9 +5,22 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Right Neutral A"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Right Neutral A"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonIntakeExtend"
+                }
+              }
+            ]
           }
         },
         {
@@ -18,12 +31,6 @@
                 "type": "named",
                 "data": {
                   "name": "AutonIntakeOnCommand"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutonConveyorOnTimed"
                 }
               },
               {
@@ -50,6 +57,12 @@
                 "data": {
                   "name": "AutonIntakeOffCommand"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonShooterOnTimed"
+                }
               }
             ]
           }
@@ -75,6 +88,32 @@
                 "data": {
                   "name": "AutonConveyorOnTimed"
                 }
+              }
+            ]
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Right Neutral D"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Right Neutral E"
+                }
               },
               {
                 "type": "named",
@@ -86,25 +125,50 @@
           }
         },
         {
-          "type": "wait",
+          "type": "parallel",
           "data": {
-            "waitTime": 7.0
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Right Neutral F"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonIntakeOffCommand"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonShooterOnTimed"
+                }
+              }
+            ]
           }
         },
         {
-          "type": "sequential",
+          "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "named",
                 "data": {
-                  "name": "AutonIntakeRetract"
+                  "name": "AutonShooterOnTimed"
                 }
               },
               {
-                "type": "path",
+                "type": "named",
                 "data": {
-                  "pathName": "Right Neutral Zone"
+                  "name": "AutonSerializerOnTimed"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonSerializerOnTimed"
                 }
               }
             ]

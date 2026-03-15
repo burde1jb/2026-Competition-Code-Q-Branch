@@ -5,13 +5,19 @@
     "data": {
       "commands": [
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 3.0
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Left A"
+                  "pathName": "Right A"
                 }
               },
               {
@@ -24,40 +30,21 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "wait",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutonConveyorOnTimed"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutonIntakeOnCommand"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Left B"
-                }
-              }
-            ]
+            "waitTime": 3.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right B"
           }
         },
         {
           "type": "parallel",
           "data": {
             "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutonShooterOnTimed"
-                }
-              },
               {
                 "type": "named",
                 "data": {
@@ -68,6 +55,12 @@
                 "type": "named",
                 "data": {
                   "name": "AutonConveyorOnTimed"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonShooterOnTimed"
                 }
               },
               {
@@ -86,13 +79,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Climb Left B"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutonIntakeOffCommand"
+                  "pathName": "Right C"
                 }
               }
             ]
@@ -101,7 +88,7 @@
         {
           "type": "named",
           "data": {
-            "name": "AutonClimber"
+            "name": "AutonIntakeOffCommand"
           }
         }
       ]
