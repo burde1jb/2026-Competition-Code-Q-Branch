@@ -66,6 +66,7 @@ public class Robot extends TimedRobot {
     VisionSubsystem.setlimelightsThrottles(200);//slows down limelight processing to keep from overheating while disabled. 
   }
 
+
   @Override
   public void disabledPeriodic() {
   }

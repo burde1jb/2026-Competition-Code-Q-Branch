@@ -21,7 +21,7 @@ public class RobotConstants {
     public final static int FuelShooterMotor3CANid = 22;
     public final static int FuelShooterEncoderid = 2;
     //shooter power values
-    public final static double FuelShooterMaxVelocity = -2400;
+    public final static double FuelShooterMaxVelocity = -3300;
     public final static double FuelShooterSpeed = -0.80;
 
     // Fuel Wrist Constants
@@ -40,8 +40,8 @@ public class RobotConstants {
     // and 1
     public final static double FuelWristencoderOffset = 0.00;
     public final static double FuelWristrangeOffset = 0.03;
-    public final static double FuelWristExtendgoal = 0.446;
-    public final static double FuelWristRetractgoal = 0.03;
+    public final static double FuelWristExtendgoal = 0.75;
+    public final static double FuelWristRetractgoal = 0.13;
  
     // Fuel Wrist Power values for motors
     public final static double FuelWristExtendpower = 0.40;
@@ -59,7 +59,8 @@ public class RobotConstants {
     public final static double FuelIntakemotorFF = 0;
 
     // Fuel Intake Power values for motors
-    public final static double FuelIntakeOnspeed = 0.90;
+    public final static double FuelIntakeOnspeed = 0.60;
+    public final static double FuelIntakeMaxVelocity = 4500;
     // public final static double FuelIntakeOutspeed = 0.50;
     // public final static double FuelIntakeSlowspeed = -0.2;
 
@@ -77,9 +78,10 @@ public class RobotConstants {
 
     // Fuel Intake Power values for motors
     public final static double ConveyorIntakeOnspeed = -0.80;
-    public final static double ConveyorIntakeOnspeedAuton = -0.50;
+    public final static double ConveyorIntakeOnspeedAuton = -0.80;
     public final static double ConveyorIntakeOutspeed = 0.80;
     public final static double ConveyorIntakeSlowspeed = 0.60;
+    public final static double ConveyorMaxVelocity = -6000;
 
         // Climber Constants
     // CAN, PWM, DIO values for motors, encoders, and sensors - Motor moving the
@@ -112,9 +114,9 @@ public class RobotConstants {
     public final static double ClimberReleasepower = -1.0;
     // Serealizer
     public final static int SerializerMotorCAN = 27;
-    public final static double SerializerOnspeed = 1.0;
-    public final static double SerializerOutspeed = -1.0;
-    public final static double SerializerSlowspeed = 0.2;
+    public final static double SerializerOnspeed = -1.0;
+    public final static double SerializerOutspeed = 1.0;
+    public final static double SerializerSlowspeed = -0.2;
 
     // LED Values
     public final static double LEDintakesensor = 0.81;

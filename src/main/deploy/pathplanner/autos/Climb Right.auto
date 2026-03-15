@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Left A"
+                  "pathName": "Right A"
                 }
               },
               {
@@ -24,40 +24,21 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "wait",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutonConveyorOnTimed"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutonIntakeOnCommand"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Left B"
-                }
-              }
-            ]
+            "waitTime": 2.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right B"
           }
         },
         {
           "type": "parallel",
           "data": {
             "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutonShooterOnTimed"
-                }
-              },
               {
                 "type": "named",
                 "data": {
@@ -68,6 +49,12 @@
                 "type": "named",
                 "data": {
                   "name": "AutonConveyorOnTimed"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonShooterOnTimed"
                 }
               },
               {
@@ -86,35 +73,16 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Left C"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutonIntakeOffCommand"
+                  "pathName": "Climb Right C"
                 }
               }
             ]
           }
         },
         {
-          "type": "parallel",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Left D"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutonIntakeOnCommand"
-                }
-              }
-            ]
+            "name": "AutonClimber"
           }
         }
       ]

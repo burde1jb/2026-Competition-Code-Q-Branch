@@ -262,7 +262,7 @@ public class RobotContainer {
     //joystick.button(1).whileTrue(new AlignCommand(commandSwerveDrivetrain, visionSubsystem));
     joystick.button(1).whileTrue(alignHub());
     joystick.button(4).whileTrue(alignTower());
-    joystick.button(14).whileTrue(brake(true));
+    joystick.button(14).whileTrue(xstance());
         
         // // reset the field-centric heading on left bumper press
         joystick.button(13).onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
@@ -286,7 +286,7 @@ public class RobotContainer {
   }
   public Command AutonIntakeOn() {
      return new InstantCommand(() -> {
-       intakeSubsystem.FuelIntakeOn(true);
+       intakeSubsystem.FuelIntakeOn(RobotConstants.FuelIntakeMaxVelocity);
      });
    }
 
@@ -298,7 +298,7 @@ public class RobotContainer {
 
   public Command AutonConveyorOn() {
     return new InstantCommand(() -> {
-      conveyorSubsystem.conveyorOn(true);
+      conveyorSubsystem.conveyorOn(RobotConstants.ConveyorMaxVelocity);
     });
   }
 

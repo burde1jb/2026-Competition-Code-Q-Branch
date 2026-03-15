@@ -106,6 +106,8 @@ public class FuelShooterSubsystem extends SubsystemBase {
      }
     public void shooterOn(double velocity){
         FuelShooterMotorLoop.setSetpoint(velocity, ControlType.kVelocity);
+        // FuelShooterMotor.set(0);
+        // FuelShooterMotor2.set(0);
         FuelShooterMotorLoop2.setSetpoint(velocity, ControlType.kVelocity);
         FuelShooterTargetVelocity = velocity;
     }
@@ -137,7 +139,7 @@ public class FuelShooterSubsystem extends SubsystemBase {
   }
 
     public boolean atSpeed () {
-      if (FuelShooterEncoder.getVelocity() <= RobotConstants.FuelShooterMaxVelocity * 0.98){
+      if (Math.abs(FuelShooterEncoder.getVelocity()) >= RobotConstants.FuelShooterMaxVelocity * 0.96){
         return true;
       }
       else {

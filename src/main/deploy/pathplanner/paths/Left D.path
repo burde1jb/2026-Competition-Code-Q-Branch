@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.713637660485022,
-        "y": 1.1690870185449365
+        "x": 7.735,
+        "y": 7.204
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.713637660485022,
-        "y": 1.6622858923583212
+        "x": 7.735,
+        "y": 6.428055578226428
       },
       "isLocked": false,
-      "linkedName": "Right Ballpit"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.713637660485022,
-        "y": 2.8122967189728967
+        "x": 7.723614457831324,
+        "y": 5.3353975903614455
       },
       "prevControl": {
-        "x": 7.713637660485022,
-        "y": 2.2424079030011543
+        "x": 7.723614457831324,
+        "y": 5.794491519147065
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Right Balls Collected"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.5,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 1.25,
+    "maxAcceleration": 4.25,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": -90.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": -90.0
   },
   "useDefaultConstraints": false
 }

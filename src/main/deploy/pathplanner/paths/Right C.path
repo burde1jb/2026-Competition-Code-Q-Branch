@@ -3,77 +3,77 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.713637660485022,
-        "y": 2.8122967189728967
-      },
-      "prevControl": null,
-      "nextControl": {
-        "x": 6.718265060240964,
-        "y": 2.7673855421686757
-      },
-      "isLocked": false,
-      "linkedName": "Right Balls Collected"
-    },
-    {
-      "anchor": {
-        "x": 5.461578313253011,
-        "y": 2.516048192771084
-      },
-      "prevControl": {
-        "x": 6.387692064262756,
-        "y": 2.7667473778852925
-      },
-      "nextControl": {
-        "x": 4.535464562243266,
-        "y": 2.2653490076568756
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 3.9098433734939757,
-        "y": 2.384915662650603
-      },
-      "prevControl": {
-        "x": 4.307552862380843,
-        "y": 2.4346293487614616
-      },
-      "nextControl": {
-        "x": 3.2978915662650605,
-        "y": 2.3084216867469887
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
         "x": 2.7840085592011405,
         "y": 2.721726105563481
       },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.833756557149258,
+        "y": 2.613359063770873
+      },
+      "isLocked": false,
+      "linkedName": "Right Shot"
+    },
+    {
+      "anchor": {
+        "x": 4.489012048192771,
+        "y": 2.6690361445783126
+      },
       "prevControl": {
-        "x": 2.685659161610779,
-        "y": 2.295545382671915
+        "x": 3.5141853072452367,
+        "y": 2.7697268769116223
+      },
+      "nextControl": {
+        "x": 5.047092210809723,
+        "y": 2.611391541784617
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.270228915662651,
+        "y": 2.341204819277109
+      },
+      "prevControl": {
+        "x": 6.07970676215765,
+        "y": 2.503073003377063
+      },
+      "nextControl": {
+        "x": 6.996042399997176,
+        "y": 1.7245515401538194
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.767325301204821,
+        "y": 1.0954457831325295
+      },
+      "prevControl": {
+        "x": 7.524701824693388,
+        "y": 1.1557271952386337
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Right Shot"
+      "linkedName": "Right Neutral C to D"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.3,
-      "rotationDegrees": 45.0
+      "waypointRelativePos": 2.3,
+      "rotationDegrees": 29.999999999999996
     }
   ],
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.35,
-      "maxWaypointRelativePos": 0.9,
+      "minWaypointRelativePos": 2.504621848739505,
+      "maxWaypointRelativePos": 3.0,
       "constraints": {
-        "maxVelocity": 2.0,
-        "maxAcceleration": 4.25,
+        "maxVelocity": 1.5,
+        "maxAcceleration": 3.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
         "nominalVoltage": 12.0,
@@ -82,16 +82,9 @@
     }
   ],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "AutonShooterOnTimed",
-      "waypointRelativePos": 1.1,
-      "endWaypointRelativePos": null,
-      "command": null
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.5,
+    "maxVelocity": 2.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -100,13 +93,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 35.36246188706894
+    "rotation": 90.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": 35.36246188706894
   },
   "useDefaultConstraints": false
 }

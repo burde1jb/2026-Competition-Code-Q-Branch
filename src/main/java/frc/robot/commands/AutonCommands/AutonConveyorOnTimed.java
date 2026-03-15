@@ -1,6 +1,7 @@
 package frc.robot.commands.AutonCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.RobotConstants;
 import frc.robot.subsystems.ConveyorSubsystem;
 import edu.wpi.first.wpilibj.Timer;
 
@@ -21,7 +22,7 @@ public class AutonConveyorOnTimed extends Command {
 
     @Override
     public void execute() {
-        conveyorSubsystem.conveyorOn(true);
+        conveyorSubsystem.conveyorOn(RobotConstants.ConveyorMaxVelocity);
     }
 
     @Override
