@@ -97,31 +97,10 @@ public class RobotContainer {
  
     configureTriggers();
     configureBindings();
+    configureSecondControllerBindings();
     configureAutoChooser();
     CommandScheduler.getInstance().schedule(FollowPathCommand.warmupCommand()); // Replaces deprecated method -> FollowPathCommand.warmupCommand().schedule();    
         
-  }
-     
-  private void configureAutoChooser() {
-    autoChooser = AutoBuilder.buildAutoChooser();
-
-    SmartDashboard.putData("Auto Chooser", autoChooser);
-  }
-
-
-  public Command alignHub()
-  {
-      return new ConditionalCommand(ATMan.C_HubCommand(),ATMan.C_HubCommand(),()->{return true;}).asProxy();//.until(MantaState.getLimeLightBypassed)
-      // return new ConditionalCommand( ATMan.C_HubCommand(), ATMan.C_TowerCommand(),()->{return OptionalButtonSupplier.getAsInt() == 0;}).asProxy();//.until(MantaState.getLimeLightBypassed)
-  }
-  public Command alignTower()
-  {
-    return new ConditionalCommand(ATMan.C_TowerCommand(), ATMan.C_TowerCommand(), ()->{return true;}).asProxy();//.until(MantaState.getLimeLightBypassed)
-  }
-  public Command xstance() {
-    return new InstantCommand(() -> {
-      drivetrain.brake(true);
-    });
   }
   
   public double RPMTolerance = 200; // 4% tolerance, this is pretty tight but it is important to be at the correct speed for shooting and passing.
@@ -129,6 +108,13 @@ public class RobotContainer {
   
   private void configureTriggers() {
     ShooterRPMOK = new Trigger(() -> MathUtil.isNear(shooterSubsystem.MaxVelocity, shooterSubsystem.FuelShooterVelocity, RPMTolerance));
+
+    //anytime the shooter is up to speed, run the serializer and conveyor to feed fuel into the shooter. 
+    //the shooter is only up to speed when the trigger is pulled, wether for passing or for shooting, so this should not cause any issues with intaking.
+    ShooterRPMOK
+      .onTrue(Commands.parallel(TeleopSerializerOn(),TeleopConveyorOn()))
+      .onFalse(Commands.parallel(TeleopConveyorOff(),TeleopSerializerOff())
+    );
   }
     
   private void configureBindings() {
@@ -151,6 +137,42 @@ public class RobotContainer {
     //visionSubsystem.setDefaultCommand(new AlignCommand(drivetrain, visionSubsystem,6));
     climberSubsystem.setDefaultCommand(new ClimberCommand(climberSubsystem, xboxController.getHID()));
 
+    
+    
+    /*
+     * Move to firing position and fire
+     */
+    joystick.button(15)
+      .whileTrue(
+        Commands.parallel(
+            new AimAndDriveCommand(drivetrain, () -> joystick.getRawAxis(4) * MaxSpeed, () -> -joystick.getRawAxis(3) * MaxSpeed),
+            TeleopShooterOn()
+        )
+      )
+      .onFalse(TeleopShooterOff());
+
+    // joystick.button(13).whileTrue(commandSwerveDrivetrain.applyRequest(() -> brake));
+    // joystick.button(14).whileTrue(commandSwerveDrivetrain.applyRequest(
+    //     () -> point.withModuleDirection(new Rotation2d(-joystick.getRawAxis(3), -joystick.getRawAxis(4)))));
+
+    // Run SysId routines when holding back/start and X/Y.
+    // Note that each routine should be run exactly once in a single log.
+    // joystick.button(1).and(joystick.button(12)).whileTrue(commandSwerveDrivetrain.sysIdDynamic(Direction.kForward));
+    // joystick.button(1).and(joystick.button(11)).whileTrue(commandSwerveDrivetrain.sysIdDynamic(Direction.kReverse));
+    // joystick.button(3).and(joystick.button(12)).whileTrue(commandSwerveDrivetrain.sysIdQuasistatic(Direction.kForward));
+    // joystick.button(3).and(joystick.button(11)).whileTrue(commandSwerveDrivetrain.sysIdQuasistatic(Direction.kReverse));
+
+    //joystick.button(1).whileTrue(new AlignCommand(commandSwerveDrivetrain, visionSubsystem));
+    joystick.button(1).whileTrue(alignHub());
+    joystick.button(4).whileTrue(alignTower());
+    joystick.button(14).whileTrue(xstance());
+  
+    // // reset the field-centric heading on left bumper press
+    joystick.button(13).onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+    // commandSwerveDrivetrain.registerTelemetry(logger::telemeterize);
+  }
+
+  private void configureSecondControllerBindings() {
     /*
      * Shooter Bindings
      */
@@ -172,47 +194,6 @@ public class RobotContainer {
     xboxController.back()
     .onTrue(new InstantCommand(() -> {conveyorSubsystem.conveyorOn(-RobotConstants.ConveyorIntakeOnspeed);}, conveyorSubsystem))
     .onFalse(new InstantCommand(() -> {conveyorSubsystem.conveyorOff();}, conveyorSubsystem));
-    
-    /*
-     * Move to firing position and fire
-     */
-    joystick.button(15).whileTrue(new AimAndDriveCommand(drivetrain, () -> joystick.getRawAxis(4) * MaxSpeed, () -> -joystick.getRawAxis(3) * MaxSpeed).alongWith(TeleopShooterOn())).onFalse(TeleopShooterOff());
-    //anytime the shooter is up to speed, run the serializer and conveyor to feed fuel into the shooter. 
-    //the shooter is only up to speed when the trigger is pulled, wether for passing or for shooting, so this should not cause any issues with intaking.
-    ShooterRPMOK
-      .onTrue(Commands.parallel(TeleopSerializerOn(),TeleopConveyorOn()))
-      .onFalse(Commands.parallel(TeleopConveyorOff(),TeleopSerializerOff())
-    );
-    // joystick.button(13).whileTrue(commandSwerveDrivetrain.applyRequest(() -> brake));
-    // joystick.button(14).whileTrue(commandSwerveDrivetrain.applyRequest(
-    //     () -> point.withModuleDirection(new Rotation2d(-joystick.getRawAxis(3), -joystick.getRawAxis(4)))));
-
-    // Run SysId routines when holding back/start and X/Y.
-    // Note that each routine should be run exactly once in a single log.
-    // joystick.button(1).and(joystick.button(12)).whileTrue(commandSwerveDrivetrain.sysIdDynamic(Direction.kForward));
-    // joystick.button(1).and(joystick.button(11)).whileTrue(commandSwerveDrivetrain.sysIdDynamic(Direction.kReverse));
-    // joystick.button(3).and(joystick.button(12)).whileTrue(commandSwerveDrivetrain.sysIdQuasistatic(Direction.kForward));
-    // joystick.button(3).and(joystick.button(11)).whileTrue(commandSwerveDrivetrain.sysIdQuasistatic(Direction.kReverse));
-
-    //joystick.button(1).whileTrue(new AlignCommand(commandSwerveDrivetrain, visionSubsystem));
-    joystick.button(1).whileTrue(alignHub());
-    joystick.button(4).whileTrue(alignTower());
-    joystick.button(14).whileTrue(xstance());
-    /*
-     * Drivetrain align to alliance hub
-     */
-    //joystick.button(15).whileTrue(new AimAndDriveCommand(drivetrain, () -> joystick.getRawAxis(4) * MaxSpeed, () -> -joystick.getRawAxis(3) * MaxSpeed));    
-       
-    // // reset the field-centric heading on left bumper press
-        joystick.button(13).onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
-    
-        // commandSwerveDrivetrain.registerTelemetry(logger::telemeterize);
-      }
-      
-    // reset the field-centric heading on left bumper press
-    joystick.button(13).onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
-
-    // commandSwerveDrivetrain.registerTelemetry(logger::telemeterize);
   }
       
   private void RegisterPathplannerCommands() {
@@ -231,11 +212,28 @@ public class RobotContainer {
     NamedCommands.registerCommand("AutonShooterOn",AutonShooterOn());
     NamedCommands.registerCommand("AutonShooterOnTimed", new frc.robot.commands.AutonCommands.AutonShooterOnTimed(shooterSubsystem));
     NamedCommands.registerCommand("AutonClimber", new frc.robot.commands.AutonCommands.AutonClimber(climberSubsystem));
+  }
+  private void configureAutoChooser() {
+    autoChooser = AutoBuilder.buildAutoChooser();
+    SmartDashboard.putData("Auto Chooser", autoChooser);
   }  
   public Command getAutonomousCommand() {
     return autoChooser.getSelected();
   }
-  
+  public Command alignHub()
+  {
+      return new ConditionalCommand(ATMan.C_HubCommand(),ATMan.C_HubCommand(),()->{return true;}).asProxy();//.until(MantaState.getLimeLightBypassed)
+      // return new ConditionalCommand( ATMan.C_HubCommand(), ATMan.C_TowerCommand(),()->{return OptionalButtonSupplier.getAsInt() == 0;}).asProxy();//.until(MantaState.getLimeLightBypassed)
+  }
+  public Command alignTower()
+  {
+    return new ConditionalCommand(ATMan.C_TowerCommand(), ATMan.C_TowerCommand(), ()->{return true;}).asProxy();//.until(MantaState.getLimeLightBypassed)
+  }
+  public Command xstance() {
+    return new InstantCommand(() -> {
+      drivetrain.brake(true);
+    });
+  }
   public Command TeleopShooterOn() {
     return new InstantCommand(() -> {
       shooterSubsystem.shooterOn(RobotConstants.FuelShooterMaxVelocity);},shooterSubsystem);

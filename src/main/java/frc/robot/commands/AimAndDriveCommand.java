@@ -113,7 +113,7 @@ public class AimAndDriveCommand extends Command {
     @Override
     public void execute() {
         double currentDistanceToHub = distanceToHub();
-        distanceToHubPublisher.set(currentDistanceToHub);
+        distanceToHubPublisher.set(Units.metersToInches(currentDistanceToHub));
         Pose2d CurrentPose = swerve.getState().Pose;
         Pose2d TargetPose = getPoseAlongLineToHub(wanteddistanceFromHub);
         TargetPose = new Pose2d(TargetPose.getTranslation(), getDirectionToHub());
@@ -143,6 +143,7 @@ public class AimAndDriveCommand extends Command {
                 //.withVelocityX(Driving.kMaxSpeed.times(input.forward * Driving.kAimingTranslationalSpeedFactor))
                 //.withVelocityY(Driving.kMaxSpeed.times(input.left * Driving.kAimingTranslationalSpeedFactor))
                 .withTargetDirection(getDirectionToHub())
+                //.withForwardPerspective(ForwardPerspectiveValue.BlueAlliance) //our pid align flips iteself when we are on red, but our rotation might not. testing required (3/15/26)
         );
     }
 
