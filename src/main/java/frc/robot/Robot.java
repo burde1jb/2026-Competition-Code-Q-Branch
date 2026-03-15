@@ -27,6 +27,8 @@ import frc.robot.subsystems.VisionSubsystem;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   private final RobotContainer m_robotContainer;
+  private static final NetworkTableInstance inst = NetworkTableInstance.getDefault();
+  public static final NetworkTable driveStateTable = inst.getTable("Q Branch");
 
   public Robot() {
     m_robotContainer = new RobotContainer();
@@ -35,35 +37,25 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
-  //UpdateDrivetrainFromLimelight();//vision subsystem is a subsystem and has its own periodic
-  CommandScheduler.getInstance().run();
+    CommandScheduler.getInstance().run();
 
-  double startTime = Timer.getFPGATimestamp();
+    double startTime = Timer.getFPGATimestamp();
 
-  SmartDashboard.putNumber("Voltage", RobotController.getBatteryVoltage());
+    SmartDashboard.putNumber("Voltage", RobotController.getBatteryVoltage());
     SmartDashboard.putNumber("Match Time", DriverStation.getMatchTime());
 
-    SmartDashboard.putNumber(
-        "HubTracker/Time Until Shift",
-        HubTracker.timeRemainingInCurrentShift().orElse(Seconds.of(0)).in(Seconds));
-    SmartDashboard.putBoolean(
-        "HubTracker/RedWonAuto", HubTracker.getAutoWinner().orElse(Alliance.Blue) == Alliance.Red);
-    SmartDashboard.putBoolean("HubTracker/GameDataPresent", !HubTracker.getAutoWinner().isEmpty());
-
-    SmartDashboard.putNumber(
-        "HubTracker/TimeUtilActive",
-        HubTracker.timeUntilActive().orElse(Seconds.of(0)).in(Seconds));
-
+    HubTracker.PutHubTrackerInfoToDashboard();
 
   }
+
+
   
-  private static final NetworkTableInstance inst = NetworkTableInstance.getDefault();
-  public static final NetworkTable driveStateTable = inst.getTable("Q Branch");
+ 
 
 
   @Override
   public void disabledInit() {
-    VisionSubsystem.setlimelightsThrottles(200);//slows down limelight processing to keep from overheating while disabled. 
+    VisionSubsystem.setlimelightsThrottles(100);//slows down limelight processing to keep from overheating while disabled. 
   }
 
 
@@ -82,7 +74,7 @@ public class Robot extends TimedRobot {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
+      CommandScheduler.getInstance().schedule(m_autonomousCommand);// updated deprecated command -> m_autonomousCommand.schedule();
     }
   }
 

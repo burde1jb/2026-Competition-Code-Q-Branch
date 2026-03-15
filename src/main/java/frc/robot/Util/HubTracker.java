@@ -5,9 +5,25 @@ import static edu.wpi.first.units.Units.Seconds;
 import edu.wpi.first.units.measure.Time;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import java.util.Optional;
 
 public class HubTracker {
+
+  public static void PutHubTrackerInfoToDashboard() {
+    SmartDashboard.putNumber(
+        "HubTracker/Time Until Shift",
+        HubTracker.timeRemainingInCurrentShift().orElse(Seconds.of(0)).in(Seconds));
+    SmartDashboard.putBoolean(
+        "HubTracker/RedWonAuto", HubTracker.getAutoWinner().orElse(Alliance.Blue) == Alliance.Red);
+    SmartDashboard.putBoolean("HubTracker/GameDataPresent", !HubTracker.getAutoWinner().isEmpty());
+
+    SmartDashboard.putNumber(
+        "HubTracker/TimeUtilActive",
+        HubTracker.timeUntilActive().orElse(Seconds.of(0)).in(Seconds));
+  }
+
   public static Optional<Shift> getCurrentShift() {
     double matchTime = getMatchTime();
     if (matchTime < 0) return Optional.empty();
