@@ -32,6 +32,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.units.*;
 import frc.robot.subsystems.FuelShooterSubsystem;
+import frc.robot.commands.AimAndDriveCommand;
 import frc.robot.commands.AlignCommand;
 import frc.robot.commands.ClimberCommand;
 import frc.robot.commands.ConveyorCommand;
@@ -78,6 +79,7 @@ public class RobotContainer {
   private final ClimberSubsystem climberSubsystem;
   // private final FuelIntakeWristSubsystemJOE intakeWristSubsystem;
   private final AprilTagManager ATMan;
+  
 
   public RobotContainer() {
     
@@ -86,6 +88,7 @@ public class RobotContainer {
     // this.extendoSubsystem = new ExtendoSubsystem();
     this.ledSubsystem = new LEDSubsystem();
     this.shooterSubsystem = new FuelShooterSubsystem();
+    
     this.conveyorSubsystem = new ConveyorSubsystem();
     this.serializerSubsystem = new SerializerSubsystem();
     this.climberSubsystem = new ClimberSubsystem();
@@ -173,7 +176,7 @@ public class RobotContainer {
     /*
      * Move to firing position and fire
      */
-    joystick.button(15).whileTrue(xstance().alongWith(TeleopShooterOn())).onFalse(TeleopShooterOff());
+    joystick.button(15).whileTrue(new AimAndDriveCommand(drivetrain, () -> joystick.getRawAxis(4) * MaxSpeed, () -> -joystick.getRawAxis(3) * MaxSpeed).alongWith(TeleopShooterOn())).onFalse(TeleopShooterOff());
     //anytime the shooter is up to speed, run the serializer and conveyor to feed fuel into the shooter. 
     //the shooter is only up to speed when the trigger is pulled, wether for passing or for shooting, so this should not cause any issues with intaking.
     ShooterRPMOK
@@ -195,7 +198,16 @@ public class RobotContainer {
     joystick.button(1).whileTrue(alignHub());
     joystick.button(4).whileTrue(alignTower());
     joystick.button(14).whileTrue(xstance());
-
+    /*
+     * Drivetrain align to alliance hub
+     */
+    //joystick.button(15).whileTrue(new AimAndDriveCommand(drivetrain, () -> joystick.getRawAxis(4) * MaxSpeed, () -> -joystick.getRawAxis(3) * MaxSpeed));    
+       
+    // // reset the field-centric heading on left bumper press
+        joystick.button(13).onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+    
+        // commandSwerveDrivetrain.registerTelemetry(logger::telemeterize);
+      }
       
     // reset the field-centric heading on left bumper press
     joystick.button(13).onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));

@@ -3,45 +3,45 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.713637660485022,
-        "y": 2.8122967189728967
+        "x": 7.610128388017117,
+        "y": 4.015592011412268
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.087172510245527,
-        "y": 2.0569902222811374
+        "x": 6.7475355375994335,
+        "y": 1.5753734993096575
       },
       "isLocked": false,
-      "linkedName": "Right Balls Collected"
+      "linkedName": "Right Balls Collected 2"
     },
     {
       "anchor": {
-        "x": 5.617574893009986,
-        "y": 0.7032952924393738
+        "x": 5.59169757489301,
+        "y": 0.5480313837375184
       },
       "prevControl": {
-        "x": 5.867446621830987,
-        "y": 0.7113027349776733
+        "x": 6.28912034209533,
+        "y": 0.6596190264898898
       },
       "nextControl": {
-        "x": 3.823201275536289,
-        "y": 0.645792414054704
+        "x": 4.944764621968615,
+        "y": 0.44452211126961516
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.4956348074179737,
-        "y": 0.7032952924393738
+        "x": 3.52151212553495,
+        "y": 0.5480313837375184
       },
       "prevControl": {
-        "x": 3.7357834560743317,
-        "y": 0.6338069729279259
+        "x": 4.168445078459343,
+        "y": 0.48333808844507875
       },
       "nextControl": {
-        "x": 3.2554861587616157,
-        "y": 0.7727836119508218
+        "x": 3.2727528279824525,
+        "y": 0.5729073134927682
       },
       "isLocked": false,
       "linkedName": null
@@ -52,8 +52,8 @@
         "y": 1.531369472182596
       },
       "prevControl": {
-        "x": 2.8290298345182086,
-        "y": 1.3817504725117438
+        "x": 2.640733004603869,
+        "y": 1.2816570788861015
       },
       "nextControl": null,
       "isLocked": false,
@@ -62,23 +62,20 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.1980654076462158,
+      "waypointRelativePos": 0.9851576994434041,
+      "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 2.0092764378478614,
       "rotationDegrees": 0.0
     }
   ],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "AutonShooterOnTimed",
-      "waypointRelativePos": 1.1,
-      "endWaypointRelativePos": null,
-      "command": null
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.5,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 3.5,
+    "maxAcceleration": 4.25,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -94,5 +91,5 @@
     "velocity": 0,
     "rotation": 135.0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

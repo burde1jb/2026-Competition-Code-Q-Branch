@@ -1,0 +1,95 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.2535235378031384,
+        "y": 5.71055634807418
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.133352353780314,
+        "y": 7.1855634807417985
+      },
+      "isLocked": false,
+      "linkedName": "Shooting Position"
+    },
+    {
+      "anchor": {
+        "x": 3.5862054208273886,
+        "y": 7.483152639087019
+      },
+      "prevControl": {
+        "x": 3.133352353780314,
+        "y": 7.496091298145506
+      },
+      "nextControl": {
+        "x": 5.047677496910739,
+        "y": 7.441396294056069
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.876348074179743,
+        "y": 7.17262482168331
+      },
+      "prevControl": {
+        "x": 5.218367741467941,
+        "y": 7.619554858996986
+      },
+      "nextControl": {
+        "x": 6.5620970042796,
+        "y": 6.706833095577747
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.153552068473608,
+        "y": 5.1930099857346645
+      },
+      "prevControl": {
+        "x": 7.338416547788871,
+        "y": 6.189286733238229
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Left Ball Pit 2"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.1925380009212037,
+      "rotationDegrees": 180.0
+    },
+    {
+      "waypointRelativePos": 2.436204514048802,
+      "rotationDegrees": -135.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.5,
+    "maxAcceleration": 4.25,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -135.0
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -38.0
+  },
+  "useDefaultConstraints": true
+}

@@ -1,14 +1,17 @@
 package frc.robot.commands;
 
+import java.util.function.BooleanSupplier;
+
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.RobotConstants;
 import frc.robot.subsystems.*;
 
 public class ShooterCommand extends Command {
     FuelShooterSubsystem ShooterSubsystem;
     XboxController controller2;
-
+   
     public ShooterCommand(FuelShooterSubsystem ShooterSubsystem, XboxController controller2) {
         this.ShooterSubsystem = ShooterSubsystem;
         this.controller2 = controller2;

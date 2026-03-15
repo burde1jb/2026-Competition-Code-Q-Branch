@@ -3,45 +3,38 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.5714978601997143,
-        "y": 0.6774179743223976
+        "x": 7.90771754636234,
+        "y": 2.8769900142653353
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.1041545568376374,
-        "y": 0.9017527085748723
+        "x": 7.714797739725881,
+        "y": 3.662878402575809
       },
       "isLocked": false,
-      "linkedName": "HP"
+      "linkedName": "RIght Ballpit 2"
     },
     {
       "anchor": {
-        "x": 2.628744650499286,
-        "y": 1.531369472182596
+        "x": 7.610128388017117,
+        "y": 4.015592011412268
       },
       "prevControl": {
-        "x": 2.388349258031952,
-        "y": 1.392577127629635
+        "x": 7.8695770972437815,
+        "y": 3.0101442233510487
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Right Shot"
+      "linkedName": "Right Balls Collected 2"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "AutonShooterOnTimed",
-      "waypointRelativePos": 0.5996860282574531,
-      "endWaypointRelativePos": null,
-      "command": null
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 1.25,
-    "maxAcceleration": 3.0,
+    "maxAcceleration": 4.25,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -49,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 45.0
+    "rotation": 135.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 135.0
   },
   "useDefaultConstraints": false
 }
