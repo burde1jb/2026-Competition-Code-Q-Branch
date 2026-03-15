@@ -27,7 +27,7 @@ public class AutonConveyorOnTimed extends Command {
 
     @Override
     public boolean isFinished() {
-        if (timer.get() >= 5.0) {
+        if (timer.get() >= 3.0) {
             conveyorSubsystem.conveyorOff();
             return true;
         }
