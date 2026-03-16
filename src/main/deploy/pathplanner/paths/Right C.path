@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.4946028539756824,
-        "y": 1.3838395938030552
+        "x": 2.734853801342002,
+        "y": 2.5143429036402627
       },
       "isLocked": false,
       "linkedName": "Right Shot"
     },
     {
       "anchor": {
-        "x": 0.5585592011412266,
-        "y": 0.6644793152639101
+        "x": 2.9004564907275316,
+        "y": 4.028530670470756
       },
       "prevControl": {
-        "x": 1.3507516476784804,
-        "y": 0.9971448576181737
+        "x": 2.8889799451354667,
+        "y": 3.7787942315971446
       },
       "nextControl": null,
       "isLocked": false,
@@ -55,8 +55,8 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": 180.0
+    "velocity": 0.0,
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": null,
