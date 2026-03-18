@@ -16,7 +16,7 @@ import frc.robot.AlphaBots.NT;
 import frc.robot.LimelightHelpers.*;
 
 public class VisionSubsystem extends SubsystemBase {
-    private final String classname = this.getClass().getSimpleName(); //this will autopopulate to the classname which is "VisionSubsystem"
+  private final String classname = this.getClass().getSimpleName(); //this will autopopulate to the classname which is "VisionSubsystem"
   private final boolean kUseLimelight = true; //false if not using Limelight, true if using Limelight
   private RawFiducial[] fiducials;
   private final CommandSwerveDrivetrain drivetrain = RobotContainer.drivetrain;//assumes the drivetrain is made before the vision subsystem, which is true in our current code
@@ -152,30 +152,29 @@ public RawFiducial getFiducialWithId(int id, boolean verbose) {
     return getClosestFiducial().ta;
   }
 
-// //*
-//    * first we process the MegaTag1 readings from both limelights, 
-//    * which give us a pose estimate that is independent of our current robot heading (MT1 does its own solve). 
-//    * We apply tunable rejection criteria to decide whether to accept each MT1 reading, 
-//    * and we scale the MT1 measurement std devs based on the average tag distance (e.g. if tags are far away, we trust MT1 less and increase the std devs so the pose estimator relies more on the gyro and less on MT1).
-//    * 
-//    * after megatag1 processing, we set the robot orientation in the limelight network tables 
-//    * to the possibly updated robot heading from the drivetrain pose estimator,
-//    *  if the MT1 were rejected we STILL need to update our limelights orientation because our drivetrain has it own odometry! 
-//    * This allows MegaTag2 to do a more accurate multi-tag solve that relies on the gyro for heading and vision for x/y position. 
-//    * Then we process the MegaTag2 readings from both limelights, applying tunable rejection criteria and scaling the MT2 std devs based on average tag distance.
-//    */
-//   /* STANDARD DEVIATIONS EXPLAINED:
-//    * The pose estimator uses a Kalman filter to fuse odometry and vision measurements.
-//    * setVisionMeasurementStdDevs(Matrix<N3, N1>) -> This method sets how much the pose estimator trusts vision measurements.
-//    *  The matrix is a 3×1 column vector (3 rows, 1 column) representing standard deviations for each component of the vision pose:
-//    * How to think about it
-//    * Smaller values = more trust in vision (the estimator weights vision more heavily)
-//    * Larger values = less trust in vision (the estimator favors odometry)
-//    * A standard deviation of 0.1 meters means "I believe vision is accurate to about ±10 cm." A value of 1.0 meters means "vision could be off by ±1 meter, don't trust it much."
-//    */
-//   // ---- Tunable rejection / weighting thresholds ----
-//   /** Minimum number of tags a MegaTag1 reading must see to be accepted */
-
+  /*
+   * first we process the MegaTag1 readings from both limelights, 
+   * which give us a pose estimate that is independent of our current robot heading (MT1 does its own solve). 
+   * We apply tunable rejection criteria to decide whether to accept each MT1 reading, 
+   * and we scale the MT1 measurement std devs based on the average tag distance (e.g. if tags are far away, we trust MT1 less and increase the std devs so the pose estimator relies more on the gyro and less on MT1).
+   * 
+   * after megatag1 processing, we set the robot orientation in the limelight network tables 
+   * to the possibly updated robot heading from the drivetrain pose estimator,
+   *  if the MT1 were rejected we STILL need to update our limelights orientation because our drivetrain has it own odometry! 
+   * This allows MegaTag2 to do a more accurate multi-tag solve that relies on the gyro for heading and vision for x/y position. 
+   * Then we process the MegaTag2 readings from both limelights, applying tunable rejection criteria and scaling the MT2 std devs based on average tag distance.
+   */
+  /* STANDARD DEVIATIONS EXPLAINED:
+   * The pose estimator uses a Kalman filter to fuse odometry and vision measurements.
+   * setVisionMeasurementStdDevs(Matrix<N3, N1>) -> This method sets how much the pose estimator trusts vision measurements.
+   *  The matrix is a 3×1 column vector (3 rows, 1 column) representing standard deviations for each component of the vision pose:
+   * How to think about it
+   * Smaller values = more trust in vision (the estimator weights vision more heavily)
+   * Larger values = less trust in vision (the estimator favors odometry)
+   * A standard deviation of 0.1 meters means "I believe vision is accurate to about ±10 cm." A value of 1.0 meters means "vision could be off by ±1 meter, don't trust it much."
+   */
+  // ---- Tunable rejection / weighting thresholds ----
+  /** Minimum number of tags a MegaTag1 reading must see to be accepted */
   private static final int kMT1_MinTagCount = 2;
   /** Max chassis speed (m/s) before we reject MegaTag1 readings */
   private static final double kMT1_MaxSpeedMps = 3.0;

@@ -32,12 +32,12 @@ public class FuelShooterSubsystem extends SubsystemBase {
     private RelativeEncoder FuelShooterEncoder = FuelShooterMotor.getEncoder();
     private RelativeEncoder FuelShooterEncoder2 = FuelShooterMotor2.getEncoder();
    
-    private double MaxVelocity =  RobotConstants.FuelShooterMaxVelocity; // rotations
-    public double FuelShooterVelocity = FuelShooterEncoder.getVelocity();
-    private double FuelShooterVelocity2 = FuelShooterEncoder2.getVelocity();
+    public double MaxVelocity =  RobotConstants.FuelShooterMaxVelocity; // rotations
+    public double FuelShooterVelocity = 0;
+    //private double FuelShooterVelocity2 = FuelShooterEncoder2.getVelocity(); not needed because both motors are mechanically linked and should have the same velocity, we can just use one encoder to get the velocity of both motors.
 
-      //the built in PID controller on the Spark(Max Or Flex) motor controller, these will not take processing power from the roborio because they are running on the motor controller itself at a much higher loop rate (this is good for fast response and precision)
-    private SparkClosedLoopController SparkMaxBuiltInPidController;
+    //the built in PID controller on the Spark(Max Or Flex) motor controller, these will not take processing power from the roborio because they are running on the motor controller itself at a much higher loop rate (this is good for fast response and precision)
+    //private SparkClosedLoopController SparkMaxBuiltInPidController;
 
     private double FuelShooterTargetVelocity = 0.0;
 
@@ -79,6 +79,7 @@ public class FuelShooterSubsystem extends SubsystemBase {
         FuelShooterMotorConfig2.closedLoop
         .feedbackSensor(FeedbackSensor.kPrimaryEncoder);
         
+
         // FuelShooterMotorConfig.closedLoop.maxMotion.cruiseVelocity(2000);
         // FuelShooterMotorConfig.closedLoop.maxMotion.maxAcceleration(1000);
         // FuelShooterMotorConfig2.closedLoop.maxMotion.cruiseVelocity(2000);
@@ -86,13 +87,19 @@ public class FuelShooterSubsystem extends SubsystemBase {
 
         
         // SetupMotorConfig();
-
+        //  FuelShooterMotorConfig.encoder //https://www.chiefdelphi.com/t/psa-rev-spark-default-velocity-filtering-is-still-really-bad-for-flywheels/514567/2
+        // .uvwMeasurementPeriod(8)
+        // .quadratureAverageDepth(2)
+        // .quadratureMeasurementPeriod(8)
+        //FuelShooterMotorConfig.inverted(true); // invert the first motor because of how the motors are mounted we want Shooting to be a positive velocity not -3300 (its a semantic change really but it makes it easier to understand when we are trying to shoot at a certain velocity, we can just set the velocity to a positive number instead of a negative number)
+        //FuelShooterMotorConfig.encoder.quadratureMeasurementPeriod(10).quadratureAverageDepth(2); //https://www.chiefdelphi.com/t/psa-rev-spark-default-velocity-filtering-is-still-really-bad-for-flywheels/514567/2
+        //FuelShooterMotorConfig2.follow(FuelShooterMotor, false); // set the second motor to follow the first motor, and dont invert it because of how the motors are mounted.
+        
         FuelShooterMotor.configure(FuelShooterMotorConfig, com.revrobotics.ResetMode.kResetSafeParameters, com.revrobotics.PersistMode.kPersistParameters);
         FuelShooterMotor2.configure(FuelShooterMotorConfig2, com.revrobotics.ResetMode.kResetSafeParameters, com.revrobotics.PersistMode.kPersistParameters);
 
         FuelShooterEncoder.setPosition(0);
         FuelShooterEncoder2.setPosition(0);
-
     }
 
     public void stop() {
@@ -157,6 +164,7 @@ public class FuelShooterSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Shooter2 | Flywheel | Current", FuelShooterMotor.getOutputCurrent());
         SmartDashboard.putNumber("Shooter | Flywheel | Target Velocity", FuelShooterTargetVelocity);
         SmartDashboard.putNumber("Shooter | Flywheel | Actual Velocity", FuelShooterEncoder.getVelocity());
+        FuelShooterVelocity = FuelShooterEncoder.getVelocity();
         // pidtune();
     }
      

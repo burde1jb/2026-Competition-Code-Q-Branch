@@ -27,6 +27,8 @@ import frc.robot.subsystems.VisionSubsystem;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   private final RobotContainer m_robotContainer;
+  private static final NetworkTableInstance inst = NetworkTableInstance.getDefault();
+  public static final NetworkTable driveStateTable = inst.getTable("Q Branch");
 
   public Robot() {
     m_robotContainer = new RobotContainer();
@@ -35,63 +37,25 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
-  // UpdateDrivetrainFromLimelight();
     CommandScheduler.getInstance().run();
 
-  double startTime = Timer.getFPGATimestamp();
+    double startTime = Timer.getFPGATimestamp();
 
-  SmartDashboard.putNumber("Voltage", RobotController.getBatteryVoltage());
+    SmartDashboard.putNumber("Voltage", RobotController.getBatteryVoltage());
     SmartDashboard.putNumber("Match Time", DriverStation.getMatchTime());
 
-    SmartDashboard.putNumber(
-        "HubTracker/Time Until Shift",
-        HubTracker.timeRemainingInCurrentShift().orElse(Seconds.of(0)).in(Seconds));
-    SmartDashboard.putBoolean(
-        "HubTracker/RedWonAuto", HubTracker.getAutoWinner().orElse(Alliance.Blue) == Alliance.Red);
-    SmartDashboard.putBoolean("HubTracker/GameDataPresent", !HubTracker.getAutoWinner().isEmpty());
-
-    SmartDashboard.putNumber(
-        "HubTracker/TimeUtilActive",
-        HubTracker.timeUntilActive().orElse(Seconds.of(0)).in(Seconds));
-
+    HubTracker.PutHubTrackerInfoToDashboard();
 
   }
-  // private final boolean kUseLimelight = true; //false if not using Limelight, true if using Limelight
-  private final NetworkTableInstance inst = NetworkTableInstance.getDefault();
-  private final NetworkTable driveStateTable = inst.getTable("Q Branch");
-  // private final StructPublisher<Pose2d> drivePose = driveStateTable.getStructTopic("LLPose", Pose2d.struct).publish();
 
-  private void UpdateDrivetrainFromLimelight() {
-    /*
-     * This example of adding Limelight is very simple and may not be sufficient for on-field use.
-     * Users typically need to provide a standard deviation that scales with the distance to target
-     * and changes with number of tags available.
-     *
-     * This example is sufficient to show that vision integration is possible, though exact implementation
-     * of how to use vision should be tuned per-robot and to the team's specification.
-     */
-    // if (kUseLimelight) {
-    //   var driveState = RobotContainer.drivetrain.getState();
-    //   double headingDeg = driveState.Pose.getRotation().getDegrees();
-    //   double omegaRps = Units.radiansToRotations(driveState.Speeds.omegaRadiansPerSecond);
 
-    //   LimelightHelpers.SetRobotOrientation("limelight-four", headingDeg, 0, 0, 0, 0, 0);
-    //   var llMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight-four");
-    //   if (llMeasurement != null && llMeasurement.tagCount > 0 && Math.abs(omegaRps) < 2.0) {
-    //     RobotContainer.drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(.5,.5,9999999));
-    //     SmartDashboard.putBoolean("usingLL",true);
-    //     RobotContainer.drivetrain.addVisionMeasurement(llMeasurement.pose, llMeasurement.timestampSeconds);
-    //   }
-    //   else{
-    //     SmartDashboard.putBoolean("usingLL",false);
-    //   }
-    //   drivePose.set(llMeasurement.pose);
-    // }
-  }
+  
+ 
+
 
   @Override
   public void disabledInit() {
-      VisionSubsystem.setlimelightsThrottles(200);//slows down limelight processing to keep from overheating while disabled. 
+    VisionSubsystem.setlimelightsThrottles(100);//slows down limelight processing to keep from overheating while disabled. 
   }
 
 
@@ -110,7 +74,7 @@ public class Robot extends TimedRobot {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
+      CommandScheduler.getInstance().schedule(m_autonomousCommand);// updated deprecated command -> m_autonomousCommand.schedule();
     }
   }
 

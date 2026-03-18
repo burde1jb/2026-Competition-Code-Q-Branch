@@ -104,6 +104,7 @@ Temporary Items
 .apdisk
 
 ### VisualStudioCode ###
+.github/*
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
@@ -185,3 +186,4 @@ compile_commands.json
 
 # Eclipse generated file for annotation processors
 .factorypath
+/.github
