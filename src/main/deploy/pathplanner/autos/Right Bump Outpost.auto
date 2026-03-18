@@ -62,12 +62,6 @@
                 "data": {
                   "name": "AutonShooterOnTimed"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutonIntakeOnCommand"
-                }
               }
             ]
           }
