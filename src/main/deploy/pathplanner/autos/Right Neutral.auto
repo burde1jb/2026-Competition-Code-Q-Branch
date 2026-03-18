@@ -137,12 +137,6 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AutonIntakeOffCommand"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
                   "name": "AutonShooterOnTimed"
                 }
               }
@@ -162,7 +156,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AutonSerializerOnTimed"
+                  "name": "AutonConveyorOnTimed"
                 }
               },
               {
