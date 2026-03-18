@@ -55,7 +55,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AutonIntakeOffCommand"
+                  "name": "AutonIntakeOnCommand"
                 }
               },
               {
@@ -87,6 +87,12 @@
                 "type": "named",
                 "data": {
                   "name": "AutonConveyorOnTimed"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonIntakeOffCommand"
                 }
               }
             ]

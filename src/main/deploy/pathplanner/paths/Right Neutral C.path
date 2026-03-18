@@ -8,24 +8,40 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.087172510245527,
-        "y": 2.0569902222811374
+        "x": 7.1633095725557325,
+        "y": 3.1825966718470196
       },
       "isLocked": false,
       "linkedName": "Right Balls Collected"
     },
     {
       "anchor": {
-        "x": 5.617574893009986,
+        "x": 6.652667617689016,
+        "y": 2.7087874465049935
+      },
+      "prevControl": {
+        "x": 6.800386574958214,
+        "y": 2.9104780751006243
+      },
+      "nextControl": {
+        "x": 6.4157361426253185,
+        "y": 2.385288966532638
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.514065620542081,
         "y": 0.7032952924393738
       },
       "prevControl": {
-        "x": 5.867446621830987,
-        "y": 0.7113027349776733
+        "x": 5.876861417746757,
+        "y": 0.9628505375934142
       },
       "nextControl": {
-        "x": 3.823201275536289,
-        "y": 0.645792414054704
+        "x": 5.249157335141492,
+        "y": 0.5137717767584696
       },
       "isLocked": false,
       "linkedName": null
@@ -36,12 +52,12 @@
         "y": 0.7032952924393738
       },
       "prevControl": {
-        "x": 3.7357834560743317,
-        "y": 0.6338069729279259
+        "x": 4.163974979483588,
+        "y": 0.6310836594046432
       },
       "nextControl": {
-        "x": 3.2554861587616157,
-        "y": 0.7727836119508218
+        "x": 3.1910796130708583,
+        "y": 0.736201331687387
       },
       "isLocked": false,
       "linkedName": null
@@ -52,8 +68,8 @@
         "y": 1.531369472182596
       },
       "prevControl": {
-        "x": 2.8290298345182086,
-        "y": 1.3817504725117438
+        "x": 2.868691020683451,
+        "y": 1.33067217047647
       },
       "nextControl": null,
       "isLocked": false,
@@ -62,7 +78,11 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.1980654076462158,
+      "waypointRelativePos": 1.1068702290076258,
+      "rotationDegrees": -115.0
+    },
+    {
+      "waypointRelativePos": 1.9923664122137184,
       "rotationDegrees": 0.0
     }
   ],
@@ -71,7 +91,7 @@
   "eventMarkers": [
     {
       "name": "AutonShooterOnTimed",
-      "waypointRelativePos": 1.1,
+      "waypointRelativePos": 1.2,
       "endWaypointRelativePos": null,
       "command": null
     }

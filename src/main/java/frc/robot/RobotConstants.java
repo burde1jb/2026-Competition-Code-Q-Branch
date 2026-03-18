@@ -27,6 +27,7 @@ public class RobotConstants {
     public final static int FuelShooterEncoderid = 2;
     //shooter power values
     public final static double FuelShooterMaxVelocity = -3300;
+    public final static double FuelShooterUltraVelocity = -4500;
     public final static double FuelShooterSpeed = -0.80;
 
     // Fuel Wrist Constants

@@ -3,37 +3,70 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.90771754636234,
-        "y": 2.8769900142653353
+        "x": 7.053766048502139,
+        "y": 1.8030813124108418
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.714797739725881,
-        "y": 3.662878402575809
+        "x": 6.736391516862426,
+        "y": 2.36324366160454
       },
       "isLocked": false,
       "linkedName": "RIght Ballpit 2"
     },
     {
       "anchor": {
-        "x": 7.610128388017117,
-        "y": 4.015592011412268
+        "x": 6.342139800285306,
+        "y": 3.782696148359487
       },
       "prevControl": {
-        "x": 7.8695770972437815,
-        "y": 3.0101442233510487
+        "x": 6.854537657014709,
+        "y": 3.7167959662873304
+      },
+      "nextControl": {
+        "x": 5.816522155826565,
+        "y": 3.850296545229339
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.863409415121255,
+        "y": 1.9842225392296724
+      },
+      "prevControl": {
+        "x": 5.434337337260055,
+        "y": 3.0269203775117317
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "Right Balls Collected 2"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": 135.0
+    },
+    {
+      "waypointRelativePos": 1.0038167938931137,
+      "rotationDegrees": 180.0
+    },
+    {
+      "waypointRelativePos": 1.454198473282426,
+      "rotationDegrees": -135.0
+    },
+    {
+      "waypointRelativePos": 1.8244274809160093,
+      "rotationDegrees": -90.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.25,
+    "maxVelocity": 1.75,
     "maxAcceleration": 4.25,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -42,7 +75,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 135.0
+    "rotation": -45.0
   },
   "reversed": false,
   "folder": null,
