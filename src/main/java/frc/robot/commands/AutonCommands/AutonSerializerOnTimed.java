@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.Timer;
 public class AutonSerializerOnTimed extends Command {
     SerializerSubsystem serializerSubsystem;
     Timer timer;
+    boolean isItFinished;
 
     public AutonSerializerOnTimed(SerializerSubsystem serializerSubsystem) {
         this.serializerSubsystem = serializerSubsystem;
@@ -16,6 +17,8 @@ public class AutonSerializerOnTimed extends Command {
 
     @Override
     public void initialize() {
+        isItFinished = false;
+        timer.reset();
         timer.restart();
     }
 

@@ -7,8 +7,13 @@ import static edu.wpi.first.units.Units.Inches;
 
 import java.util.DuplicateFormatFlagsException;
 
+import com.ctre.phoenix6.CANBus;
+
 public class RobotConstants {
-  // AprilTag Constants
+    //canbuses for use with CTRE Phoenix 6 devices, such as the TalonFX. If using CAN Spark Flexs, these can be ignored and the CAN IDs can be used directly in the constructors for those motors.
+    public final static CANBus Rio = CANBus.roboRIO();
+    public final static CANBus drivetraincanbus = new CANBus("drivetrain");
+    // AprilTag Constants
     public final static double TowerOffset = 0.32; //Distance robot is to be away from Tower
     public final static double TowerOffsetRight = 0.432; //Distance between AprilTags
     public final static double HubOffset = - 1.0; //Distance robot is to be away from Hub
@@ -82,7 +87,7 @@ public class RobotConstants {
     public final static double ConveyorIntakeOnspeedAuton = -0.80;
     public final static double ConveyorIntakeOutspeed = 0.80;
     public final static double ConveyorIntakeSlowspeed = 0.60;
-    public final static double ConveyorMaxVelocity = -6000;
+    public final static double ConveyorMaxVelocity = -4000;
 
         // Climber Constants
     // CAN, PWM, DIO values for motors, encoders, and sensors - Motor moving the

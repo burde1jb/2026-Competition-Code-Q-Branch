@@ -26,8 +26,8 @@ public class C_Align extends Command{
   public static class drivetrainThings{
     public static final double MaxAngularRate = 1.5 * Math.PI; // 3/4 of a rotation per second max angular velocity
 
-    public static final double minXposeErrorMetersToCorrect = Units.inchesToMeters(.9);//.6;
-    public static final double minYposeErrorMetersToCorrect = Units.inchesToMeters(.9);//.6;
+    public static final double minXposeErrorMetersToCorrect = Units.inchesToMeters(6);//.6;
+    public static final double minYposeErrorMetersToCorrect = Units.inchesToMeters(6);//.6;
     public static final double minRZErrorToCorrect = .9;//1;//.45;//0.5;//1;//2;//1.25;
 
     public static  double k_PoseX_P = 7.0;//3.0;//2.1;//4;

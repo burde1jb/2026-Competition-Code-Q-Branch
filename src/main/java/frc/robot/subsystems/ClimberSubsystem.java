@@ -23,7 +23,7 @@ public class ClimberSubsystem extends SubsystemBase {
     private final double encoderOffsetLOWER = RobotConstants.ClimberencoderLOWERoffset;
 
     public ClimberSubsystem() {
-        climberMotorUPPER = new TalonFX(RobotConstants.ClimbermotorUPPERcanID, "drivetrain");
+        climberMotorUPPER = new TalonFX(RobotConstants.ClimbermotorUPPERcanID, RobotConstants.drivetraincanbus);
         climberMotorUPPERconfig = new TalonFXConfiguration();
         BaseStatusSignal.setUpdateFrequencyForAll(250,climberMotorUPPER.getPosition());
         climberEncoderUPPER = climberMotorUPPER.getPosition();

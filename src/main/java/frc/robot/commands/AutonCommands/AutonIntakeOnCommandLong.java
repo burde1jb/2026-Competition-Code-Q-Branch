@@ -5,12 +5,12 @@ import frc.robot.RobotConstants;
 import frc.robot.subsystems.FuelIntakeSubsystem;
 import edu.wpi.first.wpilibj.Timer;
 
-public class AutonIntakeOnCommand extends Command {
+public class AutonIntakeOnCommandLong extends Command {
     FuelIntakeSubsystem intakeSubsystem;
     Timer timer;
     boolean isItFinished;
 
-    public AutonIntakeOnCommand(FuelIntakeSubsystem intakeSubsystem) {
+    public AutonIntakeOnCommandLong(FuelIntakeSubsystem intakeSubsystem) {
         this.intakeSubsystem = intakeSubsystem;
         timer = new Timer();
         addRequirements(intakeSubsystem);
@@ -31,7 +31,7 @@ public class AutonIntakeOnCommand extends Command {
 
     @Override
     public boolean isFinished() {
-        if (timer.get() >= 1.5) {
+        if (timer.get() >= 3.5) {
             intakeSubsystem.FuelIntakeOff();
             return true;
         }

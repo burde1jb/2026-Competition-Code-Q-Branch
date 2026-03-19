@@ -225,7 +225,8 @@ public class FuelIntakeWristSubsystemJOE extends SubsystemBase {
         * the SPARK MAX loses power. This is useful for power cycles that may occur
         * mid-operation.
         */
-        FuelIntakeWristMotor.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+        FuelIntakeWristMotor.configure(motorConfig, com.revrobotics.ResetMode.kResetSafeParameters, com.revrobotics.PersistMode.kPersistParameters);
     }
     // public void setupTuningDashboardDefaults()
     // {

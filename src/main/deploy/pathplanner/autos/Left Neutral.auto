@@ -55,7 +55,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AutonIntakeOnCommand"
+                  "name": "AutonIntakeOnCommandLong"
                 }
               },
               {
@@ -118,7 +118,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AutonIntakeOnCommand"
+                  "name": "AutonIntakeOnCommandLong"
                 }
               }
             ]
@@ -132,12 +132,6 @@
                 "type": "path",
                 "data": {
                   "pathName": "Left Neutral F"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutonIntakeOffCommand"
                 }
               }
             ]

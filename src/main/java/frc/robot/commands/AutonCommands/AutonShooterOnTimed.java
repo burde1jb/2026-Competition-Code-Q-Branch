@@ -20,9 +20,9 @@ public class AutonShooterOnTimed extends Command {
 
     @Override
     public void initialize() {
-        // isItFinished = false;
+        isItFinished = false;
+        timer.reset();
         timer.restart();
-
     }
 
     @Override
