@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Landmarks;
+import frc.robot.RobotContainer;
 import frc.robot.AlphaBots.NT;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.Util.DriveInputSmoother;
@@ -104,10 +105,10 @@ public class AimAndDriveCommand extends Command {
     }
     
     
-
+    Pose2d PoseOffset;//This is how far we are from where we want to be. this is CurrentPose minus TargetPose.
     private final PIDController AlignXPid = new PIDController(drivetrainThings.k_PoseX_P,drivetrainThings.k_PoseX_I,drivetrainThings.k_PoseX_D);
     private final PIDController AlignYPid = new PIDController(drivetrainThings.k_PoseY_P,drivetrainThings.k_PoseY_I,drivetrainThings.k_PoseY_D);
-    private final double wanteddistanceFromHub = Units.inchesToMeters(160); //CHANGE SHOOTING DISTANCE HERE
+    private final double wanteddistanceFromHub = Units.inchesToMeters(120); //CHANGE SHOOTING DISTANCE HERE
     private final StructPublisher<Pose2d> drivePose = NT.getStructEntry_Pose2D("AimAndDriveCmd", "TargetPose", new Pose2d());
     private final DoubleEntry distanceToHubPublisher = NT.getDoubleEntry("AimAndDriveCmd", "DistanceToHub", 0);
     @Override
@@ -120,10 +121,11 @@ public class AimAndDriveCommand extends Command {
         drivePose.set(TargetPose);
         //get offsets
         //SUBTRACT where we need to go, from where we are. this will give us the translations we need to make 
-        //double Xpose_Offset = CurrentPose.getX() - TargetPose.getX();
-        //double Ypose_Offset = CurrentPose.getY() - TargetPose.getY();             
+        double Xpose_Offset = CurrentPose.getX() - TargetPose.getX();
+        double Ypose_Offset = CurrentPose.getY() - TargetPose.getY();             
      
-        //var PoseOffset = new Pose2d(Xpose_Offset, Ypose_Offset, new Rotation2d(0));
+        PoseOffset = new Pose2d(Xpose_Offset, Ypose_Offset, new Rotation2d(0));
+
         AlignXPid.setSetpoint(TargetPose.getX());
         AlignYPid.setSetpoint(TargetPose.getY());
         double xpose_adjust = AlignXPid.calculate(CurrentPose.getX());//GetXPoseAdjust(XP_buffer, min_xpose_command);
@@ -151,9 +153,30 @@ public class AimAndDriveCommand extends Command {
     public void initialize() {
         AlignXPid.reset();
         AlignYPid.reset();
+        RobotContainer.aligned = false;
     }
     @Override
     public boolean isFinished() {
+        if(PoseOffset == null){System.err.println("No pose OFFSET! Broken CODE?"); return false;}
+        boolean Xok = IsXInTarget();
+        boolean Yok = IsYInTarget();
+        boolean Zok = isRotInTarget();
+         boolean isatSetpos = Xok && Yok;//  && Zok;
+    
+        if(isatSetpos){RobotContainer.aligned = true;}else {RobotContainer.aligned = false;}
+        SmartDashboard.putBoolean("isAligned",RobotContainer.aligned);
+        SmartDashboard.putBoolean("alignXOK", Xok);
         return false;
     }
+     private boolean IsXInTarget() {
+        return Math.abs(PoseOffset.getX()) < drivetrainThings.minXposeErrorMetersToCorrect;
+      }
+    
+      private boolean IsYInTarget() {
+        return Math.abs(PoseOffset.getY()) < drivetrainThings.minYposeErrorMetersToCorrect;
+      }
+    
+      private boolean isRotInTarget() {
+        return Math.abs(PoseOffset.getRotation().getDegrees()) < drivetrainThings.minRZErrorToCorrect;
+      }
 }

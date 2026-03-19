@@ -19,10 +19,10 @@ public class ConveyorCommand extends Command {
     @Override
     public void execute() {
         if (controller2.getLeftBumperButton()){
-            ConveyorSubsystem.conveyorOn(RobotConstants.ConveyorIntakeOnspeed);
+            ConveyorSubsystem.conveyorOn(RobotConstants.ConveyorMaxVelocity);
         }
         else if (controller2.getBackButton()){
-            ConveyorSubsystem.conveyorOn(-RobotConstants.ConveyorIntakeOnspeed);
+            ConveyorSubsystem.conveyorOn(-RobotConstants.ConveyorMaxVelocity);
         }
         else {
             ConveyorSubsystem.conveyorOff();

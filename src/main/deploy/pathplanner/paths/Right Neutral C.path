@@ -32,32 +32,32 @@
     },
     {
       "anchor": {
-        "x": 5.514065620542081,
-        "y": 0.7032952924393738
+        "x": 5.578758915834522,
+        "y": 0.8197432239657632
       },
       "prevControl": {
-        "x": 5.876861417746757,
-        "y": 0.9628505375934142
+        "x": 5.9415547130391975,
+        "y": 1.0792984691198035
       },
       "nextControl": {
-        "x": 5.249157335141492,
-        "y": 0.5137717767584696
+        "x": 5.313850630433932,
+        "y": 0.630219708284859
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.4956348074179737,
-        "y": 0.7032952924393738
+        "x": 3.5473894436519258,
+        "y": 0.8197432239657632
       },
       "prevControl": {
-        "x": 4.163974979483588,
-        "y": 0.6310836594046432
+        "x": 4.215729615717541,
+        "y": 0.7475315909310325
       },
       "nextControl": {
-        "x": 3.1910796130708583,
-        "y": 0.736201331687387
+        "x": 3.2428342493048103,
+        "y": 0.8526492632137763
       },
       "isLocked": false,
       "linkedName": null
@@ -84,18 +84,15 @@
     {
       "waypointRelativePos": 1.9923664122137184,
       "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 3.045801526717509,
+      "rotationDegrees": 0.0
     }
   ],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "AutonShooterOnTimed",
-      "waypointRelativePos": 1.2,
-      "endWaypointRelativePos": null,
-      "command": null
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 2.5,
     "maxAcceleration": 3.0,

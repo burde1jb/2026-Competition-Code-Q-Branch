@@ -53,8 +53,8 @@ public class ConveyorSubsystem extends SubsystemBase {
     }
 
     public void conveyorOn(double velocity) {
-        ConveyorMotor.set(velocity);
-        // ConveyorMotorLoop.setSetpoint(velocity, ControlType.kVelocity);
+        // ConveyorMotor.set(velocity);
+        ConveyorMotorLoop.setSetpoint(velocity, ControlType.kVelocity);
     }
 
     // public void intakeOnAuton(boolean forward) {

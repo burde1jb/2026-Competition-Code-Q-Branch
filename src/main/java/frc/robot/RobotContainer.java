@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -102,18 +103,19 @@ public class RobotContainer {
     CommandScheduler.getInstance().schedule(FollowPathCommand.warmupCommand()); // Replaces deprecated method -> FollowPathCommand.warmupCommand().schedule();    
         
   }
-  
+  public static boolean aligned = false;
+  public Trigger AlignmentOK;
   public double RPMTolerance = 200; // 4% tolerance, this is pretty tight but it is important to be at the correct speed for shooting and passing.
   public Trigger ShooterRPMOK; // we could use shooter.atspeed() but meh. 
   
   private void configureTriggers() {
     ShooterRPMOK = new Trigger(() -> MathUtil.isNear(shooterSubsystem.MaxVelocity, shooterSubsystem.FuelShooterVelocity, RPMTolerance));
-
+    AlignmentOK = new Trigger (()->aligned);
     //anytime the shooter is up to speed, run the serializer and conveyor to feed fuel into the shooter. 
     //the shooter is only up to speed when the trigger is pulled, wether for passing or for shooting, so this should not cause any issues with intaking.
-    ShooterRPMOK
-      .onTrue(Commands.parallel(TeleopSerializerOn(),TeleopConveyorOn()))
-      .onFalse(Commands.parallel(TeleopConveyorOff(),TeleopSerializerOff())
+    ShooterRPMOK.and(AlignmentOK)
+      .whileTrue(Commands.parallel(TeleopSerializerOn(),TeleopConveyorOn(),agiation().repeatedly()))
+      .onFalse(Commands.parallel(TeleopConveyorOff(),TeleopSerializerOff(),new InstantCommand(()->{intakeSubsystem.wristOff();}))
     );
   }
     
@@ -129,7 +131,7 @@ public class RobotContainer {
             // Drive counterclockwise with negative X (left)
             .withRotationalRate(-joystick.getRawAxis(0) * MaxAngularRate)));
 
-    intakeSubsystem.setDefaultCommand(new FuelIntakeCommand(intakeSubsystem, xboxController.getHID()));
+    //intakeSubsystem.setDefaultCommand(new FuelIntakeCommand(intakeSubsystem, xboxController.getHID()));
     //shooterSubsystem.setDefaultCommand(new ShooterCommand(shooterSubsystem, xboxController.getHID()));
     //serializerSubsystem.setDefaultCommand(new SerializerCommand(serializerSubsystem, xboxController.getHID()));
     //conveyorSubsystem.setDefaultCommand(new ConveyorCommand(conveyorSubsystem, xboxController.getHID()));
@@ -163,8 +165,8 @@ public class RobotContainer {
     // joystick.button(3).and(joystick.button(11)).whileTrue(commandSwerveDrivetrain.sysIdQuasistatic(Direction.kReverse));
 
     //joystick.button(1).whileTrue(new AlignCommand(commandSwerveDrivetrain, visionSubsystem));
-    joystick.button(1).whileTrue(alignHub());
-    joystick.button(4).whileTrue(alignTower());
+    //joystick.button(1).whileTrue(alignHub());
+    //joystick.button(4).whileTrue(alignTower());
     joystick.button(14).whileTrue(xstance());
   
     // // reset the field-centric heading on left bumper press
@@ -173,6 +175,14 @@ public class RobotContainer {
   }
 
   private void configureSecondControllerBindings() {
+    xboxController.a()
+      .onTrue(new InstantCommand(()->{intakeSubsystem.goTo(RobotConstants.FuelWristExtendgoal);}))
+      .onFalse(new InstantCommand(()->{intakeSubsystem.wristOff();}));
+
+    xboxController.b()
+      .onTrue(new InstantCommand(()->{intakeSubsystem.goTo(RobotConstants.FuelWristRetractgoal);}))
+      .onFalse(new InstantCommand(()->{intakeSubsystem.wristOff();}));
+
     /*
      * Shooter Bindings
      */
@@ -181,9 +191,13 @@ public class RobotContainer {
     /*
      * Serializer Bindings
      */
-    xboxController.a().onTrue(TeleopSerializerOn());
+    xboxController.rightBumper().onTrue(TeleopSerializerOn()).onFalse(new InstantCommand(()->{serializerSubsystem.serializerOff();}, serializerSubsystem));
     xboxController.rightTrigger(.2).onTrue(new InstantCommand(()->{serializerSubsystem.serializerOn(false);}, serializerSubsystem)).onFalse(new InstantCommand(()->{serializerSubsystem.serializerOff();}, serializerSubsystem));
-    xboxController.a().onFalse(new InstantCommand(()->{serializerSubsystem.serializerOff();}, serializerSubsystem));
+    
+    xboxController.leftTrigger(.2)
+    .onTrue(new InstantCommand(()->{intakeSubsystem.FuelIntakeOn(RobotConstants.FuelIntakeOnspeed);}))
+    .onFalse(new InstantCommand(()->{intakeSubsystem.FuelIntakeOff();}));
+    
     /*
      * conveyor Bindings
      */
@@ -201,6 +215,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("AutonIntakeRetract", new AutonIntakeRetract(intakeSubsystem));
     NamedCommands.registerCommand("AutonConveyorOnTimed", new AutonConveyorOnTimed(conveyorSubsystem));
     NamedCommands.registerCommand("AutonIntakeOnCommand", new AutonIntakeOnCommand(intakeSubsystem));
+    NamedCommands.registerCommand("AutonIntakeOnCommandLong", new AutonIntakeOnCommandLong(intakeSubsystem));
     NamedCommands.registerCommand("AutonIntakeOffCommand", new AutonIntakeOffCommand(intakeSubsystem));
     NamedCommands.registerCommand("AutonConveyorOn", AutonConveyorOn());
     NamedCommands.registerCommand("AutonConveyorOff", AutonConveyorOff());
@@ -220,14 +235,23 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     return autoChooser.getSelected();
   }
-  public Command alignHub()
+  // public Command alignHub()
+  // {
+  //     return new ConditionalCommand(ATMan.C_HubCommand(),ATMan.C_HubCommand(),()->{return true;}).asProxy();//.until(MantaState.getLimeLightBypassed)
+  //     // return new ConditionalCommand( ATMan.C_HubCommand(), ATMan.C_TowerCommand(),()->{return OptionalButtonSupplier.getAsInt() == 0;}).asProxy();//.until(MantaState.getLimeLightBypassed)
+  // }
+  // public Command alignTower()
+  // {
+  //   return new ConditionalCommand(ATMan.C_TowerCommand(), ATMan.C_TowerCommand(), ()->{return true;}).asProxy();//.until(MantaState.getLimeLightBypassed)
+  // }
+  public Command agiation() 
   {
-      return new ConditionalCommand(ATMan.C_HubCommand(),ATMan.C_HubCommand(),()->{return true;}).asProxy();//.until(MantaState.getLimeLightBypassed)
-      // return new ConditionalCommand( ATMan.C_HubCommand(), ATMan.C_TowerCommand(),()->{return OptionalButtonSupplier.getAsInt() == 0;}).asProxy();//.until(MantaState.getLimeLightBypassed)
-  }
-  public Command alignTower()
-  {
-    return new ConditionalCommand(ATMan.C_TowerCommand(), ATMan.C_TowerCommand(), ()->{return true;}).asProxy();//.until(MantaState.getLimeLightBypassed)
+    return Commands.sequence(
+      new InstantCommand(()->{intakeSubsystem.goTo(RobotConstants.FuelWristRetractgoal);}),
+      new WaitCommand(.25),
+      new InstantCommand(()->{intakeSubsystem.goTo(RobotConstants.FuelWristExtendgoal);}),
+      new WaitCommand(.25)
+      );
   }
   public Command xstance() {
     return new InstantCommand(() -> {

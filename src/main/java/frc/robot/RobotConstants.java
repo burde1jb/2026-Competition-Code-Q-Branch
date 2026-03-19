@@ -26,7 +26,7 @@ public class RobotConstants {
     public final static int FuelShooterMotor3CANid = 22;
     public final static int FuelShooterEncoderid = 2;
     //shooter power values
-    public final static double FuelShooterMaxVelocity = -3300;
+    public final static double FuelShooterMaxVelocity = -3000;
     public final static double FuelShooterUltraVelocity = -4500;
     public final static double FuelShooterSpeed = -0.80;
 
@@ -87,7 +87,7 @@ public class RobotConstants {
     public final static double ConveyorIntakeOnspeedAuton = -0.80;
     public final static double ConveyorIntakeOutspeed = 0.80;
     public final static double ConveyorIntakeSlowspeed = 0.60;
-    public final static double ConveyorMaxVelocity = -6000;
+    public final static double ConveyorMaxVelocity = -4000;
 
         // Climber Constants
     // CAN, PWM, DIO values for motors, encoders, and sensors - Motor moving the

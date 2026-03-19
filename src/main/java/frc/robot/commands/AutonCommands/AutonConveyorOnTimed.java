@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.Timer;
 public class AutonConveyorOnTimed extends Command {
     ConveyorSubsystem conveyorSubsystem;
     Timer timer;
+    boolean isItFinished;
 
     public AutonConveyorOnTimed(ConveyorSubsystem conveyorSubsystem) {
         this.conveyorSubsystem = conveyorSubsystem;
@@ -17,6 +18,8 @@ public class AutonConveyorOnTimed extends Command {
 
     @Override
     public void initialize() {
+        isItFinished = false;
+        timer.reset();
         timer.restart();
     }
 

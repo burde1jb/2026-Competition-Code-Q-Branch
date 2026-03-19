@@ -87,10 +87,14 @@ public class FuelShooterSubsystem extends SubsystemBase {
 
         
         // SetupMotorConfig();
-        //  FuelShooterMotorConfig.encoder //https://www.chiefdelphi.com/t/psa-rev-spark-default-velocity-filtering-is-still-really-bad-for-flywheels/514567/2
-        // .uvwMeasurementPeriod(8)
-        // .quadratureAverageDepth(2)
-        // .quadratureMeasurementPeriod(8)
+         FuelShooterMotorConfig.encoder //https://www.chiefdelphi.com/t/psa-rev-spark-default-velocity-filtering-is-still-really-bad-for-flywheels/514567/2
+         .uvwMeasurementPeriod(8)
+         .quadratureAverageDepth(2)
+         .quadratureMeasurementPeriod(8);
+         FuelShooterMotorConfig2.encoder //https://www.chiefdelphi.com/t/psa-rev-spark-default-velocity-filtering-is-still-really-bad-for-flywheels/514567/2
+         .uvwMeasurementPeriod(8)
+         .quadratureAverageDepth(2)
+         .quadratureMeasurementPeriod(8);
         //FuelShooterMotorConfig.inverted(true); // invert the first motor because of how the motors are mounted we want Shooting to be a positive velocity not -3300 (its a semantic change really but it makes it easier to understand when we are trying to shoot at a certain velocity, we can just set the velocity to a positive number instead of a negative number)
         //FuelShooterMotorConfig.encoder.quadratureMeasurementPeriod(10).quadratureAverageDepth(2); //https://www.chiefdelphi.com/t/psa-rev-spark-default-velocity-filtering-is-still-really-bad-for-flywheels/514567/2
         //FuelShooterMotorConfig2.follow(FuelShooterMotor, false); // set the second motor to follow the first motor, and dont invert it because of how the motors are mounted.
