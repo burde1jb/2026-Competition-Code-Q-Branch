@@ -120,16 +120,22 @@ public class RobotContainer {
   }
     
   private void configureBindings() {
-    //Note that X is defined as forward according to WPILib convention,
-    //and Y is defined as to the left according to WPILib convention.
+    //Note that X is defined as forward according to WPILib convention, but is left and right from 2d scoring table perspective
+    //and Y is defined as to the left according to WPILib convention. but is up/away and down/closer from the 2d scoring table perspective.
+    //if in a simulation use a xbox controller so Jow can actually drive the dang thing. my goodness.  
+    if(Robot.isSimulation()) {
+      drivetrain.setDefaultCommand(
+        drivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getRawAxis(1) * MaxSpeed)
+            .withVelocityY(-joystick.getRawAxis(0) * MaxSpeed)
+            .withRotationalRate(-joystick.getRawAxis(4) * MaxAngularRate)));
+    }
+    else{
     drivetrain.setDefaultCommand(
-        // Drivetrain will execute this command periodically
-        // Drive forward with negative Y (forward)
         drivetrain.applyRequest(() -> drive.withVelocityX(joystick.getRawAxis(4) * MaxSpeed)
-            // Drive left with negative X (left)
             .withVelocityY(-joystick.getRawAxis(3) * MaxSpeed)
-            // Drive counterclockwise with negative X (left)
             .withRotationalRate(-joystick.getRawAxis(0) * MaxAngularRate)));
+    }
+    
 
     //intakeSubsystem.setDefaultCommand(new FuelIntakeCommand(intakeSubsystem, xboxController.getHID()));
     //shooterSubsystem.setDefaultCommand(new ShooterCommand(shooterSubsystem, xboxController.getHID()));
@@ -144,15 +150,28 @@ public class RobotContainer {
     /*
      * Move to firing position and fire
      */
-    joystick.button(15)
-      .whileTrue(
-        Commands.parallel(
-            new AimAndDriveCommand(drivetrain, () -> joystick.getRawAxis(4) * MaxSpeed, () -> -joystick.getRawAxis(3) * MaxSpeed),
-            TeleopShooterOn()
+    //if in sim use button 1 (A) on an Xbox Controller so jow can actually debug in the sim. Else just use the wild joystick button 15 because why not.
+    if(Robot.isSimulation()) {
+      joystick.button(1)
+        .whileTrue(
+          Commands.parallel(
+              new InstantCommand(() -> System.out.println("Aiming and Driving")),
+              new AimAndDriveCommand(drivetrain),
+              TeleopShooterOn()
+          )
         )
-      )
-      .onFalse(TeleopShooterOff());
-
+        .onFalse(TeleopShooterOff());
+    }
+    else {
+      joystick.button(15)
+        .whileTrue(
+          Commands.parallel(
+              new AimAndDriveCommand(drivetrain),
+              TeleopShooterOn()
+          )
+        )
+        .onFalse(TeleopShooterOff());
+    }
     // joystick.button(13).whileTrue(commandSwerveDrivetrain.applyRequest(() -> brake));
     // joystick.button(14).whileTrue(commandSwerveDrivetrain.applyRequest(
     //     () -> point.withModuleDirection(new Rotation2d(-joystick.getRawAxis(3), -joystick.getRawAxis(4)))));

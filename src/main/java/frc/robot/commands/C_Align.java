@@ -7,7 +7,6 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.BooleanEntry;
 import edu.wpi.first.networktables.DoubleEntry;
 import edu.wpi.first.networktables.StringEntry;
@@ -19,39 +18,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.LimelightHelpers;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
+import frc.robot.drivetrainThings;
 import frc.robot.AlphaBots.NT;
 import frc.robot.LimelightHelpers.PoseEstimate;
 
 public class C_Align extends Command{
-  public static class drivetrainThings{
-    public static final double MaxAngularRate = 1.5 * Math.PI; // 3/4 of a rotation per second max angular velocity
-
-    public static final double minXposeErrorMetersToCorrect = Units.inchesToMeters(6);//.6;
-    public static final double minYposeErrorMetersToCorrect = Units.inchesToMeters(6);//.6;
-    public static final double minRZErrorToCorrect = .9;//1;//.45;//0.5;//1;//2;//1.25;
-
-    public static  double k_PoseX_P = 7.0;//3.0;//2.1;//4;
-    public static  double k_PoseX_I = 0.1;//.6;//0.0;//0.000001;//0.02;
-    public static  double k_PoseX_D = 0.0;//.0;//0.06;
-
-    public static  double k_PoseY_P = k_PoseX_P;//.5;//1.20;
-    public static  double k_PoseY_I = k_PoseX_I;//0.000001;//0.02;
-    public static  double k_PoseY_D = k_PoseX_D;//0.15;//0.002; 
-
-    public static  double k_RZ_P = 0.11;//.05;
-    public static  double k_RZ_I = 0.01;//0.00;
-    public static  double k_RZ_D = 0.000000;//0.00;
-
-    //if we are really far away lets keep pid from going insane.
-    public static final double maxYvelocity = 1.0;
-    public static final double maxXvelocity = 1.0;
-    public static final double maxRZvelocity = MaxAngularRate /2;
-
-    
-
-
-}
-    //Get ClassName to help network tables auto sort by creating a sub Table with the same name.
+  //Get ClassName to help network tables auto sort by creating a sub Table with the same name.
     String className = this.getClass().getSimpleName();
     public final Timer TimeToAlignTimer = new Timer();
     public final frc.robot.subsystems.CommandSwerveDrivetrain drivetrain = RobotContainer.drivetrain;
