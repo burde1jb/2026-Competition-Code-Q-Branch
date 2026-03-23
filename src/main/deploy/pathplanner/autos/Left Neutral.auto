@@ -17,7 +17,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "AutonIntakeExtend"
+                  "name": "AutonIntakeExtendandOn"
                 }
               }
             ]
@@ -28,15 +28,15 @@
           "data": {
             "commands": [
               {
-                "type": "named",
-                "data": {
-                  "name": "AutonIntakeOnCommand"
-                }
-              },
-              {
                 "type": "path",
                 "data": {
                   "pathName": "Left Neutral B"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonIntakeOnCommand"
                 }
               }
             ]
@@ -82,12 +82,6 @@
                 "data": {
                   "name": "AutonShooterOnTimed"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutonConveyorOnTimed"
-                }
               }
             ]
           }
@@ -106,7 +100,7 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "deadline",
           "data": {
             "commands": [
               {
@@ -145,12 +139,6 @@
                 "type": "named",
                 "data": {
                   "name": "AutonShooterOnTimed"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutonConveyorOnTimed"
                 }
               },
               {

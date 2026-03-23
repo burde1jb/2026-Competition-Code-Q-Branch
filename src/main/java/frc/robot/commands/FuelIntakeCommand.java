@@ -22,19 +22,32 @@ public class FuelIntakeCommand extends Command {
     public void execute() {
         if (controller2.getLeftTriggerAxis() > 0.2) {
             intakeSubsystem.FuelIntakeOn(RobotConstants.FuelIntakeOnspeed);
+            // intakeSubsystem.goTo(RobotConstants.FuelWristExtendgoal);
         }
         else {
             intakeSubsystem.FuelIntakeOff();
         }
 
-        if (controller2.getAButton()) {
+        // while(controller2.getXButtonPressed())
+        //     intakeSubsystem.goToPID(RobotConstants.FuelWristExtendgoal);
+
+        while (controller2.getAButtonPressed())
             intakeSubsystem.goTo(RobotConstants.FuelWristExtendgoal);
-            // intakeSubsystem.wristOn(true);
-        } else if (controller2.getBButton()) {
+        
+        while (controller2.getBButtonPressed())
             intakeSubsystem.goTo(RobotConstants.FuelWristRetractgoal);
-            // intakeSubsystem.wristOn(false);
-        } else {
-            intakeSubsystem.wristOff();
-        }
+
+        while (controller2.getStartButtonPressed())
+            intakeSubsystem.FuelIntakeOn(RobotConstants.FuelIntakeOutspeed);
+        
+        // if (controller2.getAButton()) {
+        //     intakeSubsystem.goTo(RobotConstants.FuelWristExtendgoal);
+        //     // intakeSubsystem.wristOn(true);
+        // } else if (controller2.getBButton()) {
+        //     intakeSubsystem.goTo(RobotConstants.FuelWristRetractgoal);
+        //     // intakeSubsystem.wristOn(false);
+        // } else {
+        //     intakeSubsystem.wristOff();
+        // }
     }
 }

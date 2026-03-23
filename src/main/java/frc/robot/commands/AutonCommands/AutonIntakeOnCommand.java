@@ -26,7 +26,7 @@ public class AutonIntakeOnCommand extends Command {
 
     @Override
     public void execute() {
-        intakeSubsystem.FuelIntakeOn(RobotConstants.FuelIntakeOnspeed);
+        intakeSubsystem.FuelIntakeOn(RobotConstants.FuelIntakeOnspeedAuto);
     }
 
     @Override

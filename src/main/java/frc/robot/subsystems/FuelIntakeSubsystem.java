@@ -22,6 +22,8 @@ public class FuelIntakeSubsystem extends SubsystemBase {
     AbsoluteEncoder FuelIntakeWristEncoder = FuelIntakeWristMotor.getAbsoluteEncoder();
     SparkFlexConfig FuelIntakeWristMotorConfig = new SparkFlexConfig();
     private SparkClosedLoopController FuelIntakeMotorLoop = intakeMotor.getClosedLoopController();
+    private SparkClosedLoopController FuelIntakeWristMotorLoop = FuelIntakeWristMotor.getClosedLoopController();
+
     private SparkFlexConfig FuelIntakeMotorConfig = new SparkFlexConfig();
     private RelativeEncoder FuelIntakeEncoder = intakeMotor.getEncoder();
     private SparkClosedLoopController SparkMaxBuiltInPidController;
@@ -47,11 +49,28 @@ public class FuelIntakeSubsystem extends SubsystemBase {
             .sva(0, 0, 0, ClosedLoopSlot.kSlot1); // slot 1
         
             FuelIntakeMotorConfig.closedLoop
-            .feedbackSensor(FeedbackSensor.kPrimaryEncoder);
+            .feedbackSensor(FeedbackSensor.kDetachedAbsoluteEncoder);
 
             intakeMotor.configure(FuelIntakeMotorConfig, com.revrobotics.ResetMode.kResetSafeParameters, com.revrobotics.PersistMode.kPersistParameters);
 
             FuelIntakeEncoder.setPosition(0);
+
+            FuelIntakeWristMotorConfig
+        .closedLoop
+          .pid(0.00005, 0, 0) // slot 0
+          .pid(0, 0, 0, ClosedLoopSlot.kSlot1) // slot 1
+          .feedForward
+            .kS(0.0) // slot 0 by default
+            .kV(0.0019, ClosedLoopSlot.kSlot0) // slot 0 explicitly
+            .kA(0.0)
+            .sva(0, 0, 0, ClosedLoopSlot.kSlot1); // slot 1
+        
+            FuelIntakeWristMotorConfig.closedLoop
+            .feedbackSensor(FeedbackSensor.kAbsoluteEncoder);
+
+            FuelIntakeWristMotor.configure(FuelIntakeWristMotorConfig, com.revrobotics.ResetMode.kResetSafeParameters, com.revrobotics.PersistMode.kPersistParameters);
+
+            // FuelIntakeEncoder.setPosition(0);
 
         
     }
@@ -78,21 +97,25 @@ public class FuelIntakeSubsystem extends SubsystemBase {
     }
 
     public void goTo(double encoderGoal) {
-        if ((FuelIntakeWristEncoder.getPosition() + encoderOffset) % 1 < (encoderGoal - rangeOffset + encoderOffset) % 1) {
-            FuelIntakeWristMotor.set(RobotConstants.FuelWristExtendpower);
-        } else if ((FuelIntakeWristEncoder.getPosition() + encoderOffset) % 1 > (encoderGoal + rangeOffset + encoderOffset) % 1) {
+        if ((FuelIntakeWristEncoder.getPosition() + rangeOffset - encoderOffset) % 1 < (encoderGoal - encoderOffset) % 1) {
             FuelIntakeWristMotor.set(RobotConstants.FuelWristRetractpower);
+        } else if ((FuelIntakeWristEncoder.getPosition() - rangeOffset - encoderOffset) % 1 > (encoderGoal - encoderOffset) % 1) {
+            FuelIntakeWristMotor.set(RobotConstants.FuelWristExtendpower);
         } else {
             FuelIntakeWristMotor.stopMotor();
         }
         }
 
+    public void goToPID(double encoderGoal) {
+            FuelIntakeWristMotorLoop.setSetpoint(encoderGoal, ControlType.kPosition);
+    }
+
     public boolean wentTo(double encoderGoal) {
         if ((FuelIntakeWristEncoder.getPosition() + encoderOffset) % 1 < (encoderGoal - rangeOffset + encoderOffset) % 1) {
-            this.wristExtend();
+            this.wristRetract();
             return false;
         } else if ((FuelIntakeWristEncoder.getPosition() + encoderOffset) % 1 > (encoderGoal + rangeOffset + encoderOffset) % 1) {
-            this.wristRetract();
+            this.wristExtend();
             return false;
         } else {
             this.wristOff();

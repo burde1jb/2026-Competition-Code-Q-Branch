@@ -35,7 +35,7 @@ import edu.wpi.first.units.*;
 import frc.robot.subsystems.FuelShooterSubsystem;
 import frc.robot.commands.AimAndDriveCommand;
 import frc.robot.commands.AlignCommand;
-import frc.robot.commands.ClimberCommand;
+// import frc.robot.commands.ClimberCommand;
 import frc.robot.commands.ConveyorCommand;
 import frc.robot.commands.FuelIntakeCommand;
 import frc.robot.commands.LEDCommand;
@@ -50,7 +50,7 @@ import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.ConveyorSubsystem;
 import frc.robot.subsystems.SerializerSubsystem;
-import frc.robot.subsystems.ClimberSubsystem;
+// import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.AprilTagManager;
 
 
@@ -77,7 +77,7 @@ public class RobotContainer {
   private final VisionSubsystem visionSubsystem;
   private final SerializerSubsystem serializerSubsystem;
   private SendableChooser<Command> autoChooser;
-  private final ClimberSubsystem climberSubsystem;
+  // private final ClimberSubsystem climberSubsystem;
   // private final FuelIntakeWristSubsystemJOE intakeWristSubsystem;
   private final AprilTagManager ATMan;
   
@@ -92,7 +92,7 @@ public class RobotContainer {
     
     this.conveyorSubsystem = new ConveyorSubsystem();
     this.serializerSubsystem = new SerializerSubsystem();
-    this.climberSubsystem = new ClimberSubsystem();
+    // this.climberSubsystem = new ClimberSubsystem();
     ATMan = new AprilTagManager(drivetrain); 
     RegisterPathplannerCommands();
  
@@ -143,7 +143,7 @@ public class RobotContainer {
     //conveyorSubsystem.setDefaultCommand(new ConveyorCommand(conveyorSubsystem, xboxController.getHID()));
     ledSubsystem.setDefaultCommand(new LEDCommand(ledSubsystem, shooterSubsystem));
     //visionSubsystem.setDefaultCommand(new AlignCommand(drivetrain, visionSubsystem,6));
-    climberSubsystem.setDefaultCommand(new ClimberCommand(climberSubsystem, xboxController.getHID()));
+    // climberSubsystem.setDefaultCommand(new ClimberCommand(climberSubsystem, xboxController.getHID()));
 
     
     
@@ -245,7 +245,8 @@ public class RobotContainer {
     NamedCommands.registerCommand("AutonIntakeOff", AutonIntakeOff());
     NamedCommands.registerCommand("AutonShooterOn",AutonShooterOn());
     NamedCommands.registerCommand("AutonShooterOnTimed", new frc.robot.commands.AutonCommands.AutonShooterOnTimed(shooterSubsystem));
-    NamedCommands.registerCommand("AutonClimber", new frc.robot.commands.AutonCommands.AutonClimber(climberSubsystem));
+    // NamedCommands.registerCommand("AutonAimShoot", new AutonAimShoot(drivetrain, shooterSubsystem, conveyorSubsystem, serializerSubsystem));
+    // NamedCommands.registerCommand("AutonClimber", new frc.robot.commands.AutonCommands.AutonClimber(climberSubsystem));
   }
   private void configureAutoChooser() {
     autoChooser = AutoBuilder.buildAutoChooser();
@@ -345,4 +346,10 @@ public class RobotContainer {
       shooterSubsystem.stop();
     });
   } 
+
+  public Command AutonAimShoot() {
+    return new InstantCommand(() -> {
+      new AimAndDriveCommand(drivetrain);
+    }).andThen(TeleopShooterOn().andThen(Commands.parallel(TeleopSerializerOn(),TeleopConveyorOn(),agiation().repeatedly()))).withTimeout(3);
+  }
 }
