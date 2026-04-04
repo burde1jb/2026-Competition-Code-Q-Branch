@@ -4,11 +4,10 @@ import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.BooleanEntry;
-import edu.wpi.first.networktables.DoubleEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.RobotConstants.VisionConstants;
 import frc.robot.LimelightHelpers;
 import frc.robot.RobotContainer;
@@ -20,6 +19,9 @@ public class VisionSubsystem extends SubsystemBase {
   private final boolean kUseLimelight = true; //false if not using Limelight, true if using Limelight
   private RawFiducial[] fiducials;
   private final CommandSwerveDrivetrain drivetrain = RobotContainer.drivetrain;//assumes the drivetrain is made before the vision subsystem, which is true in our current code
+
+  // Uncomment the line below to enable dashboard-driven vision tuning.
+  // private final VisionTuning tuning = new VisionTuning("Vision Tuning", this);
 
   private final StructPublisher<Pose2d> LLPose = NT.getStructEntry_Pose2D(classname, "LLPose", new Pose2d());
   private final StructPublisher<Pose2d> drivePose = NT.getStructEntry_Pose2D(classname, "DrivetrainPose", new Pose2d());
@@ -175,32 +177,46 @@ public RawFiducial getFiducialWithId(int id, boolean verbose) {
    */
   // ---- Tunable rejection / weighting thresholds ----
   /** Minimum number of tags a MegaTag1 reading must see to be accepted */
-  private static final int kMT1_MinTagCount = 2;
+  int kMT1_MinTagCount = 2;
   /** Max chassis speed (m/s) before we reject MegaTag1 readings */
-  private static final double kMT1_MaxSpeedMps = 3.0;
+  double kMT1_MaxSpeedMps = 3.0;
   /** Max rotation rate (rotations/s) before we reject MegaTag1 readings */
-  private static final double kMT1_MaxOmegaRps = 1.5;
+  double kMT1_MaxOmegaRps = 1.5;
   /** Distance (m) beyond which MegaTag1 std devs are increased */
-  private static final double kMT1_FarDistanceMeters = 3.0;
+  double kMT1_FarDistanceMeters = 3.0;
   /** Base std devs for MegaTag1 when tags are close [x, y] in meters */
-  private static final double kMT1_CloseStdDevXY = 0.5;
+  double kMT1_CloseStdDevXY = 0.5;
   /** Std devs for MegaTag1 when tags are far [x, y] in meters */
-  private static final double kMT1_FarStdDevXY = 2.0;
+  double kMT1_FarStdDevXY = 2.0;
   /** Yaw std dev (radians) for MegaTag1 when tags are close — low = trust vision yaw */
-  private static final double kMT1_CloseStdDevYaw = 0.5;
+  double kMT1_CloseStdDevYaw = 0.5;
   /** Yaw std dev (radians) for MegaTag1 when tags are far — high = trust gyro only */
-  private static final double kMT1_FarStdDevYaw = 9999999;
+  double kMT1_FarStdDevYaw = 9999999;
+  /** Single-tag disabled scaling factor for MT1 std devs */
+  double kMT1_SingleTagDisabledStdDevScale = 2.0;
+
+  /** Omega threshold (rotations/s) where yaw std dev soft gating begins (270 deg/s) */
+  double kVisionYawSoftGateStartOmegaRps = 0.75;
+  /** Yaw scale factor per extra rotation/s above the soft gate threshold */
+  double kVisionYawSoftGateFactor = 2.0;
+  /** Maximum yaw scale multiplier from rotation speed gating */
+  double kVisionYawSoftGateMaxScale = 6.0;
 
   /** Max rotation rate (rotations/s) before we reject MegaTag2 readings */
-  private static final double kMT2_MaxOmegaRps = 2.0;
+  double kMT2_MaxOmegaRps = 2.0;
   /** Multiplier applied to avgTagDist for MegaTag2 std dev scaling (tune this!) */
-  private static final double kMT2_DistanceStdDevMultiplier = 0.7;
+  double kMT2_DistanceStdDevMultiplier = 0.7;
   /** Minimum std dev floor so we never trust MegaTag2 infinitely */
-  private static final double kMT2_MinStdDev = 0.3;
+  double kMT2_MinStdDev = 0.3;
+  /** Base yaw std dev for MegaTag2 when not spinning quickly */
+  double kMT2_BaseStdDevYaw = 0.75;
+  /** Minimum yaw std dev for MegaTag2 so vision yaw is never overtrusted */
+  double kMT2_MinStdDevYaw = 0.3;
+
+  // Vision tuning is managed in the separate VisionTuning subsystem.
 
   private void UpdateDrivetrainFromLimelight() {
     if (!kUseLimelight) return;
-
     var driveState = drivetrain.getState();
     double omegaRps = Math.abs(Units.radiansToRotations(driveState.Speeds.omegaRadiansPerSecond));
     double chassisSpeedMps = Math.hypot(driveState.Speeds.vxMetersPerSecond, driveState.Speeds.vyMetersPerSecond);
@@ -248,7 +264,8 @@ public RawFiducial getFiducialWithId(int id, boolean verbose) {
    */
   private boolean processMegaTag1(LimelightHelpers.PoseEstimate mt1, String label,
                                    double omegaRps, double chassisSpeedMps) {
-    if (mt1 == null || mt1.tagCount < kMT1_MinTagCount) return false;
+  boolean singleTagDisabled = DriverStation.isDisabled() && mt1 != null && mt1.tagCount == 1;
+    if (mt1 == null || (mt1.tagCount < kMT1_MinTagCount && !singleTagDisabled)) return false;
     if (chassisSpeedMps > kMT1_MaxSpeedMps) return false;
     if (omegaRps > kMT1_MaxOmegaRps) return false;
 
@@ -256,9 +273,19 @@ public RawFiducial getFiducialWithId(int id, boolean verbose) {
     boolean isClose = mt1.avgTagDist <= kMT1_FarDistanceMeters;
     double stdXY = isClose ? kMT1_CloseStdDevXY : kMT1_FarStdDevXY;
     double stdYaw = isClose ? kMT1_CloseStdDevYaw : kMT1_FarStdDevYaw;
+    if (omegaRps > kVisionYawSoftGateStartOmegaRps && stdYaw < kMT1_FarStdDevYaw) {
+      double yawScale = 1.0
+          + Math.min(kVisionYawSoftGateMaxScale - 1.0,
+              (omegaRps - kVisionYawSoftGateStartOmegaRps) * kVisionYawSoftGateFactor);
+      stdYaw = Math.min(kMT1_FarStdDevYaw, stdYaw * yawScale);
+    }
 
-    drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(stdXY, stdXY, stdYaw));
-    drivetrain.addVisionMeasurement(mt1.pose, mt1.timestampSeconds);
+    //drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(stdXY, stdXY, stdYaw));
+    if (singleTagDisabled) {
+      stdXY *= kMT1_SingleTagDisabledStdDevScale;
+      stdYaw = Math.min(kMT1_FarStdDevYaw, stdYaw * kMT1_SingleTagDisabledStdDevScale);
+    }
+    drivetrain.addVisionMeasurement(mt1.pose, mt1.timestampSeconds, VecBuilder.fill(stdXY, stdXY, stdYaw));
                                     
     SmartDashboard.putNumber("Vision/" + label + " Tags", mt1.tagCount);
     SmartDashboard.putNumber("Vision/" + label + " AvgDist", mt1.avgTagDist);
@@ -276,11 +303,12 @@ public RawFiducial getFiducialWithId(int id, boolean verbose) {
     if (mt2 == null || mt2.tagCount == 0) return false;
     if (omegaRps > kMT2_MaxOmegaRps) return false;
 
-    // Weight by distance: farther tags → less trust
-    double stdXY = Math.max(kMT2_MinStdDev, mt2.avgTagDist * kMT2_DistanceStdDevMultiplier);
-
-    drivetrain.setVisionMeasurementStdDevs(VecBuilder.fill(stdXY, stdXY, 9999999));
-    drivetrain.addVisionMeasurement(mt2.pose, mt2.timestampSeconds);
+  // Weight by distance: farther tags → less trust
+  double stdXY = Math.max(kMT2_MinStdDev, mt2.avgTagDist * kMT2_DistanceStdDevMultiplier);
+  double yawScale = 1.0 + Math.min(kVisionYawSoftGateMaxScale - 1.0,
+    Math.max(0.0, omegaRps - kVisionYawSoftGateStartOmegaRps) * kVisionYawSoftGateFactor);
+  double stdYaw = Math.max(kMT2_MinStdDevYaw, kMT2_BaseStdDevYaw * yawScale);
+  drivetrain.addVisionMeasurement(mt2.pose, mt2.timestampSeconds, VecBuilder.fill(stdXY, stdXY, stdYaw));
 
     SmartDashboard.putNumber("Vision/" + label + " Tags", mt2.tagCount);
     SmartDashboard.putNumber("Vision/" + label + " AvgDist", mt2.avgTagDist);
@@ -288,8 +316,8 @@ public RawFiducial getFiducialWithId(int id, boolean verbose) {
     return true;
   }
 
-       public static void setlimelightsThrottles(int throttle){
-         LimelightHelpers.SetThrottle(LimelightA,throttle);
-         LimelightHelpers.SetThrottle(LimelightB,throttle);  
-    }
+  public static void setlimelightsThrottles(int throttle){
+        LimelightHelpers.SetThrottle(LimelightA,throttle);
+        LimelightHelpers.SetThrottle(LimelightB,throttle);  
+  }
 }

@@ -4,46 +4,29 @@
 
 package frc.robot;
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.geometry.Rotation2d;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.FollowPathCommand;
-import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
-import java.util.function.IntSupplier;
 import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.RadiansPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 
 import com.ctre.phoenix6.swerve.SwerveRequest;
-import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
-
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import edu.wpi.first.units.*;
 import frc.robot.subsystems.FuelShooterSubsystem;
 import frc.robot.commands.AimAndDriveCommand;
-import frc.robot.commands.AlignCommand;
-// import frc.robot.commands.ClimberCommand;
-import frc.robot.commands.ConveyorCommand;
-import frc.robot.commands.FuelIntakeCommand;
 import frc.robot.commands.LEDCommand;
-import frc.robot.commands.SerializerCommand;
-import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.AutonCommands.*;
 import frc.robot.subsystems.FuelIntakeSubsystem;
-import frc.robot.subsystems.FuelIntakeWristSubsystemJOE;
 import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.generated.TunerConstants;
@@ -79,8 +62,7 @@ public class RobotContainer {
   private final SerializerSubsystem serializerSubsystem;
   private SendableChooser<Command> autoChooser;
   // private final ClimberSubsystem climberSubsystem;
-  // private final FuelIntakeWristSubsystemJOE intakeWristSubsystem;
-  private final AprilTagManager ATMan;
+
   
 
   public RobotContainer() {
@@ -94,7 +76,6 @@ public class RobotContainer {
     this.conveyorSubsystem = new ConveyorSubsystem();
     this.serializerSubsystem = new SerializerSubsystem();
     // this.climberSubsystem = new ClimberSubsystem();
-    ATMan = new AprilTagManager(drivetrain); 
     RegisterPathplannerCommands();
  
     configureTriggers();
@@ -134,14 +115,18 @@ public class RobotContainer {
         //     .withRotationalRate(-joystick.getRawAxis(4) * MaxAngularRate)));
     }
     else{
-    drivetrain.setDefaultCommand(
-      drivetrain.applyRequest(() -> drive.withVelocityX(-xboxController0.getRightX() * MaxSpeed)
+      drivetrain.setDefaultCommand(new InstantCommand(() -> {
+        drivetrain.brake(true); 
+      }));
+    }
+    
+    xboxController0.axisMagnitudeGreaterThan(0,0.1)
+    .or(xboxController0.axisMagnitudeGreaterThan(1,0.1))
+    .or(xboxController0.axisMagnitudeGreaterThan(3,0.1))
+    .or(xboxController0.axisMagnitudeGreaterThan(4,0.1))
+      .whileTrue(drivetrain.applyRequest(() -> drive.withVelocityX(-xboxController0.getRightX() * MaxSpeed)
             .withVelocityY(-xboxController0.getRightY() * MaxSpeed)
             .withRotationalRate(-xboxController0.getLeftX() * MaxAngularRate)));
-        // drivetrain.applyRequest(() -> drive.withVelocityX(joystick.getRawAxis(4) * MaxSpeed)
-        //     .withVelocityY(-joystick.getRawAxis(3) * MaxSpeed)
-        //     .withRotationalRate(-joystick.getRawAxis(0) * MaxAngularRate)));
-    }
     
 
     //intakeSubsystem.setDefaultCommand(new FuelIntakeCommand(intakeSubsystem, xboxController.getHID()));

@@ -5,8 +5,6 @@ import edu.wpi.first.units.measure.Distance;
 import static edu.wpi.first.units.Units.Degrees;
 import static edu.wpi.first.units.Units.Inches;
 
-import java.util.DuplicateFormatFlagsException;
-
 import com.ctre.phoenix6.CANBus;
 
 public class RobotConstants {
