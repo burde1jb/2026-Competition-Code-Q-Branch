@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.8159868845828715,
-        "y": 2.1548044090937823
+        "x": 8.051536361553396,
+        "y": 1.745314508927518
       },
       "isLocked": false,
       "linkedName": "Right Ballpit"
     },
     {
       "anchor": {
-        "x": 7.713637660485022,
-        "y": 2.8122967189728967
+        "x": 7.854746987951808,
+        "y": 2.2428554216867465
       },
       "prevControl": {
-        "x": 7.8351616107995765,
-        "y": 2.5504896852925074
+        "x": 8.081402811843487,
+        "y": 1.7034316109704766
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.25,
+    "maxVelocity": 1.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,

@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.863409415121255,
-        "y": 1.9842225392296724
+        "x": 7.013313253012049,
+        "y": 2.6581084337349408
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.114509161464234,
-        "y": 1.291270803687229
+        "x": 7.264412999355028,
+        "y": 1.9651566981924973
       },
       "isLocked": false,
       "linkedName": "Right Balls Collected 2"
@@ -87,7 +87,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -45.0
+    "rotation": -90.0
   },
   "useDefaultConstraints": true
 }

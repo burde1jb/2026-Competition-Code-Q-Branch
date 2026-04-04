@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.713637660485022,
-        "y": 2.8122967189728967
+        "x": 7.854746987951808,
+        "y": 2.2428554216867465
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.057648744510387,
-        "y": 3.1441025658441384
+        "x": 7.44881362641511,
+        "y": 2.6674354754827867
       },
       "isLocked": false,
       "linkedName": "Right Balls Collected"
@@ -20,12 +20,12 @@
         "y": 2.7087874465049935
       },
       "prevControl": {
-        "x": 6.85053234239375,
-        "y": 2.861593044300099
+        "x": 7.4749082445992645,
+        "y": 2.946888642128828
       },
       "nextControl": {
-        "x": 6.355407317702465,
-        "y": 2.4792213229426445
+        "x": 5.7895059545136816,
+        "y": 2.4588364987015616
       },
       "isLocked": false,
       "linkedName": null
@@ -36,12 +36,12 @@
         "y": 0.8197432239657632
       },
       "prevControl": {
-        "x": 5.778814317495156,
-        "y": 0.9696693266510601
+        "x": 6.139999386751754,
+        "y": 1.1255289035596854
       },
       "nextControl": {
-        "x": 4.948806751409952,
-        "y": 0.3476426352970402
+        "x": 5.049504169325575,
+        "y": 0.5313846134844913
       },
       "isLocked": false,
       "linkedName": null
@@ -52,12 +52,12 @@
         "y": 0.6127246790299581
       },
       "prevControl": {
-        "x": 3.880091543508792,
-        "y": 0.5400511697575989
+        "x": 3.81146334299404,
+        "y": 0.6000581244162237
       },
       "nextControl": {
-        "x": 3.2756776034236803,
-        "y": 0.6774179743223976
+        "x": 3.216355802416711,
+        "y": 0.6300736736288896
       },
       "isLocked": false,
       "linkedName": null
@@ -68,8 +68,8 @@
         "y": 1.013823109843081
       },
       "prevControl": {
-        "x": 2.963663674246409,
-        "y": 0.7712887900757809
+        "x": 3.13029484186313,
+        "y": 0.8770490609240988
       },
       "nextControl": null,
       "isLocked": false,
@@ -97,6 +97,19 @@
       "maxWaypointRelativePos": 4.0,
       "constraints": {
         "maxVelocity": 1.5,
+        "maxAcceleration": 6.5,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    },
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0,
+      "maxWaypointRelativePos": 0.5881838074398017,
+      "constraints": {
+        "maxVelocity": 1.0,
         "maxAcceleration": 6.5,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,

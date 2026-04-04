@@ -3,64 +3,55 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.67455421686747,
-        "y": 5.324469879518071
+        "x": 0.9047228915662651,
+        "y": 4.767156626506025
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.318366174334675,
-        "y": 6.116182413187995
+        "x": 1.3218005305598004,
+        "y": 4.695998119152679
       },
       "isLocked": false,
-      "linkedName": "Left Ball Pit Collected 2"
+      "linkedName": "Left Depot C End"
     },
     {
       "anchor": {
-        "x": 5.52700427960057,
-        "y": 7.237318116975749
+        "x": 1.7570843373493976,
+        "y": 3.4449036144578313
       },
       "prevControl": {
-        "x": 5.762307380623816,
-        "y": 6.966198733748366
+        "x": 1.7768489811707915,
+        "y": 4.333990896813372
       },
       "nextControl": {
-        "x": 5.142834739728798,
-        "y": 7.679963404062265
+        "x": 1.7263912939843942,
+        "y": 2.0642162234169907
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.4734807417974314,
-        "y": 6.978544935805992
+        "x": 0.5878192771084336,
+        "y": 0.6583373493975899
       },
       "prevControl": {
-        "x": 2.4690561362887338,
-        "y": 7.478525358288805
+        "x": 0.5842257529810095,
+        "y": 0.9083115212320929
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Shooting Position"
+      "linkedName": "Left Depot D End"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 1.05,
-      "rotationDegrees": 0.0
-    },
-    {
-      "waypointRelativePos": 1.6776119402985017,
-      "rotationDegrees": 0.0
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 1.477461706783359,
+      "minWaypointRelativePos": 1.764551422319475,
       "maxWaypointRelativePos": 2.0,
       "constraints": {
-        "maxVelocity": 1.5,
+        "maxVelocity": 1.0,
         "maxAcceleration": 6.5,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
@@ -81,13 +72,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -49.635463426902646
+    "rotation": 180.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": -9.36796942462384
   },
   "useDefaultConstraints": true
 }

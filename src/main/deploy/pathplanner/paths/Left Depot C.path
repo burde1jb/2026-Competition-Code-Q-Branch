@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.192368045649072,
-        "y": 6.965606276747503
+        "x": 0.4785421686746987,
+        "y": 4.931072289156628
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.058540878443166,
-        "y": 6.487712681205675
+        "x": 0.6440637453246891,
+        "y": 5.195866228064533
       },
       "isLocked": false,
-      "linkedName": "Left Ball Pit"
+      "linkedName": "Left Depot B End"
     },
     {
       "anchor": {
-        "x": 7.909385542168675,
-        "y": 5.81621686746988
+        "x": 0.9047228915662651,
+        "y": 4.767156626506025
       },
       "prevControl": {
-        "x": 8.127019486737378,
-        "y": 6.682882916095122
+        "x": 1.2106987951807227,
+        "y": 5.084060240963856
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Left Ball Pit Collected"
+      "linkedName": "Left Depot C End"
     }
   ],
   "rotationTargets": [],
@@ -34,7 +34,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 1.0,
-    "maxAcceleration": 3.0,
+    "maxAcceleration": 6.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -135.0
+    "rotation": -9.36796942462384
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -107.96913974015686
+    "rotation": -90.0
   },
   "useDefaultConstraints": false
 }
