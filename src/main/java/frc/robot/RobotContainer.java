@@ -126,8 +126,8 @@ public class RobotContainer {
     //if in a simulation use a xbox controller so Jow can actually drive the dang thing. my goodness.  
     if(Robot.isSimulation()) {
       drivetrain.setDefaultCommand(
-        drivetrain.applyRequest(() -> drive.withVelocityX(-xboxController0.getRightX() * MaxSpeed)
-            .withVelocityY(-xboxController0.getRightY() * MaxSpeed)
+        drivetrain.applyRequest(() -> drive.withVelocityX(-xboxController0.getRightY() * MaxSpeed)
+            .withVelocityY(-xboxController0.getRightX() * MaxSpeed)
             .withRotationalRate(-xboxController0.getLeftX() * MaxAngularRate)));
         // drivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getRawAxis(1) * MaxSpeed)
         //     .withVelocityY(-joystick.getRawAxis(0) * MaxSpeed)
@@ -135,8 +135,8 @@ public class RobotContainer {
     }
     else{
     drivetrain.setDefaultCommand(
-      drivetrain.applyRequest(() -> drive.withVelocityX(-xboxController0.getRightX() * MaxSpeed)
-            .withVelocityY(-xboxController0.getRightY() * MaxSpeed)
+      drivetrain.applyRequest(() -> drive.withVelocityX(-xboxController0.getRightY() * MaxSpeed)
+            .withVelocityY(-xboxController0.getRightX() * MaxSpeed)
             .withRotationalRate(-xboxController0.getLeftX() * MaxAngularRate)));
         // drivetrain.applyRequest(() -> drive.withVelocityX(joystick.getRawAxis(4) * MaxSpeed)
         //     .withVelocityY(-joystick.getRawAxis(3) * MaxSpeed)
