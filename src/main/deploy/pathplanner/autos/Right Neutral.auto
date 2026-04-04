@@ -82,18 +82,30 @@
                 "data": {
                   "name": "AutonShooterOnTimed"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonConveyorOnTimed"
+                }
               }
             ]
           }
         },
         {
-          "type": "sequential",
+          "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
                   "pathName": "Right Neutral D"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonIntakeExtendandOn"
                 }
               }
             ]
@@ -151,6 +163,12 @@
                 "type": "named",
                 "data": {
                   "name": "AutonSerializerOnTimed"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonConveyorOnTimed"
                 }
               }
             ]

@@ -31,7 +31,7 @@ public class AutonIntakeOnCommandLong extends Command {
 
     @Override
     public boolean isFinished() {
-        if (timer.get() >= 10.0) {
+        if (timer.get() >= 1.7) {
             intakeSubsystem.FuelIntakeOff();
             return true;
         }

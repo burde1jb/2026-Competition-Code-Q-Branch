@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.658159771754635,
-        "y": 1.2337803138373749
+        "x": 8.295877318116975,
+        "y": 1.1690870185449365
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.178269338220531,
-        "y": 2.219497704386221
+        "x": 7.8159868845828715,
+        "y": 2.1548044090937823
       },
       "isLocked": false,
       "linkedName": "Right Ballpit"
@@ -48,7 +48,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 135.0
+    "rotation": 115.76932762433877
   },
   "useDefaultConstraints": false
 }

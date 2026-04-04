@@ -32,10 +32,10 @@ public class FuelIntakeCommand extends Command {
         //     intakeSubsystem.goToPID(RobotConstants.FuelWristExtendgoal);
 
         while (controller2.getAButtonPressed())
-            intakeSubsystem.goTo(RobotConstants.FuelWristExtendgoal);
+            intakeSubsystem.goToPID(RobotConstants.FuelWristExtendgoal);
         
         while (controller2.getBButtonPressed())
-            intakeSubsystem.goTo(RobotConstants.FuelWristRetractgoal);
+            intakeSubsystem.goToPID(RobotConstants.FuelWristRetractgoal);
 
         while (controller2.getStartButtonPressed())
             intakeSubsystem.FuelIntakeOn(RobotConstants.FuelIntakeOutspeed);

@@ -9,7 +9,7 @@ public class drivetrainThings{
     public static final double minYposeErrorMetersToCorrect = Units.inchesToMeters(6);//.6;
     public static final double minRZErrorToCorrect = 4;//1;//.45;//0.5;//1;//2;//1.25; //Degrees of error
 
-    public static  double k_PoseX_P = 7.0;//3.0;//2.1;//4;
+    public static  double k_PoseX_P = 3.0;//3.0;//2.1;//4;
     public static  double k_PoseX_I = 0.1;//.6;//0.0;//0.000001;//0.02;
     public static  double k_PoseX_D = 0.0;//.0;//0.06;
 

@@ -59,7 +59,8 @@ public class RobotContainer {
   private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond);
   // 3/4 of a rotation per second max angular velocity
   private double MaxAngularRate = RotationsPerSecond.of(3.0).in(RadiansPerSecond);
-  private final CommandJoystick joystick = new CommandJoystick(0);
+  // private final CommandJoystick joystick = new CommandJoystick(0);
+  private final CommandXboxController xboxController0 = new CommandXboxController(0);
   private final CommandXboxController xboxController = new CommandXboxController(1);
   public static final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
   // /* Setting up bindings for necessary control of the swerve drive platform */
@@ -113,7 +114,7 @@ public class RobotContainer {
     AlignmentOK = new Trigger (()->aligned);
     //anytime the shooter is up to speed, run the serializer and conveyor to feed fuel into the shooter. 
     //the shooter is only up to speed when the trigger is pulled, wether for passing or for shooting, so this should not cause any issues with intaking.
-    ShooterRPMOK.and(AlignmentOK)
+    ShooterRPMOK.and(AlignmentOK).debounce(0.10)
       .whileTrue(Commands.parallel(TeleopSerializerOn(),TeleopConveyorOn(),agiation().repeatedly()))
       .onFalse(Commands.parallel(TeleopConveyorOff(),TeleopSerializerOff(),new InstantCommand(()->{intakeSubsystem.wristOff();}))
     );
@@ -125,15 +126,21 @@ public class RobotContainer {
     //if in a simulation use a xbox controller so Jow can actually drive the dang thing. my goodness.  
     if(Robot.isSimulation()) {
       drivetrain.setDefaultCommand(
-        drivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getRawAxis(1) * MaxSpeed)
-            .withVelocityY(-joystick.getRawAxis(0) * MaxSpeed)
-            .withRotationalRate(-joystick.getRawAxis(4) * MaxAngularRate)));
+        drivetrain.applyRequest(() -> drive.withVelocityX(-xboxController0.getRightX() * MaxSpeed)
+            .withVelocityY(-xboxController0.getRightY() * MaxSpeed)
+            .withRotationalRate(-xboxController0.getLeftX() * MaxAngularRate)));
+        // drivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getRawAxis(1) * MaxSpeed)
+        //     .withVelocityY(-joystick.getRawAxis(0) * MaxSpeed)
+        //     .withRotationalRate(-joystick.getRawAxis(4) * MaxAngularRate)));
     }
     else{
     drivetrain.setDefaultCommand(
-        drivetrain.applyRequest(() -> drive.withVelocityX(joystick.getRawAxis(4) * MaxSpeed)
-            .withVelocityY(-joystick.getRawAxis(3) * MaxSpeed)
-            .withRotationalRate(-joystick.getRawAxis(0) * MaxAngularRate)));
+      drivetrain.applyRequest(() -> drive.withVelocityX(-xboxController0.getRightX() * MaxSpeed)
+            .withVelocityY(-xboxController0.getRightY() * MaxSpeed)
+            .withRotationalRate(-xboxController0.getLeftX() * MaxAngularRate)));
+        // drivetrain.applyRequest(() -> drive.withVelocityX(joystick.getRawAxis(4) * MaxSpeed)
+        //     .withVelocityY(-joystick.getRawAxis(3) * MaxSpeed)
+        //     .withRotationalRate(-joystick.getRawAxis(0) * MaxAngularRate)));
     }
     
 
@@ -152,7 +159,8 @@ public class RobotContainer {
      */
     //if in sim use button 1 (A) on an Xbox Controller so jow can actually debug in the sim. Else just use the wild joystick button 15 because why not.
     if(Robot.isSimulation()) {
-      joystick.button(1)
+      xboxController0.leftBumper()
+      // joystick.button(1)
         .whileTrue(
           Commands.parallel(
               new InstantCommand(() -> System.out.println("Aiming and Driving")),
@@ -163,7 +171,8 @@ public class RobotContainer {
         .onFalse(TeleopShooterOff());
     }
     else {
-      joystick.button(15)
+      xboxController0.leftBumper()
+      // joystick.button(15)
         .whileTrue(
           Commands.parallel(
               new AimAndDriveCommand(drivetrain),
@@ -186,10 +195,12 @@ public class RobotContainer {
     //joystick.button(1).whileTrue(new AlignCommand(commandSwerveDrivetrain, visionSubsystem));
     //joystick.button(1).whileTrue(alignHub());
     //joystick.button(4).whileTrue(alignTower());
-    joystick.button(14).whileTrue(xstance());
+    xboxController0.rightBumper().whileTrue(xstance());
+    // joystick.button(14).whileTrue(xstance());
   
     // // reset the field-centric heading on left bumper press
-    joystick.button(13).onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+    xboxController0.back().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+    // joystick.button(13).onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
     // commandSwerveDrivetrain.registerTelemetry(logger::telemeterize);
   }
 
@@ -206,7 +217,9 @@ public class RobotContainer {
      * Shooter Bindings
      */
     xboxController.y().onTrue(TeleopShooterOn());
+    // xboxController.x().onTrue(TeleopShooterOnWarmUp());
     xboxController.y().onFalse(TeleopShooterOff());
+    // xboxController.x().onFalse(TeleopShooterOff());
     /*
      * Serializer Bindings
      */
@@ -233,6 +246,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("AutonIntakeExtend", new AutonIntakeExtend(intakeSubsystem));
     NamedCommands.registerCommand("AutonIntakeRetract", new AutonIntakeRetract(intakeSubsystem));
     NamedCommands.registerCommand("AutonConveyorOnTimed", new AutonConveyorOnTimed(conveyorSubsystem));
+    NamedCommands.registerCommand("AutonConveyorOnTimed2", new AutonConveyorOnTimed2(conveyorSubsystem));
     NamedCommands.registerCommand("AutonIntakeOnCommand", new AutonIntakeOnCommand(intakeSubsystem));
     NamedCommands.registerCommand("AutonIntakeOnCommandLong", new AutonIntakeOnCommandLong(intakeSubsystem));
     NamedCommands.registerCommand("AutonIntakeOffCommand", new AutonIntakeOffCommand(intakeSubsystem));
@@ -244,6 +258,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("AutonIntakeOn", AutonIntakeOn());
     NamedCommands.registerCommand("AutonIntakeOff", AutonIntakeOff());
     NamedCommands.registerCommand("AutonShooterOn",AutonShooterOn());
+    NamedCommands.registerCommand("AutonIntakeExtendandOn", new AutonIntakeExtendandOn(intakeSubsystem));
     NamedCommands.registerCommand("AutonShooterOnTimed", new frc.robot.commands.AutonCommands.AutonShooterOnTimed(shooterSubsystem));
     // NamedCommands.registerCommand("AutonAimShoot", new AutonAimShoot(drivetrain, shooterSubsystem, conveyorSubsystem, serializerSubsystem));
     // NamedCommands.registerCommand("AutonClimber", new frc.robot.commands.AutonCommands.AutonClimber(climberSubsystem));
@@ -282,9 +297,17 @@ public class RobotContainer {
     return new InstantCommand(() -> {
       shooterSubsystem.shooterOn(RobotConstants.FuelShooterMaxVelocity);},shooterSubsystem);
   }
+  public Command TeleopShooterOnWarmUp() {
+    return new InstantCommand(() -> {
+      shooterSubsystem.shooterOn(RobotConstants.FuelShooterWarmUpVelocity);},shooterSubsystem);
+  }
   public Command TeleopShooterOff() {
     return AutonShooterOff();
   }
+  // public Command TeleopShooterOnUltra() {
+  //   return new InstantCommand(() -> {
+  //     shooterSubsystem.shooterOn(RobotConstants.FuelShooterUltraVelocity);},shooterSubsystem);
+  // }
   public Command TeleopSerializerOn() {
     return new InstantCommand(() -> {
       serializerSubsystem.serializerOn(true);

@@ -1,21 +1,19 @@
 package frc.robot.commands.AutonCommands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotConstants;
-import frc.robot.subsystems.FuelShooterSubsystem;
+import frc.robot.subsystems.ConveyorSubsystem;
+import edu.wpi.first.wpilibj.Timer;
 
-
-public class AutonShooterOnTimed extends Command {
+public class AutonConveyorOnTimed2 extends Command {
+    ConveyorSubsystem conveyorSubsystem;
     Timer timer;
-    FuelShooterSubsystem shooterSubsystem;
     boolean isItFinished;
 
-
-    public AutonShooterOnTimed(FuelShooterSubsystem shooterSubsystem) {
+    public AutonConveyorOnTimed2(ConveyorSubsystem conveyorSubsystem) {
+        this.conveyorSubsystem = conveyorSubsystem;
         timer = new Timer();
-        this.shooterSubsystem = shooterSubsystem;
-        addRequirements(shooterSubsystem);
+        addRequirements(conveyorSubsystem);
     }
 
     @Override
@@ -27,17 +25,15 @@ public class AutonShooterOnTimed extends Command {
 
     @Override
     public void execute() {
-        shooterSubsystem.shooterOn(RobotConstants.FuelShooterMaxVelocity);
-        
+        conveyorSubsystem.conveyorOn(RobotConstants.ConveyorMaxVelocity);
     }
 
     @Override
     public boolean isFinished() {
         if (timer.get() >= RobotConstants.AutonShootTime) {
-            shooterSubsystem.stop();
+            conveyorSubsystem.conveyorOff();
             return true;
         }
         return false;
-        // return isItFinished;
     }
 }

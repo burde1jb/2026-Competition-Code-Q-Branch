@@ -5,7 +5,7 @@
     "data": {
       "commands": [
         {
-          "type": "deadline",
+          "type": "parallel",
           "data": {
             "commands": [
               {
@@ -24,26 +24,38 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "parallel",
           "data": {
             "commands": [
               {
-                "type": "wait",
+                "type": "named",
                 "data": {
-                  "waitTime": 3.0
+                  "name": "AutonShooterOnTimed"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "AutonAimShoot"
+                  "name": "AutonSerializerOnTimed"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonConveyorOnTimed"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonIntakeOffCommand"
                 }
               }
             ]
           }
         },
         {
-          "type": "deadline",
+          "type": "parallel",
           "data": {
             "commands": [
               {
@@ -57,24 +69,91 @@
                 "data": {
                   "name": "AutonIntakeOnCommand"
                 }
-              }
-            ]
-          }
-        },
-        {
-          "type": "deadline",
-          "data": {
-            "commands": [
+              },
               {
-                "type": "wait",
+                "type": "named",
                 "data": {
-                  "waitTime": 3.0
+                  "name": "AutonConveyorOff"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "AutonAimShoot"
+                  "name": "AutonSerializerOff"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonShooterOff"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonShooterOnTimed"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonSerializerOnTimed"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonConveyorOnTimed"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonIntakeOffCommand"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Right Sweep 3"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonIntakeOnCommand"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonShooterOff"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonSerializerOff"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutonConveyorOff"
                 }
               }
             ]

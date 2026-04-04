@@ -96,12 +96,12 @@
     },
     {
       "anchor": {
-        "x": 2.8487018544935796,
-        "y": 6.525691868758916
+        "x": 2.4734807417974314,
+        "y": 6.978544935805992
       },
       "prevControl": {
-        "x": 3.0083513931687973,
-        "y": 6.718076963817733
+        "x": 2.6331302804726495,
+        "y": 7.17093003086481
       },
       "nextControl": null,
       "isLocked": false,
@@ -163,7 +163,19 @@
     }
   ],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "AutonShooterOnTimed",
+      "waypointRelativePos": 4.0,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "AutonShooterOnTimed"
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 4.85,
     "maxAcceleration": 7.5,
@@ -174,7 +186,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -46.531607792011
+    "rotation": -49.635463426902646
   },
   "reversed": false,
   "folder": null,

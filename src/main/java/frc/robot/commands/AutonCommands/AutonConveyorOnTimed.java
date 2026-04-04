@@ -19,7 +19,7 @@ public class AutonConveyorOnTimed extends Command {
     @Override
     public void initialize() {
         isItFinished = false;
-        timer.reset();
+        // timer.reset();
         timer.restart();
     }
 
@@ -30,7 +30,7 @@ public class AutonConveyorOnTimed extends Command {
 
     @Override
     public boolean isFinished() {
-        if (timer.get() >= 3.0) {
+        if (timer.get() >= RobotConstants.AutonShootTime) {
             conveyorSubsystem.conveyorOff();
             return true;
         }

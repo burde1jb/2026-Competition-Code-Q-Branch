@@ -1,6 +1,7 @@
 package frc.robot.commands.AutonCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.RobotConstants;
 import frc.robot.subsystems.SerializerSubsystem;
 import edu.wpi.first.wpilibj.Timer;
 
@@ -18,18 +19,19 @@ public class AutonSerializerOnTimed extends Command {
     @Override
     public void initialize() {
         isItFinished = false;
-        timer.reset();
+        // timer.reset();
         timer.restart();
     }
 
     @Override
     public void execute() {
-        serializerSubsystem.serializerOn(true);
+        // serializerSubsystem.serializerOn(true);
+        serializerSubsystem.serializerOnAuto(RobotConstants.SerializerOnspeed);
     }
 
     @Override
     public boolean isFinished() {
-        if (timer.get() >= 3.0) {
+        if (timer.get() >= RobotConstants.AutonShootTime) {
             serializerSubsystem.serializerOff();
             return true;
         }

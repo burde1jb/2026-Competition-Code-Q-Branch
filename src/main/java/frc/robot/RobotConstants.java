@@ -19,6 +19,9 @@ public class RobotConstants {
     public final static double HubOffset = - 1.0; //Distance robot is to be away from Hub
     public final static double HubOffsetLeft = 0.356; //Distance between AprilTags on Hub
 
+    //Auton Timing Values
+    public final static double AutonShootTime = 2.5;
+    
     // Fuel Shooter Constants
     // CAN, PWM, DIO values for motors, encoders, and sensors - Motors Spinning
     public final static int FuelShooterMotorCANid = 20;
@@ -26,8 +29,8 @@ public class RobotConstants {
     public final static int FuelShooterMotor3CANid = 22;
     public final static int FuelShooterEncoderid = 2;
     //shooter power values
-    public final static double FuelShooterMaxVelocity = -3220;
-    public final static double FuelShooterUltraVelocity = -4500;
+    public final static double FuelShooterMaxVelocity = -3100;
+    public final static double FuelShooterWarmUpVelocity = -2500;
     public final static double FuelShooterSpeed = -0.80;
 
     // Fuel Wrist Constants
@@ -47,7 +50,7 @@ public class RobotConstants {
     public final static double FuelWristencoderOffset = 0.00;
     public final static double FuelWristrangeOffset = 0.03;
     public final static double FuelWristExtendgoal = 0.20;
-    public final static double FuelWristRetractgoal = 0.80;
+    public final static double FuelWristRetractgoal = 0.81;
  
     // Fuel Wrist Power values for motors%
     public final static double FuelWristExtendpower = 0.40;
@@ -65,7 +68,7 @@ public class RobotConstants {
     public final static double FuelIntakemotorFF = 0;
 
     // Fuel Intake Power values for motors
-    public final static double FuelIntakeOnspeed = 0.80;
+    public final static double FuelIntakeOnspeed = 1.0;
     public final static double FuelIntakeOnspeedAuto = 1.0;
     public final static double FuelIntakeMaxVelocity = 4500;
     public final static double FuelIntakeOutspeed = -1.00;

@@ -123,6 +123,14 @@ public class FuelShooterSubsystem extends SubsystemBase {
         FuelShooterTargetVelocity = velocity;
     }
 
+    public void shooterOnWarmUp(double velocity){
+        FuelShooterMotorLoop.setSetpoint(velocity, ControlType.kVelocity);
+        // FuelShooterMotor.set(0);
+        // FuelShooterMotor2.set(0);
+        FuelShooterMotorLoop2.setSetpoint(velocity, ControlType.kVelocity);
+        FuelShooterTargetVelocity = velocity;
+    }
+
     public void shooterSpeed(double power){
       FuelShooterMotor.set(power);
       FuelShooterMotor2.set(power);

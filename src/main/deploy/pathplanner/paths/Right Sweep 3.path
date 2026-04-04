@@ -8,40 +8,40 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.2718427289532497,
-        "y": 0.31841233716942496
+        "x": 3.6145301720433807,
+        "y": 0.26467475035663135
       },
       "isLocked": false,
       "linkedName": "Right Shot"
     },
     {
       "anchor": {
-        "x": 5.643452211126961,
-        "y": 0.7809272467902997
+        "x": 4.609216867469879,
+        "y": 0.5490602409638552
       },
       "prevControl": {
-        "x": 5.405258728132782,
-        "y": 0.7050071265381423
+        "x": 4.359742276818678,
+        "y": 0.5652598897074398
       },
       "nextControl": {
-        "x": 5.890687431856404,
-        "y": 0.8597292671159639
+        "x": 6.292084337349398,
+        "y": 0.43978313253011947
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.053766048502139,
-        "y": 1.8030813124108418
+        "x": 7.789180722891565,
+        "y": 1.156148359486449
       },
       "prevControl": {
-        "x": 6.4417686596009425,
-        "y": 1.1019522152595789
+        "x": 6.974840228245364,
+        "y": 0.6025608167334112
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "RIght Ballpit 2"
+      "linkedName": null
     }
   ],
   "rotationTargets": [
@@ -50,11 +50,25 @@
       "rotationDegrees": 180.0
     },
     {
-      "waypointRelativePos": 1.124045801526711,
+      "waypointRelativePos": 1.1402985074626748,
       "rotationDegrees": 180.0
     }
   ],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 1.831072210065642,
+      "maxWaypointRelativePos": 2.0,
+      "constraints": {
+        "maxVelocity": 1.0,
+        "maxAcceleration": 6.5,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -67,7 +81,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 135.0
+    "rotation": 90.0
   },
   "reversed": false,
   "folder": null,

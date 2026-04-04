@@ -38,7 +38,7 @@ public class AimAndDriveCommand extends Command {
     private Pose2d PoseOffset;//This is how far we are from where we want to be. this is CurrentPose minus TargetPose.
     private final PIDController AlignXPid = new PIDController(drivetrainThings.k_PoseX_P,drivetrainThings.k_PoseX_I,drivetrainThings.k_PoseX_D);
     private final PIDController AlignYPid = new PIDController(drivetrainThings.k_PoseY_P,drivetrainThings.k_PoseY_I,drivetrainThings.k_PoseY_D);
-    private final double wanteddistanceFromHub = Units.inchesToMeters(140); //CHANGE SHOOTING DISTANCE HERE
+    private final double wanteddistanceFromHub = Units.inchesToMeters(142); //CHANGE SHOOTING DISTANCE HERE
     private final StructPublisher<Pose2d> NTTargetPose = NT.getStructEntry_Pose2D("AimAndDriveCmd", "TargetPose", new Pose2d());
     private final BooleanEntry isAligned = NT.getBooleanEntry("AimAndDriveCmd", "isAligned", false);
     private final BooleanEntry alignXOK = NT.getBooleanEntry("AimAndDriveCmd", "alignXOK", false);

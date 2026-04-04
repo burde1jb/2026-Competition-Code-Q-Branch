@@ -26,6 +26,10 @@ public class SerializerSubsystem extends SubsystemBase {
         }
     }
 
+    public void serializerOnAuto(double power) {
+        SerializerMotor.set(power);
+    }
+
     public void serializerOff() {
         SerializerMotor.stopMotor();
     }
