@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.833120481927711,
-        "y": 3.007795180722892
+        "x": 5.691060240963855,
+        "y": 2.4504819277108436
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.713321160396662,
-        "y": 3.2468946718856673
+        "x": 5.4834337349397595,
+        "y": 2.9203734939759034
       },
       "isLocked": false,
       "linkedName": "RIght Ballpit 2"
@@ -20,12 +20,12 @@
         "y": 3.641602409638554
       },
       "prevControl": {
-        "x": 6.074160282595428,
-        "y": 3.742234757236026
+        "x": 5.909614457831326,
+        "y": 3.6743855421686753
       },
       "nextControl": {
-        "x": 6.750689710352794,
-        "y": 3.444746361827341
+        "x": 6.790370397954759,
+        "y": 3.600989213825054
       },
       "isLocked": false,
       "linkedName": null
@@ -56,10 +56,6 @@
     {
       "waypointRelativePos": 1.454198473282426,
       "rotationDegrees": -45.0
-    },
-    {
-      "waypointRelativePos": 1.8244274809160093,
-      "rotationDegrees": -90.0
     }
   ],
   "constraintZones": [],
@@ -74,13 +70,13 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": -90.0
+    "velocity": 1.0,
+    "rotation": -45.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
-    "velocity": 0,
+    "velocity": 1.0,
     "rotation": 90.0
   },
   "useDefaultConstraints": false

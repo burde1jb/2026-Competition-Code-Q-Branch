@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.192368045649072,
-        "y": 6.965606276747503
+        "x": 8.171650602409636,
+        "y": 6.679506024096386
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.058540878443166,
-        "y": 6.487712681205675
+        "x": 8.08422891566265,
+        "y": 6.209614457831325
       },
       "isLocked": false,
       "linkedName": "Left Ball Pit"
@@ -20,8 +20,8 @@
         "y": 5.81621686746988
       },
       "prevControl": {
-        "x": 8.127019486737378,
-        "y": 6.682882916095122
+        "x": 8.138867469879518,
+        "y": 6.056626506024097
       },
       "nextControl": null,
       "isLocked": false,
@@ -41,13 +41,13 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
+    "velocity": 1.0,
     "rotation": -135.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
-    "velocity": 0,
+    "velocity": 1.0,
     "rotation": -107.96913974015686
   },
   "useDefaultConstraints": false

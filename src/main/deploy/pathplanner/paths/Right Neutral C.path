@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.44881362641511,
-        "y": 2.6674354754827867
+        "x": 7.48135577340008,
+        "y": 2.629696196352362
       },
       "isLocked": false,
       "linkedName": "Right Balls Collected"
@@ -20,28 +20,28 @@
         "y": 2.7087874465049935
       },
       "prevControl": {
-        "x": 7.4749082445992645,
-        "y": 2.946888642128828
+        "x": 7.549282338059815,
+        "y": 3.042579538338497
       },
       "nextControl": {
-        "x": 5.7895059545136816,
-        "y": 2.4588364987015616
+        "x": 5.8839635229337555,
+        "y": 2.4226139742657407
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.578758915834522,
-        "y": 0.8197432239657632
+        "x": 5.559927710843374,
+        "y": 0.7239036144578312
       },
       "prevControl": {
-        "x": 6.139999386751754,
-        "y": 1.1255289035596854
+        "x": 6.105122704180157,
+        "y": 1.02363927340139
       },
       "nextControl": {
-        "x": 5.049504169325575,
-        "y": 0.5313846134844913
+        "x": 5.1560555666999175,
+        "y": 0.501864005266102
       },
       "isLocked": false,
       "linkedName": null
@@ -52,24 +52,24 @@
         "y": 0.6127246790299581
       },
       "prevControl": {
-        "x": 3.81146334299404,
-        "y": 0.6000581244162237
+        "x": 3.8093717392508815,
+        "y": 0.6345711226466885
       },
       "nextControl": {
-        "x": 3.216355802416711,
-        "y": 0.6300736736288896
+        "x": 3.245809522863392,
+        "y": 0.5851346850976076
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.8228245363766047,
-        "y": 1.013823109843081
+        "x": 0.9375060240963853,
+        "y": 2.6581084337349408
       },
       "prevControl": {
-        "x": 3.13029484186313,
-        "y": 0.8770490609240988
+        "x": 1.153571404930883,
+        "y": 2.5323477435140154
       },
       "nextControl": null,
       "isLocked": false,
@@ -93,10 +93,10 @@
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 2.4857768052516467,
-      "maxWaypointRelativePos": 4.0,
+      "minWaypointRelativePos": 0,
+      "maxWaypointRelativePos": 0.5881838074398017,
       "constraints": {
-        "maxVelocity": 1.5,
+        "maxVelocity": 1.0,
         "maxAcceleration": 6.5,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
@@ -106,10 +106,10 @@
     },
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0,
-      "maxWaypointRelativePos": 0.5881838074398017,
+      "minWaypointRelativePos": 2.9,
+      "maxWaypointRelativePos": 4.0,
       "constraints": {
-        "maxVelocity": 1.0,
+        "maxVelocity": 1.5,
         "maxAcceleration": 6.5,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
@@ -130,12 +130,12 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 56.98541411907974
+    "rotation": 20.149352876742444
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
-    "velocity": 0,
+    "velocity": 1.0,
     "rotation": 135.0
   },
   "useDefaultConstraints": true

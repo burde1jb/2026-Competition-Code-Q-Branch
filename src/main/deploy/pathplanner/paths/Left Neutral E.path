@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.98127336944359,
-        "y": 4.730030788735322
+        "x": 5.756626506024096,
+        "y": 4.712518072289157
       },
       "isLocked": false,
       "linkedName": "Left Ball Pit 2"
@@ -20,12 +20,12 @@
         "y": 4.461180722891566
       },
       "prevControl": {
-        "x": 5.968669900453768,
-        "y": 4.4220618534870155
+        "x": 5.669095553094198,
+        "y": 4.461180722891566
       },
       "nextControl": {
-        "x": 6.4625108224378005,
-        "y": 4.500299592296116
+        "x": 6.663626506024096,
+        "y": 4.461180722891566
       },
       "isLocked": false,
       "linkedName": null
@@ -36,8 +36,8 @@
         "y": 5.324469879518071
       },
       "prevControl": {
-        "x": 6.39033732334887,
-        "y": 4.9436397315379175
+        "x": 6.882180722891565,
+        "y": 4.909216867469879
       },
       "nextControl": null,
       "isLocked": false,
@@ -47,11 +47,11 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.21492537313434504,
-      "rotationDegrees": -45.0
+      "rotationDegrees": -29.999999999999996
     },
     {
       "waypointRelativePos": 1.3880597014925307,
-      "rotationDegrees": 0.0
+      "rotationDegrees": 29.999999999999996
     }
   ],
   "constraintZones": [],
@@ -66,14 +66,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": 90.0
+    "velocity": 1.0,
+    "rotation": 110.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
-    "velocity": 0,
-    "rotation": -90.0
+    "velocity": 1.0,
+    "rotation": -59.99999999999999
   },
   "useDefaultConstraints": false
 }
