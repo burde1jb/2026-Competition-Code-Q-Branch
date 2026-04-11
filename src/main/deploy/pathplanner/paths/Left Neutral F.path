@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.8892867332382295,
-        "y": 6.189286733238232
+        "x": 6.67455421686747,
+        "y": 5.324469879518071
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.533098690705434,
-        "y": 6.980999266908156
+        "x": 6.318366174334675,
+        "y": 6.116182413187995
       },
       "isLocked": false,
       "linkedName": "Left Ball Pit Collected 2"
@@ -36,8 +36,8 @@
         "y": 6.978544935805992
       },
       "prevControl": {
-        "x": 2.4605420827389435,
-        "y": 8.440613409415121
+        "x": 2.4690561362887338,
+        "y": 7.478525358288805
       },
       "nextControl": null,
       "isLocked": false,
@@ -86,8 +86,8 @@
   "reversed": false,
   "folder": null,
   "idealStartingState": {
-    "velocity": 0,
-    "rotation": 45.0
+    "velocity": 1.0,
+    "rotation": 110.0
   },
   "useDefaultConstraints": true
 }

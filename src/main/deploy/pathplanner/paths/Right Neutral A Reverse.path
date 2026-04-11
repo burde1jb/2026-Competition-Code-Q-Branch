@@ -3,60 +3,67 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.9375060240963853,
-        "y": 2.6581084337349408
+        "x": 4.412518072289157,
+        "y": 0.6256633380884444
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.4266462261318429,
-        "y": 2.314145379955454
-      },
-      "isLocked": false,
-      "linkedName": "Right Shot"
-    },
-    {
-      "anchor": {
-        "x": 5.691060240963855,
-        "y": 0.5927710843373495
-      },
-      "prevControl": {
-        "x": 5.439135012829297,
-        "y": 0.5866805669067553
-      },
-      "nextControl": {
-        "x": 6.36056950043348,
-        "y": 0.6089570687460486
+        "x": 5.9423975903614465,
+        "y": 0.5599879518072293
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.691060240963855,
-        "y": 2.4504819277108436
+        "x": 6.549158345221112,
+        "y": 0.6256633380884444
       },
       "prevControl": {
-        "x": 6.335795180722892,
-        "y": 1.3467831325301212
+        "x": 6.078159608199534,
+        "y": 0.5301258627856149
+      },
+      "nextControl": {
+        "x": 7.762108657540901,
+        "y": 0.8716984150391969
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.138867469879518,
+        "y": 1.4232771084337343
+      },
+      "prevControl": {
+        "x": 8.03444111933309,
+        "y": 1.1961314782500247
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "RIght Ballpit 2"
+      "linkedName": "Right Ballpit"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.5,
+      "waypointRelativePos": 0.9976969138645706,
       "rotationDegrees": 180.0
     },
     {
-      "waypointRelativePos": 1.124045801526711,
-      "rotationDegrees": 180.0
+      "waypointRelativePos": 1.4988484569322862,
+      "rotationDegrees": 135.0
     }
   ],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "AutonIntakeExtend",
+      "waypointRelativePos": 1.0,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 4.9,
     "maxAcceleration": 8.0,
@@ -67,13 +74,13 @@
   },
   "goalEndState": {
     "velocity": 1.0,
-    "rotation": 90.0
+    "rotation": 110.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 20.149352876742444
+    "rotation": 0.0
   },
   "useDefaultConstraints": false
 }
