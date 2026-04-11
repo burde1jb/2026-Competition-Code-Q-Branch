@@ -13,6 +13,9 @@ import static edu.wpi.first.units.Units.RadiansPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 
 import com.ctre.phoenix6.swerve.SwerveRequest;
+
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -23,6 +26,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.FuelShooterSubsystem;
+import frc.robot.AlphaBots.Tools;
 import frc.robot.commands.AimAndDriveCommand;
 import frc.robot.commands.LEDCommand;
 import frc.robot.commands.AutonCommands.*;
@@ -102,6 +106,7 @@ public class RobotContainer {
   }
     
   private void configureBindings() {
+    ledSubsystem.setDefaultCommand(new LEDCommand(ledSubsystem, shooterSubsystem));
     //Note that X is defined as forward according to WPILib convention, but is left and right from 2d scoring table perspective
     //and Y is defined as to the left according to WPILib convention. but is up/away and down/closer from the 2d scoring table perspective.
     //if in a simulation use a xbox controller so Jow can actually drive the dang thing. my goodness.  
@@ -124,24 +129,41 @@ public class RobotContainer {
     .or(xboxController0.axisMagnitudeGreaterThan(1,0.1))
     .or(xboxController0.axisMagnitudeGreaterThan(3,0.1))
     .or(xboxController0.axisMagnitudeGreaterThan(4,0.1))
-      .whileTrue(drivetrain.applyRequest(() -> drive.withVelocityX(-xboxController0.getRightX() * MaxSpeed)
-            .withVelocityY(-xboxController0.getRightY() * MaxSpeed)
-            .withRotationalRate(-xboxController0.getLeftX() * MaxAngularRate)));
-    
+      .whileTrue(drivetrain.applyRequest(() -> drive.withVelocityX(Tools.getExpoPolar(-xboxController0.getLeftX(), -xboxController0.getLeftY(), MaxSpeed, true, .1)) // Drive forward with negative Y (forward)
+                    .withVelocityY(Tools.getExpoPolar(-xboxController0.getLeftX(), -xboxController0.getLeftY(), MaxSpeed, false, .1)) // Drive left with negative X (left)
+                    .withRotationalRate(Tools.getExpoJoystickInput(-xboxController0.getRightX(), MaxAngularRate)) // Drive counterclockwise with negative X (left)
+          ));
+    // (drivetrain.applyRequest(() -> drive.withVelocityX(-xboxController0.getRightX() * MaxSpeed)
+    //         .withVelocityY(-xboxController0.getRightY() * MaxSpeed)
+    //         .withRotationalRate(-xboxController0.getLeftX() * MaxAngularRate)
+    //       ))
   
     // drivetrain.setDefaultCommand(
     //   drivetrain.applyRequest(() -> drive.withVelocityX(-xboxController0.getRightY() * MaxSpeed)
     //         .withVelocityY(-xboxController0.getRightX() * MaxSpeed)
     //         .withRotationalRate(-xboxController0.getLeftX() * MaxAngularRate)));
+    xboxController0.leftBumper()
+    // joystick.button(15)
+      .whileTrue(
+        Commands.parallel(
+            new AimAndDriveCommand(drivetrain),
+            TeleopShooterOn()
+        )
+      )
+      .onFalse(TeleopShooterOff());
 
+    if(!DriverStation.isFMSAttached())
+    {
+        xboxController0.x().onTrue(TeleopShooterOn());
+        xboxController0.y().onTrue(TeleopShooterOff());
+    }
+    xboxController0.rightBumper().whileTrue(xstance());
+    xboxController0.back().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+    xboxController0.rightTrigger(.2)
+    .onTrue(new InstantCommand(()->{intakeSubsystem.FuelIntakeOn(RobotConstants.FuelIntakeOnspeed);}))
+    .onFalse(new InstantCommand(()->{intakeSubsystem.FuelIntakeOff();}));
     
-    //intakeSubsystem.setDefaultCommand(new FuelIntakeCommand(intakeSubsystem, xboxController.getHID()));
-    //shooterSubsystem.setDefaultCommand(new ShooterCommand(shooterSubsystem, xboxController.getHID()));
-    //serializerSubsystem.setDefaultCommand(new SerializerCommand(serializerSubsystem, xboxController.getHID()));
-    //conveyorSubsystem.setDefaultCommand(new ConveyorCommand(conveyorSubsystem, xboxController.getHID()));
-    ledSubsystem.setDefaultCommand(new LEDCommand(ledSubsystem, shooterSubsystem));
-    //visionSubsystem.setDefaultCommand(new AlignCommand(drivetrain, visionSubsystem,6));
-    // climberSubsystem.setDefaultCommand(new ClimberCommand(climberSubsystem, xboxController.getHID()));
+
 
     
     
@@ -149,29 +171,9 @@ public class RobotContainer {
      * Move to firing position and fire
      */
     //if in sim use button 1 (A) on an Xbox Controller so jow can actually debug in the sim. Else just use the wild joystick button 15 because why not.
-    if(Robot.isSimulation()) {
-      xboxController0.leftBumper()
-      // joystick.button(1)
-        .whileTrue(
-          Commands.parallel(
-              new InstantCommand(() -> System.out.println("Aiming and Driving")),
-              new AimAndDriveCommand(drivetrain),
-              TeleopShooterOn()
-          )
-        )
-        .onFalse(TeleopShooterOff());
-    }
-    else {
-      xboxController0.leftBumper()
-      // joystick.button(15)
-        .whileTrue(
-          Commands.parallel(
-              new AimAndDriveCommand(drivetrain),
-              TeleopShooterOn()
-          )
-        )
-        .onFalse(TeleopShooterOff());
-    }
+  
+
+  
     // joystick.button(13).whileTrue(commandSwerveDrivetrain.applyRequest(() -> brake));
     // joystick.button(14).whileTrue(commandSwerveDrivetrain.applyRequest(
     //     () -> point.withModuleDirection(new Rotation2d(-joystick.getRawAxis(3), -joystick.getRawAxis(4)))));
@@ -186,11 +188,11 @@ public class RobotContainer {
     //joystick.button(1).whileTrue(new AlignCommand(commandSwerveDrivetrain, visionSubsystem));
     //joystick.button(1).whileTrue(alignHub());
     //joystick.button(4).whileTrue(alignTower());
-    xboxController0.rightBumper().whileTrue(xstance());
+   
     // joystick.button(14).whileTrue(xstance());
   
     // // reset the field-centric heading on left bumper press
-    xboxController0.back().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+    
     // joystick.button(13).onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
     // commandSwerveDrivetrain.registerTelemetry(logger::telemeterize);
   }
