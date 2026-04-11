@@ -52,8 +52,8 @@ public class RobotContainer {
   public static final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
   // /* Setting up bindings for necessary control of the swerve drive platform */
   private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-       .withDeadband(MaxSpeed * 0.1)
-       .withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
+       .withDeadband(MaxSpeed * 0.01)
+       .withRotationalDeadband(MaxAngularRate * 0.01) // Add a 10% deadband
        .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
   //private final Telemetry logger = new Telemetry(MaxSpeed);
   private final FuelIntakeSubsystem intakeSubsystem;
@@ -104,7 +104,7 @@ public class RobotContainer {
       .onFalse(Commands.parallel(TeleopConveyorOff(),TeleopSerializerOff(),new InstantCommand(()->{intakeSubsystem.wristOff();}))
     );
   }
-    
+    private double deadzonethreshold = 0.02;
   private void configureBindings() {
     ledSubsystem.setDefaultCommand(new LEDCommand(ledSubsystem, shooterSubsystem));
     //Note that X is defined as forward according to WPILib convention, but is left and right from 2d scoring table perspective
@@ -120,19 +120,22 @@ public class RobotContainer {
         //     .withRotationalRate(-joystick.getRawAxis(4) * MaxAngularRate)));
     }
     else{
-      drivetrain.setDefaultCommand(new InstantCommand(() -> {
-        drivetrain.brake(true); 
-      }));
+      drivetrain.setDefaultCommand(new InstantCommand(() -> {  drivetrain.brake(true); 
+      },drivetrain));
     }
     
-    xboxController0.axisMagnitudeGreaterThan(0,0.1)
-    .or(xboxController0.axisMagnitudeGreaterThan(1,0.1))
-    .or(xboxController0.axisMagnitudeGreaterThan(3,0.1))
-    .or(xboxController0.axisMagnitudeGreaterThan(4,0.1))
-      .whileTrue(drivetrain.applyRequest(() -> drive.withVelocityX(Tools.getExpoPolar(-xboxController0.getLeftX(), -xboxController0.getLeftY(), MaxSpeed, true, .1)) // Drive forward with negative Y (forward)
-                    .withVelocityY(Tools.getExpoPolar(-xboxController0.getLeftX(), -xboxController0.getLeftY(), MaxSpeed, false, .1)) // Drive left with negative X (left)
-                    .withRotationalRate(Tools.getExpoJoystickInput(-xboxController0.getRightX(), MaxAngularRate)) // Drive counterclockwise with negative X (left)
+    xboxController0.axisMagnitudeGreaterThan(0,deadzonethreshold)
+    .or(xboxController0.axisMagnitudeGreaterThan(1,deadzonethreshold))
+    .or(xboxController0.axisMagnitudeGreaterThan(4,deadzonethreshold))
+    .or(xboxController0.axisMagnitudeGreaterThan(5,deadzonethreshold))
+      .whileTrue(drivetrain.applyRequest(() -> drive.withVelocityX(Tools.getExpoPolar(-xboxController0.getRightX(), -xboxController0.getRightY(), MaxSpeed, true, .01)) // Drive forward with negative Y (forward)
+                    .withVelocityY(Tools.getExpoPolar(-xboxController0.getRightX(), -xboxController0.getRightY(), MaxSpeed, false, .01)) // Drive left with negative X (left)
+                    .withRotationalRate(Tools.getExpoJoystickInput(xboxController0.getLeftX(), MaxAngularRate)) // Drive counterclockwise with negative X (left)
           ));
+          // drivetrain.applyRequest(() -> drive.withVelocityX(Tools.getExpoPolar(-xboxController0.getLeftX(), -xboxController0.getLeftY(), MaxSpeed, true, .01)) // Drive forward with negative Y (forward)
+          //           .withVelocityY(Tools.getExpoPolar(-xboxController0.getLeftX(), -xboxController0.getLeftY(), MaxSpeed, false, .01)) // Drive left with negative X (left)
+          //           .withRotationalRate(Tools.getExpoJoystickInput(xboxController0.getRightX(), MaxAngularRate)) // Drive counterclockwise with negative X (left)
+          // ));
     // (drivetrain.applyRequest(() -> drive.withVelocityX(-xboxController0.getRightX() * MaxSpeed)
     //         .withVelocityY(-xboxController0.getRightY() * MaxSpeed)
     //         .withRotationalRate(-xboxController0.getLeftX() * MaxAngularRate)
@@ -154,8 +157,8 @@ public class RobotContainer {
 
     if(!DriverStation.isFMSAttached())
     {
-        xboxController0.x().onTrue(TeleopShooterOn());
-        xboxController0.y().onTrue(TeleopShooterOff());
+        // xboxController0.x().onTrue(TeleopShooterOn());
+        // xboxController0.y().onTrue(TeleopShooterOff());
     }
     xboxController0.rightBumper().whileTrue(xstance());
     xboxController0.back().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
@@ -163,7 +166,13 @@ public class RobotContainer {
     .onTrue(new InstantCommand(()->{intakeSubsystem.FuelIntakeOn(RobotConstants.FuelIntakeOnspeed);}))
     .onFalse(new InstantCommand(()->{intakeSubsystem.FuelIntakeOff();}));
     
+    xboxController0.a()
+      .onTrue(new InstantCommand(()->{intakeSubsystem.goTo(RobotConstants.FuelWristExtendgoal);}))
+      .onFalse(new InstantCommand(()->{intakeSubsystem.wristOff();}));
 
+    xboxController0.b()
+      .onTrue(new InstantCommand(()->{intakeSubsystem.goTo(RobotConstants.FuelWristRetractgoal);}))
+      .onFalse(new InstantCommand(()->{intakeSubsystem.wristOff();}));
 
     
     

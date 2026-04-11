@@ -27,7 +27,7 @@ public class RobotConstants {
     public final static int FuelShooterMotor3CANid = 22;
     public final static int FuelShooterEncoderid = 2;
     //shooter power values
-    public final static double FuelShooterMaxVelocity = -3100;
+    public final static double FuelShooterMaxVelocity = -3200;
     public final static double FuelShooterWarmUpVelocity = -2500;
     public final static double FuelShooterSpeed = -0.80;
 

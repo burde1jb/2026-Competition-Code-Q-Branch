@@ -37,12 +37,12 @@ public class FuelShooterSubsystem extends SubsystemBase {
    
     public FuelShooterSubsystem() {
       //setup defaults
-      SmartDashboard.putNumber("Shooter/PID/kP", P);
-      SmartDashboard.putNumber("Shooter/PID/kI", i);  
-      SmartDashboard.putNumber("Shooter/PID/kD", d);
-      SmartDashboard.putNumber("Shooter/PID/kS", S);
-      SmartDashboard.putNumber("Shooter/PID/kA", A);
-      SmartDashboard.putNumber("Shooter/PID/kV", v);
+      // SmartDashboard.putNumber("Shooter/PID/kP", P);
+      // SmartDashboard.putNumber("Shooter/PID/kI", i);  
+      // SmartDashboard.putNumber("Shooter/PID/kD", d);
+      // SmartDashboard.putNumber("Shooter/PID/kS", S);
+      // SmartDashboard.putNumber("Shooter/PID/kA", A);
+      // SmartDashboard.putNumber("Shooter/PID/kV", v);
         // Set PID gains
         FuelShooterMotorConfig
         .closedLoop
@@ -109,7 +109,7 @@ public class FuelShooterSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Shooter/Flywheel/Target Velocity", FuelShooterTargetVelocity);
         SmartDashboard.putNumber("Shooter/Flywheel/Actual Velocity", FuelShooterEncoder.getVelocity());
         FuelShooterVelocity = FuelShooterEncoder.getVelocity();
-         pidtune();
+         //pidtune();
     }
          
     private void pidtune() {
