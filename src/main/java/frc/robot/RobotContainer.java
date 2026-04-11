@@ -128,7 +128,13 @@ public class RobotContainer {
             .withVelocityY(-xboxController0.getRightY() * MaxSpeed)
             .withRotationalRate(-xboxController0.getLeftX() * MaxAngularRate)));
     
+  
+    // drivetrain.setDefaultCommand(
+    //   drivetrain.applyRequest(() -> drive.withVelocityX(-xboxController0.getRightY() * MaxSpeed)
+    //         .withVelocityY(-xboxController0.getRightX() * MaxSpeed)
+    //         .withRotationalRate(-xboxController0.getLeftX() * MaxAngularRate)));
 
+    
     //intakeSubsystem.setDefaultCommand(new FuelIntakeCommand(intakeSubsystem, xboxController.getHID()));
     //shooterSubsystem.setDefaultCommand(new ShooterCommand(shooterSubsystem, xboxController.getHID()));
     //serializerSubsystem.setDefaultCommand(new SerializerCommand(serializerSubsystem, xboxController.getHID()));

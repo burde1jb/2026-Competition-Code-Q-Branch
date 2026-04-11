@@ -28,24 +28,30 @@ public class FuelShooterSubsystem extends SubsystemBase {
     public double MaxVelocity =  RobotConstants.FuelShooterMaxVelocity; // rotations
     public double FuelShooterVelocity = 0;
     private double FuelShooterTargetVelocity = 0.0;
-
+    private double P = 0.00005;
+    private double i = 0.0;
+    private double d = 0.0;
+    private double S = 0.0;
+    private double v = 0.0019;
+    private double A = 0.0;
    
     public FuelShooterSubsystem() {
-
+      //setup defaults
+      SmartDashboard.putNumber("Shooter | PID | kP", P);
+      SmartDashboard.putNumber("Shooter | PID | kI", i);  
+      SmartDashboard.putNumber("Shooter | PID | kD", d);
+      SmartDashboard.putNumber("Shooter | PID | kS", S);
+      SmartDashboard.putNumber("Shooter | PID | kA", A);
+      SmartDashboard.putNumber("Shooter | PID | kV", v);
         // Set PID gains
         FuelShooterMotorConfig
         .closedLoop
-          .pid(0.00005, 0, 0) // slot 0
-          .pid(0, 0, 0, ClosedLoopSlot.kSlot1) // slot 1
+          .pid(P, i, d) // slot 0
           .feedForward
-            .kS(0.0) // slot 0 by default
-            .kV(0.0019, ClosedLoopSlot.kSlot0) // slot 0 explicitly
-            .kA(0.0)
+            .sva(S, v, A);
             // .kG(0) // Only use one of kG and kCos
             // .kCos(0)
             // .kCosRatio(1)
-           
-            .sva(0, 0, 0, ClosedLoopSlot.kSlot1); // slot 1
 
         FuelShooterMotorConfig.closedLoop
         .feedbackSensor(FeedbackSensor.kPrimaryEncoder);
@@ -78,7 +84,7 @@ public class FuelShooterSubsystem extends SubsystemBase {
     }
     public void shooterOn(double velocity){
       // Followers will automatically follow the first motor.
-      FuelShooterMotorLoop.setSetpoint(velocity, ControlType.kVelocity);
+      FuelShooterMotorLoop.setSetpoint(velocity, ControlType.kVelocity, ClosedLoopSlot.kSlot0);
       FuelShooterTargetVelocity = velocity;
     }
 
@@ -103,7 +109,33 @@ public class FuelShooterSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Shooter | Flywheel | Target Velocity", FuelShooterTargetVelocity);
         SmartDashboard.putNumber("Shooter | Flywheel | Actual Velocity", FuelShooterEncoder.getVelocity());
         FuelShooterVelocity = FuelShooterEncoder.getVelocity();
-        // pidtune();
+         pidtune();
+    }
+         
+    private void pidtune() {
+      double kP = SmartDashboard.getNumber("Shooter | PID | kP", 0.00005);
+      double kI = SmartDashboard.getNumber("Shooter | PID | kI", 0);  
+      double kD = SmartDashboard.getNumber("Shooter | PID | kD", 0);
+      double kS = SmartDashboard.getNumber("Shooter | PID | kS", 0.0);
+      double kA = SmartDashboard.getNumber("Shooter | PID | kA", 0.0);
+      double kV = SmartDashboard.getNumber("Shooter | PID | kV", 0.0019);
+
+      if(kP != P || kI != i || kD != d || kS != S || kA != A || kV != v) {
+          P = kP;
+          i = kI;
+          d = kD;
+          S = kS;
+          A = kA;
+          v = kV;
+          //setup the config
+          FuelShooterMotorConfig
+              .closedLoop
+                .pid(P, i, d) // slot 0
+                .feedForward
+                  .sva(S, v, A);
+            //push config
+          FuelShooterMotor.configure(FuelShooterMotorConfig, com.revrobotics.ResetMode.kResetSafeParameters, com.revrobotics.PersistMode.kPersistParameters);
+      }
     }
      
 
