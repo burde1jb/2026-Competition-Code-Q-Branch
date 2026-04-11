@@ -37,12 +37,12 @@ public class FuelShooterSubsystem extends SubsystemBase {
    
     public FuelShooterSubsystem() {
       //setup defaults
-      SmartDashboard.putNumber("Shooter | PID | kP", P);
-      SmartDashboard.putNumber("Shooter | PID | kI", i);  
-      SmartDashboard.putNumber("Shooter | PID | kD", d);
-      SmartDashboard.putNumber("Shooter | PID | kS", S);
-      SmartDashboard.putNumber("Shooter | PID | kA", A);
-      SmartDashboard.putNumber("Shooter | PID | kV", v);
+      SmartDashboard.putNumber("Shooter/PID/kP", P);
+      SmartDashboard.putNumber("Shooter/PID/kI", i);  
+      SmartDashboard.putNumber("Shooter/PID/kD", d);
+      SmartDashboard.putNumber("Shooter/PID/kS", S);
+      SmartDashboard.putNumber("Shooter/PID/kA", A);
+      SmartDashboard.putNumber("Shooter/PID/kV", v);
         // Set PID gains
         FuelShooterMotorConfig
         .closedLoop
@@ -104,21 +104,21 @@ public class FuelShooterSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Shooter | Flywheel | Applied Output", FuelShooterMotor.getAppliedOutput());
-        SmartDashboard.putNumber("Shooter | Flywheel | Current", FuelShooterMotor.getOutputCurrent());
-        SmartDashboard.putNumber("Shooter | Flywheel | Target Velocity", FuelShooterTargetVelocity);
-        SmartDashboard.putNumber("Shooter | Flywheel | Actual Velocity", FuelShooterEncoder.getVelocity());
+        SmartDashboard.putNumber("Shooter/Flywheel/Applied Output", FuelShooterMotor.getAppliedOutput());
+        SmartDashboard.putNumber("Shooter/Flywheel/Current", FuelShooterMotor.getOutputCurrent());
+        SmartDashboard.putNumber("Shooter/Flywheel/Target Velocity", FuelShooterTargetVelocity);
+        SmartDashboard.putNumber("Shooter/Flywheel/Actual Velocity", FuelShooterEncoder.getVelocity());
         FuelShooterVelocity = FuelShooterEncoder.getVelocity();
          pidtune();
     }
          
     private void pidtune() {
-      double kP = SmartDashboard.getNumber("Shooter | PID | kP", 0.00005);
-      double kI = SmartDashboard.getNumber("Shooter | PID | kI", 0);  
-      double kD = SmartDashboard.getNumber("Shooter | PID | kD", 0);
-      double kS = SmartDashboard.getNumber("Shooter | PID | kS", 0.0);
-      double kA = SmartDashboard.getNumber("Shooter | PID | kA", 0.0);
-      double kV = SmartDashboard.getNumber("Shooter | PID | kV", 0.0019);
+      double kP = SmartDashboard.getNumber("Shooter/PID/kP", 0.00005);
+      double kI = SmartDashboard.getNumber("Shooter/PID/kI", 0);  
+      double kD = SmartDashboard.getNumber("Shooter/PID/kD", 0);
+      double kS = SmartDashboard.getNumber("Shooter/PID/kS", 0.0);
+      double kA = SmartDashboard.getNumber("Shooter/PID/kA", 0.0);
+      double kV = SmartDashboard.getNumber("Shooter/PID/kV", 0.0019);
 
       if(kP != P || kI != i || kD != d || kS != S || kA != A || kV != v) {
           P = kP;
