@@ -12,8 +12,10 @@ public class Landmarks {
     public static Translation2d hubPosition() {
         final Optional<Alliance> alliance = DriverStation.getAlliance();
         if (alliance.isPresent() && alliance.get() == Alliance.Blue) {
-            return new Translation2d(Inches.of(182.105), Inches.of(158.845));//CHANGE HERE FOR ANGLE ALIGNMENT
+            return new Translation2d(Inches.of(182.105), Inches.of(148.845));//CHANGE HERE FOR ANGLE ALIGNMENT
         }
+        //AIM AT HUB CHANGE ABOVE VALUES
+        //HUB VALUE IS 0 INCHES HIGHER THAN GIVEN DIMENSION FOR X and -10 INCHES FOR Y
         return new Translation2d(Inches.of(469.115), Inches.of(158.845));//GET THESE NUMBERS FROM FIELD DRAWINGS
     }
 }

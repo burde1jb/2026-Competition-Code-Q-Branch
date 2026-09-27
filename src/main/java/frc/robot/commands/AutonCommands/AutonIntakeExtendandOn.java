@@ -27,6 +27,7 @@ public class AutonIntakeExtendandOn extends Command {
 
     @Override
     public void execute() {
+        // intakeSubsystem.wristOn(true);
         intakeSubsystem.wentTo(RobotConstants.FuelWristExtendgoal);
         intakeSubsystem.FuelIntakeOn(RobotConstants.FuelIntakeOnspeedAuto);
         // wristSubsystem.wentTo(RobotConstants.FuelWristExtendgoal);
@@ -47,11 +48,12 @@ public class AutonIntakeExtendandOn extends Command {
     public boolean isFinished() {
         if (timer.get() >=2.0){
             intakeSubsystem.FuelIntakeOff();
-            intakeSubsystem.wristOff();
+            intakeSubsystem.wristHold();
             return true;
         }
         else if (intakeSubsystem.wentTo(RobotConstants.FuelWristExtendgoal) || timer.get() >= 1.0){
-                intakeSubsystem.wristOff();
+                intakeSubsystem.wristHold();
+
         }
         return false;
         // if (intakeSubsystem.wentTo(RobotConstants.FuelWristExtendgoal) || timer.get() >= 3.0) {

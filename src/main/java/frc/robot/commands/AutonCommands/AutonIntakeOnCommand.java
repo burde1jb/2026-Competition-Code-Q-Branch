@@ -27,12 +27,14 @@ public class AutonIntakeOnCommand extends Command {
     @Override
     public void execute() {
         intakeSubsystem.FuelIntakeOn(RobotConstants.FuelIntakeOnspeedAuto);
+        intakeSubsystem.wristHold();
     }
 
     @Override
     public boolean isFinished() {
         if (timer.get() >= 2.0) {
             intakeSubsystem.FuelIntakeOff();
+            intakeSubsystem.wristHold();
             return true;
         }
         return false;

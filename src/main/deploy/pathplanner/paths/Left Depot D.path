@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.9047228915662651,
-        "y": 4.767156626506025
+        "x": 1.5677746077032806,
+        "y": 4.727218259629101
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.3218005305598004,
-        "y": 4.695998119152679
+        "x": 2.7613113452382994,
+        "y": 4.532015984050323
       },
       "isLocked": false,
       "linkedName": "Left Depot C End"
@@ -20,12 +20,12 @@
         "y": 3.4449036144578313
       },
       "prevControl": {
-        "x": 1.7768489811707915,
-        "y": 4.333990896813372
+        "x": 1.9559343794579167,
+        "y": 4.196733238231099
       },
       "nextControl": {
-        "x": 1.7263912939843942,
-        "y": 2.0642162234169907
+        "x": 1.4039610615799953,
+        "y": 2.1097842614410105
       },
       "isLocked": false,
       "linkedName": null
@@ -75,10 +75,10 @@
     "rotation": 180.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "2026 Paths",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -9.36796942462384
+    "rotation": -13.266480846583704
   },
   "useDefaultConstraints": true
 }

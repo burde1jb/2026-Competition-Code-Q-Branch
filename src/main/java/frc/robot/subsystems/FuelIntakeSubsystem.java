@@ -102,7 +102,7 @@ public class FuelIntakeSubsystem extends SubsystemBase {
         } else if ((FuelIntakeWristEncoder.getPosition() - rangeOffset - encoderOffset) % 1 > (encoderGoal - encoderOffset) % 1) {
             FuelIntakeWristMotor.set(RobotConstants.FuelWristExtendpower);
         } else {
-            FuelIntakeWristMotor.stopMotor();
+            FuelIntakeWristMotor.set(RobotConstants.FuelWristHoldpower);
         }
         }
 
@@ -118,7 +118,7 @@ public class FuelIntakeSubsystem extends SubsystemBase {
             this.wristExtend();
             return false;
         } else {
-            this.wristOff();
+            this.wristHold();
             return true;
         }
     }
@@ -129,6 +129,10 @@ public class FuelIntakeSubsystem extends SubsystemBase {
 
      public void wristRetract(){
         FuelIntakeWristMotor.set(RobotConstants.FuelWristRetractpower);
+    }
+
+    public void wristHold(){
+        FuelIntakeWristMotor.set(RobotConstants.FuelWristHoldpower);
     }
 
 

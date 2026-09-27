@@ -7,7 +7,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.0
+            "waitTime": 0.0
           }
         },
         {
@@ -87,50 +87,6 @@
                 "type": "named",
                 "data": {
                   "name": "AutonConveyorOnTimed"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Left Depot D"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutonIntakeExtendandOn"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 3.0
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Left Depot E"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutonShooterOnTimed"
                 }
               }
             ]

@@ -3,57 +3,32 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.658277108433734,
-        "y": 5.105915662650602
+        "x": 7.275578313253012,
+        "y": 5.838072289156627
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.756626506024096,
-        "y": 4.712518072289157
+        "x": 7.532436997438975,
+        "y": 5.220288588084389
       },
       "isLocked": false,
       "linkedName": "Left Ball Pit 2"
     },
     {
       "anchor": {
-        "x": 6.215590361445784,
-        "y": 4.461180722891566
+        "x": 7.67990361445783,
+        "y": 4.843650602409639
       },
       "prevControl": {
-        "x": 5.669095553094198,
-        "y": 4.461180722891566
-      },
-      "nextControl": {
-        "x": 6.663626506024096,
-        "y": 4.461180722891566
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 6.67455421686747,
-        "y": 5.324469879518071
-      },
-      "prevControl": {
-        "x": 6.882180722891565,
-        "y": 4.909216867469879
+        "x": 7.532291792923423,
+        "y": 5.203853416784846
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "Left Ball Pit Collected 2"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.21492537313434504,
-      "rotationDegrees": -29.999999999999996
-    },
-    {
-      "waypointRelativePos": 1.3880597014925307,
-      "rotationDegrees": 29.999999999999996
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -66,13 +41,13 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 1.0,
-    "rotation": 110.0
+    "velocity": 0.0,
+    "rotation": -83.82982490497031
   },
   "reversed": false,
-  "folder": null,
+  "folder": "2026 Paths",
   "idealStartingState": {
-    "velocity": 1.0,
+    "velocity": 0.0,
     "rotation": -59.99999999999999
   },
   "useDefaultConstraints": false

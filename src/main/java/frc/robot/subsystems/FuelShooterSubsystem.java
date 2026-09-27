@@ -19,10 +19,12 @@ public class FuelShooterSubsystem extends SubsystemBase {
     private SparkFlex FuelShooterMotor = new SparkFlex(RobotConstants.FuelShooterMotorCANid, MotorType.kBrushless);
     private SparkFlex FuelShooterMotor2 = new SparkFlex(RobotConstants.FuelShooterMotor2CANid, MotorType.kBrushless);
     private SparkFlex FuelShooterMotor3 = new SparkFlex(RobotConstants.FuelShooterMotor3CANid, MotorType.kBrushless);
+    private SparkFlex FuelShooterMotor4 = new SparkFlex(RobotConstants.FuelShooterMotor4CANid, MotorType.kBrushless);
     private SparkClosedLoopController FuelShooterMotorLoop = FuelShooterMotor.getClosedLoopController();
     private SparkFlexConfig FuelShooterMotorConfig = new SparkFlexConfig();
     private SparkFlexConfig FuelShooterMotorConfig2 = new SparkFlexConfig();
     private SparkFlexConfig FuelShooterMotorConfig3 = new SparkFlexConfig();
+    private SparkFlexConfig FuelShooterMotorConfig4 = new SparkFlexConfig();
     private RelativeEncoder FuelShooterEncoder = FuelShooterMotor.getEncoder();
 
     public double MaxVelocity =  RobotConstants.FuelShooterMaxVelocity; // rotations
@@ -30,9 +32,9 @@ public class FuelShooterSubsystem extends SubsystemBase {
     private double FuelShooterTargetVelocity = 0.0;
     private double P = 0.00005;
     private double i = 0.0;
-    private double d = 0.0;
+    private double d = 0.0001;
     private double S = 0.0;
-    private double v = 0.0019;
+    private double v = 0.0018;
     private double A = 0.0;
    
     public FuelShooterSubsystem() {
@@ -69,11 +71,13 @@ public class FuelShooterSubsystem extends SubsystemBase {
         
         // Configure follower behavior through the motor configs before applying them.
         FuelShooterMotorConfig2.follow(FuelShooterMotor, false);
-        FuelShooterMotorConfig3.follow(FuelShooterMotor, false);
+        FuelShooterMotorConfig3.follow(FuelShooterMotor, true);
+        FuelShooterMotorConfig4.follow(FuelShooterMotor, true);
 
         FuelShooterMotor.configure(FuelShooterMotorConfig, com.revrobotics.ResetMode.kResetSafeParameters, com.revrobotics.PersistMode.kPersistParameters);
         FuelShooterMotor2.configure(FuelShooterMotorConfig2, com.revrobotics.ResetMode.kResetSafeParameters, com.revrobotics.PersistMode.kPersistParameters);
         FuelShooterMotor3.configure(FuelShooterMotorConfig3, com.revrobotics.ResetMode.kResetSafeParameters, com.revrobotics.PersistMode.kPersistParameters);
+        FuelShooterMotor4.configure(FuelShooterMotorConfig3, com.revrobotics.ResetMode.kResetSafeParameters, com.revrobotics.PersistMode.kPersistParameters);
 
         FuelShooterEncoder.setPosition(0);
     }

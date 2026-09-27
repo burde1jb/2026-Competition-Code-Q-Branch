@@ -18,16 +18,17 @@ public class RobotConstants {
     public final static double HubOffsetLeft = 0.356; //Distance between AprilTags on Hub
 
     //Auton Timing Values
-    public final static double AutonShootTime = 2.5;
+    public final static double AutonShootTime = 3.5;
     
     // Fuel Shooter Constants
     // CAN, PWM, DIO values for motors, encoders, and sensors - Motors Spinning
     public final static int FuelShooterMotorCANid = 20;
-    public final static int FuelShooterMotor2CANid = 21;
-    public final static int FuelShooterMotor3CANid = 22;
+    public final static int FuelShooterMotor2CANid = 22;
+    public final static int FuelShooterMotor3CANid = 14;
+    public final static int FuelShooterMotor4CANid = 15;
     public final static int FuelShooterEncoderid = 2;
     //shooter power values
-    public final static double FuelShooterMaxVelocity = -3200;
+    public final static double FuelShooterMaxVelocity = -5650;
     public final static double FuelShooterWarmUpVelocity = -2500;
     public final static double FuelShooterSpeed = -0.80;
 
@@ -51,8 +52,9 @@ public class RobotConstants {
     public final static double FuelWristRetractgoal = 0.81;
  
     // Fuel Wrist Power values for motors%
-    public final static double FuelWristExtendpower = 0.40;
+    public final static double FuelWristExtendpower = 0.30;
     public final static double FuelWristRetractpower = -0.20;
+    public final static double FuelWristHoldpower = 0.04;
 
     // Fuel Intake Constants
     // CAN, PWM, DIO values for motors, encoders, and sensors - Motor Spinning
@@ -94,7 +96,7 @@ public class RobotConstants {
         // Climber Constants
     // CAN, PWM, DIO values for motors, encoders, and sensors - Motor moving the
     // Climber in/out of robot
-    public final static int ClimbermotorUPPERcanID = 25;
+    public final static int ClimbermotorUPPERcanID = 45;
     public final static int ClimbermotorLOWERcanID = 26;
     public final static double ClimberencoderLOWERoffset = 0.0;
     public final static double ClimberencoderUPPERoffset = 0.0;
@@ -122,6 +124,7 @@ public class RobotConstants {
     public final static double ClimberReleasepower = -1.0;
     // Serealizer
     public final static int SerializerMotorCAN = 27;
+    public final static int SerializerMotorCAN2 = 25;
     public final static double SerializerOnspeed = -1.0;
     public final static double SerializerOutspeed = 1.0;
     public final static double SerializerSlowspeed = -0.2;

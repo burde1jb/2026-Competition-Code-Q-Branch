@@ -27,8 +27,9 @@ public class AutonIntakeExtend extends Command {
 
     @Override
     public void execute() {
-        intakeSubsystem.wristOn(true);
+        // intakeSubsystem.wristOn(true);
         // wristSubsystem.wentTo(RobotConstants.FuelWristExtendgoal);
+        intakeSubsystem.wentTo(RobotConstants.FuelWristExtendgoal);
         // if (wristSubsystem.wentTo(RobotConstants.FuelWristExtendgoal) || timer.get() > 15.0) {
         //     wristSubsystem.wristOff();
         //     wristFinished = true;

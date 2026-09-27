@@ -1,0 +1,109 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.719315263908701,
+        "y": 6.362602409638554
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.3531224928243626,
+        "y": 7.324240963855422
+      },
+      "isLocked": false,
+      "linkedName": "Shooting Position"
+    },
+    {
+      "anchor": {
+        "x": 4.631072289156626,
+        "y": 5.564879518072289
+      },
+      "prevControl": {
+        "x": 4.2975935026315195,
+        "y": 5.543471003381789
+      },
+      "nextControl": {
+        "x": 5.1842876506024105,
+        "y": 5.600394578313253
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.718265060240964,
+        "y": 6.362602409638554
+      },
+      "prevControl": {
+        "x": 6.324269860692771,
+        "y": 6.324526167168674
+      },
+      "nextControl": {
+        "x": 7.112260259789156,
+        "y": 6.400678652108434
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.7345421686746985,
+        "y": 7.204036144578313
+      },
+      "prevControl": {
+        "x": 7.67990361445783,
+        "y": 6.111265060240965
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Climb Neutral Zone"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.3145945945945804,
+      "rotationDegrees": -45.0
+    },
+    {
+      "waypointRelativePos": 2.25,
+      "rotationDegrees": -45.0
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 2.232352941176471,
+      "maxWaypointRelativePos": 3.0,
+      "constraints": {
+        "maxVelocity": 1.5,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 2.5,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -90.0
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -51.97057150722119
+  },
+  "useDefaultConstraints": false
+}

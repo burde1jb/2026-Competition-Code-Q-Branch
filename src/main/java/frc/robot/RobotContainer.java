@@ -91,7 +91,7 @@ public class RobotContainer {
   }
   public static boolean aligned = false;
   public Trigger AlignmentOK;
-  public double RPMTolerance = 200; // 4% tolerance, this is pretty tight but it is important to be at the correct speed for shooting and passing.
+  public double RPMTolerance = 250; // 4% tolerance, this is pretty tight but it is important to be at the correct speed for shooting and passing.
   public Trigger ShooterRPMOK; // we could use shooter.atspeed() but meh. 
   
   private void configureTriggers() {
@@ -101,7 +101,7 @@ public class RobotContainer {
     //the shooter is only up to speed when the trigger is pulled, wether for passing or for shooting, so this should not cause any issues with intaking.
     ShooterRPMOK.and(AlignmentOK).debounce(0.10)
       .whileTrue(Commands.parallel(TeleopSerializerOn(),TeleopConveyorOn(),agiation().repeatedly()))
-      .onFalse(Commands.parallel(TeleopConveyorOff(),TeleopSerializerOff(),new InstantCommand(()->{intakeSubsystem.wristOff();}))
+      .onFalse(Commands.parallel(TeleopConveyorOff(),TeleopSerializerOff(),new InstantCommand(()->{intakeSubsystem.wristHold();}))
     );
   }
     private double deadzonethreshold = 0.02;
@@ -120,8 +120,12 @@ public class RobotContainer {
         //     .withRotationalRate(-joystick.getRawAxis(4) * MaxAngularRate)));
     }
     else{
-      drivetrain.setDefaultCommand(new InstantCommand(() -> {  drivetrain.brake(true); 
-      },drivetrain));
+      drivetrain.setDefaultCommand(
+        drivetrain.applyRequest(() -> drive.withVelocityX(-xboxController0.getRightY() * MaxSpeed)
+            .withVelocityY(-xboxController0.getRightX() * MaxSpeed)
+            .withRotationalRate(-xboxController0.getLeftX() * MaxAngularRate)));
+      // drivetrain.setDefaultCommand(new InstantCommand(() -> {  drivetrain.brake(false); 
+      // },drivetrain));
     }
     
     xboxController0.axisMagnitudeGreaterThan(0,deadzonethreshold)
@@ -160,19 +164,19 @@ public class RobotContainer {
         // xboxController0.x().onTrue(TeleopShooterOn());
         // xboxController0.y().onTrue(TeleopShooterOff());
     }
-    xboxController0.rightBumper().whileTrue(xstance());
+    // xboxController0.rightBumper().whileTrue(xstance());
     xboxController0.back().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
     xboxController0.rightTrigger(.2)
     .onTrue(new InstantCommand(()->{intakeSubsystem.FuelIntakeOn(RobotConstants.FuelIntakeOnspeed);}))
     .onFalse(new InstantCommand(()->{intakeSubsystem.FuelIntakeOff();}));
     
     xboxController0.a()
-      .onTrue(new InstantCommand(()->{intakeSubsystem.goTo(RobotConstants.FuelWristExtendgoal);}))
-      .onFalse(new InstantCommand(()->{intakeSubsystem.wristOff();}));
+      .onTrue(new InstantCommand(()->{intakeSubsystem.goToPID(RobotConstants.FuelWristExtendgoal);}))
+      .onFalse(new InstantCommand(()->{intakeSubsystem.wristHold();}));
 
     xboxController0.b()
-      .onTrue(new InstantCommand(()->{intakeSubsystem.goTo(RobotConstants.FuelWristRetractgoal);}))
-      .onFalse(new InstantCommand(()->{intakeSubsystem.wristOff();}));
+      .onTrue(new InstantCommand(()->{intakeSubsystem.goToPID(RobotConstants.FuelWristRetractgoal);}))
+      .onFalse(new InstantCommand(()->{intakeSubsystem.wristHold();}));
 
     
     
@@ -208,12 +212,12 @@ public class RobotContainer {
 
   private void configureSecondControllerBindings() {
     xboxController.a()
-      .onTrue(new InstantCommand(()->{intakeSubsystem.goTo(RobotConstants.FuelWristExtendgoal);}))
-      .onFalse(new InstantCommand(()->{intakeSubsystem.wristOff();}));
+      .onTrue(new InstantCommand(()->{intakeSubsystem.wristOn(true);}))
+      .onFalse(new InstantCommand(()->{intakeSubsystem.wristHold();}));
 
     xboxController.b()
-      .onTrue(new InstantCommand(()->{intakeSubsystem.goTo(RobotConstants.FuelWristRetractgoal);}))
-      .onFalse(new InstantCommand(()->{intakeSubsystem.wristOff();}));
+      .onTrue(new InstantCommand(()->{intakeSubsystem.wristOn(false);}))
+      .onFalse(new InstantCommand(()->{intakeSubsystem.wristHold();}));
 
     /*
      * Shooter Bindings
@@ -284,9 +288,9 @@ public class RobotContainer {
   public Command agiation() 
   {
     return Commands.sequence(
-      new InstantCommand(()->{intakeSubsystem.goTo(RobotConstants.FuelWristRetractgoal);}),
+      new InstantCommand(()->{intakeSubsystem.wristOn(true);}),
       new WaitCommand(.25),
-      new InstantCommand(()->{intakeSubsystem.goTo(RobotConstants.FuelWristExtendgoal);}),
+      new InstantCommand(()->{intakeSubsystem.wristOn(true);}),
       new WaitCommand(.25)
       );
   }
@@ -323,6 +327,12 @@ public class RobotContainer {
   }
   public Command TeleopConveyorOff() {
     return AutonConveyorOff();
+  }
+
+  public Command wristHold() {
+    return new InstantCommand(() -> {
+      intakeSubsystem.wristHold();
+    });
   }
 
   public Command AutonShooterOn() {

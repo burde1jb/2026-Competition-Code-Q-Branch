@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.854746987951808,
-        "y": 2.2428554216867465
+        "x": 7.5066191155492135,
+        "y": 2.501768901569187
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.48135577340008,
-        "y": 2.629696196352362
+        "x": 7.133227900997485,
+        "y": 2.8886096762348026
       },
       "isLocked": false,
       "linkedName": "Right Balls Collected"
@@ -32,16 +32,16 @@
     },
     {
       "anchor": {
-        "x": 5.559927710843374,
-        "y": 0.7239036144578312
+        "x": 5.625493975903614,
+        "y": 0.6127246790299581
       },
       "prevControl": {
-        "x": 6.105122704180157,
-        "y": 1.02363927340139
+        "x": 6.554349397590361,
+        "y": 0.9424578313253016
       },
       "nextControl": {
-        "x": 5.1560555666999175,
-        "y": 0.501864005266102
+        "x": 5.1911643971250845,
+        "y": 0.4585425988029975
       },
       "isLocked": false,
       "linkedName": null
@@ -64,12 +64,12 @@
     },
     {
       "anchor": {
-        "x": 0.9375060240963853,
-        "y": 2.6581084337349408
+        "x": 2.654621968616262,
+        "y": 1.4149215406562063
       },
       "prevControl": {
-        "x": 1.153571404930883,
-        "y": 2.5323477435140154
+        "x": 2.7857544987367446,
+        "y": 1.1198733478851215
       },
       "nextControl": null,
       "isLocked": false,
@@ -106,7 +106,7 @@
     },
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 2.9,
+      "minWaypointRelativePos": 2.661963550852451,
       "maxWaypointRelativePos": 4.0,
       "constraints": {
         "maxVelocity": 1.5,
@@ -130,13 +130,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 20.149352876742444
+    "rotation": 53.855900799493114
   },
   "reversed": false,
-  "folder": null,
+  "folder": "2026 Paths",
   "idealStartingState": {
-    "velocity": 1.0,
-    "rotation": 135.0
+    "velocity": 0.0,
+    "rotation": 115.27772223555287
   },
   "useDefaultConstraints": true
 }
